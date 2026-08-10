@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Clinical Light-Mode Palette ── */
+  --color-white: #FFFFFF;
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F3F4F6;
+  --color-gray-200: #E5E7EB;
+  --color-gray-300: #D1D5DB;
+  --color-gray-400: #9CA3AF;
+  --color-black: #000000;
+  --color-charcoal: #111827;
+
+  /* ── Accent — Crimson / Burgundy ── */
+  --color-crimson: #DC143C;
+  --color-burgundy: #800020;
+
+  /* ── Semantic ── */
+  --color-success: #10B981;
+  --color-error: #EF4444;
+
+  /* ── Typography ── */
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "Cascadia Code", "Fira Code", monospace;
+
+  /* ── Breakpoints ── */
+  --breakpoint-3xl: 2560px;
+}
+
+/* ── Heading typography ── */
+h1, h2, h3, h4 {
+  letter-spacing: -0.03em;
+  font-feature-settings: 'cv01', 'cv02';
+}
+
+/* ══════════════════════════════════════
+   Prose: Reset inline-code styles inside
+   pre blocks (dark background)
+   ══════════════════════════════════════ */
+
+.prose pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* ══════════════════════════════════════
+   Animation System — Layer 1: Reveal
+   No-motion-first: hidden by default,
+   visible when JS adds .is-visible
+   ══════════════════════════════════════ */
+
+.reveal {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ══════════════════════════════════════
+   Animation System — Layer 2: Micro-interactions
+   ══════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Button hover/focus */
+  .btn-hover {
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  .btn-hover:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  }
+  .btn-hover:active {
+    transform: translateY(0);
+  }
+
+  /* Card hover */
+  .card-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 0.08);
+  }
+
+  /* Stroke draw animation for SVGs */
+  .stroke-draw {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    transition: stroke-dashoffset 1.2s ease-out;
+  }
+  .is-visible .stroke-draw {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ══════════════════════════════════════
+   Dialog entrance — @starting-style
+   ══════════════════════════════════════ */
+
+dialog[open] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog {
+    transition: opacity 0.3s ease, transform 0.3s ease,
+      overlay 0.3s ease allow-discrete,
+      display 0.3s ease allow-discrete;
+  }
+
+  @starting-style {
+    dialog[open] {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.4);
+  backdrop-filter: blur(4px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog::backdrop {
+    transition: background-color 0.3s ease,
+      backdrop-filter 0.3s ease,
+      overlay 0.3s ease allow-discrete,
+      display 0.3s ease allow-discrete;
+  }
+
+  @starting-style {
+    dialog[open]::backdrop {
+      background: rgb(0 0 0 / 0);
+      backdrop-filter: blur(0);
+    }
+  }
+}

@@ -1,0 +1,120 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout title="Terms of Service - TAI42">
+  <NavBar />
+
+  <main id="main-content" class="pt-20">
+    <!-- Header -->
+    <section class="bg-white py-20 sm:py-24">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mb-6">
+            Terms of Service.
+          </h1>
+        </Reveal>
+        <Reveal delay={100}>
+          <p class="text-sm text-charcoal/50 font-mono">
+            Effective date: February 2026
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Terms content -->
+    <section class="bg-white pb-20 sm:pb-28">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="space-y-12">
+          <!-- 1. Acceptance of Terms -->
+          <Reveal>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">1. Acceptance of Terms</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                By accessing or using any services provided by TAI42, Inc. ("TAI42," "we," "us," or "our"), including the TAI42 open-source platform, Babelfish Flows, and any associated APIs, documentation, or websites (collectively, the "Services"), you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use the Services.
+              </p>
+            </div>
+          </Reveal>
+
+          <!-- 2. The Open-Source Platform -->
+          <Reveal>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">2. The Open-Source Platform</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                The TAI42 platform - the framework, plugin ecosystem, Studio UI, and CLI - is open source and licensed under the Apache License, Version 2.0. Your use of those components is governed by that license, including its warranty disclaimers and limitation of liability. You may self-host, modify, and distribute them under its terms.
+              </p>
+            </div>
+          </Reveal>
+
+          <!-- 3. Babelfish Flows -->
+          <Reveal>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">3. Babelfish Flows</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                Babelfish Flows is a proprietary product, licensed separately - not under the open-source license that covers the platform. Access to it, and the terms of that access, are agreed with TAI42 directly. You may not copy, redistribute, or reverse-engineer it except as that separate license permits.
+              </p>
+            </div>
+          </Reveal>
+
+          <!-- 4. Intellectual Property -->
+          <Reveal>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">4. Intellectual Property</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                You retain all ownership rights to your code, data, agent configurations, and the flows you author. TAI42 retains all intellectual property rights in and to the platform software, the Babelfish Flows software, algorithms, documentation, and all other aspects of the Services, subject to the open-source license that governs the platform. Nothing in these terms transfers ownership of either party's pre-existing intellectual property.
+              </p>
+            </div>
+          </Reveal>
+
+          <!-- 5. Data Handling -->
+          <Reveal>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">5. Data Handling</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                This website collects nothing about you, and the platform and Babelfish Flows run on your own infrastructure - your prompts, payloads, and data never reach TAI42's servers. For details, see our <a href="/privacy" class="font-medium text-crimson hover:text-burgundy transition-colors">Privacy Policy</a>.
+              </p>
+            </div>
+          </Reveal>
+
+          <!-- 6. Limitation of Liability -->
+          <Reveal>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">6. Limitation of Liability</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                To the maximum extent permitted by applicable law, TAI42 and its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses resulting from your use of or inability to use the Services. The Services are provided "as-is" and "as-available" without warranties of any kind, except as expressly stated in a separate written agreement.
+              </p>
+            </div>
+          </Reveal>
+
+          <!-- 7. Changes to Terms -->
+          <Reveal>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">7. Changes to Terms</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                TAI42 reserves the right to modify these Terms of Service at any time. We will notify you of material changes by posting the updated terms on our website and updating the effective date above. Your continued use of the Services after such changes constitutes your acceptance of the revised terms.
+              </p>
+            </div>
+          </Reveal>
+
+          <!-- 8. Contact -->
+          <Reveal>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">8. Contact</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                For questions about these Terms of Service, please contact us at
+                <a href="mailto:balin.miki@tai42.ai" class="font-medium text-crimson hover:text-burgundy transition-colors">balin.miki@tai42.ai</a>.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

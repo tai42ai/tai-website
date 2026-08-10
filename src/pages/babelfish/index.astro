@@ -1,0 +1,333 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBar from "../../components/NavBar.astro";
+import Footer from "../../components/Footer.astro";
+import Reveal from "../../components/Reveal.astro";
+import SecurityStrip from "../../components/SecurityStrip.astro";
+
+export const prerender = true;
+
+const GITHUB_URL = "https://github.com/tai42ai";
+---
+
+<BaseLayout
+  title="Babelfish Flows - Deterministic Flows for Production Agents - TAI42"
+  description="Babelfish Flows is TAI42's paid product: a deterministic flow engine and Studio editor that turns complex agent behavior into explicit, versioned, auditable flows you self-host."
+>
+  <NavBar />
+  <main id="main-content" class="pt-20">
+
+    <!-- Hero -->
+    <section class="bg-white py-20 lg:py-28">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal>
+          <div class="flex items-center justify-center gap-3 mb-6">
+            <img src="/logos/babel-fish-logo.png" alt="Babelfish" class="h-14 w-auto" />
+            <p class="text-xs uppercase tracking-widest font-mono text-crimson">
+              PAID PRODUCT
+            </p>
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-6 tracking-tight">
+            Babelfish Flows - deterministic flows for production agents.
+          </h1>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <p class="text-xl text-charcoal/60 max-w-2xl mx-auto mb-8">
+            Build heavily complex agentic systems with minimum cost, minimum
+            hallucination, and maximum security and accuracy - because every
+            step runs as an explicit, deterministic flow instead of another
+            unpredictable model call.
+          </p>
+        </Reveal>
+
+        <Reveal delay={150}>
+          <div class="flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="/company/contact"
+              class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+            >
+              Talk to us
+            </a>
+            <a
+              href="/pricing"
+              class="inline-flex items-center justify-center border-2 border-crimson text-crimson hover:bg-crimson hover:text-white rounded-lg px-8 py-3.5 font-semibold transition-colors"
+            >
+              See pricing
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- The flow engine -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div>
+            <Reveal>
+              <span class="inline-block text-xs font-mono bg-crimson/10 text-crimson px-2 py-0.5 rounded-full mb-4">
+                The flow engine
+              </span>
+              <h2 class="text-3xl sm:text-4xl font-bold text-black mb-4">
+                A deterministic flow engine.
+              </h2>
+              <p class="text-charcoal/70 leading-relaxed mb-6">
+                Compose each step of an agentic workflow into a graph with every
+                branch explicit and every run reproducible. The same input takes
+                the same path and produces the same output - no surprises in
+                production.
+              </p>
+              <ul class="space-y-2.5">
+                <li class="flex items-start gap-2 text-sm text-charcoal/70">
+                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                  jq-based deterministic routing, loops, and checkpoints
+                </li>
+                <li class="flex items-start gap-2 text-sm text-charcoal/70">
+                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                  A run lifecycle you control - step, status, state, and cooperative or hard abort
+                </li>
+                <li class="flex items-start gap-2 text-sm text-charcoal/70">
+                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                  Installs as a plugin to the open platform - runs entirely on your infrastructure
+                </li>
+              </ul>
+            </Reveal>
+          </div>
+
+          <!-- Flow visual -->
+          <Reveal delay={200}>
+            <div class="w-full border border-gray-200 rounded-xl bg-white p-4 sm:p-6">
+              <svg
+                class="w-full"
+                viewBox="0 0 780 160"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-label="Flow editor where Router, Extractor, and Validator steps are composed into a deterministic flow, with an add-step control"
+              >
+                <text x="390" y="16" text-anchor="middle" class="fill-charcoal/40 text-[10px] font-mono uppercase tracking-wider">
+                  deterministic flow
+                </text>
+
+                <!-- Router step -->
+                <rect x="20" y="34" width="200" height="100" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="20" y="34" width="200" height="30" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="20" y="52" width="200" height="12" fill="#F9FAFB" />
+                <circle cx="36" cy="52" r="4" fill="#10B981" />
+                <text x="48" y="56" class="fill-black text-xs font-bold">Router</text>
+                <text x="40" y="82" class="fill-charcoal/50 text-[10px]">classify &amp; route</text>
+                <circle cx="220" cy="84" r="5" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+
+                <path d="M225 84 C260 84, 265 84, 290 84" class="stroke-crimson stroke-draw" stroke-width="2" stroke-linecap="round" fill="none" />
+
+                <!-- Extractor step -->
+                <rect x="290" y="34" width="200" height="100" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="290" y="34" width="200" height="30" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="290" y="52" width="200" height="12" fill="#F9FAFB" />
+                <circle cx="306" cy="52" r="4" fill="#10B981" />
+                <text x="318" y="56" class="fill-black text-xs font-bold">Extractor</text>
+                <text x="310" y="82" class="fill-charcoal/50 text-[10px]">parse &amp; extract</text>
+                <circle cx="290" cy="84" r="5" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+                <circle cx="490" cy="84" r="5" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+
+                <path d="M495 84 C530 84, 535 84, 560 84" class="stroke-crimson stroke-draw" stroke-width="2" stroke-linecap="round" fill="none" />
+
+                <!-- Validator step -->
+                <rect x="560" y="34" width="200" height="100" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="560" y="34" width="200" height="30" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="560" y="52" width="200" height="12" fill="#F9FAFB" />
+                <circle cx="576" cy="52" r="4" fill="#10B981" />
+                <text x="588" y="56" class="fill-black text-xs font-bold">Validator</text>
+                <text x="580" y="82" class="fill-charcoal/50 text-[10px]">schema check</text>
+                <circle cx="560" cy="84" r="5" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+
+                <text x="20" y="154" class="fill-charcoal/30 text-[9px] font-mono">
+                  3 steps &bull; ready to publish
+                </text>
+                <rect x="640" y="140" width="120" height="18" rx="9" fill="none" stroke="#DC143C" stroke-width="1.5" stroke-dasharray="4 3" />
+                <text x="700" y="152" text-anchor="middle" class="fill-crimson text-[9px] font-mono">+ add step</text>
+              </svg>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+
+    <!-- Studio editor -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <!-- Version history visual -->
+          <Reveal delay={200} class="order-last lg:order-first">
+            <div class="w-full border border-gray-200 rounded-xl bg-gray-50 p-5 sm:p-6">
+              <p class="text-[11px] font-mono uppercase tracking-wider text-charcoal/40 mb-4">
+                greet_user &middot; version history
+              </p>
+              <ul class="space-y-2">
+                <li class="flex items-center justify-between bg-white border border-crimson/30 rounded-lg px-4 py-3">
+                  <span class="flex items-center gap-2 text-sm font-semibold text-black">
+                    <span class="w-2 h-2 rounded-full bg-success"></span> v3
+                  </span>
+                  <span class="text-xs font-mono text-crimson">active</span>
+                </li>
+                <li class="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-4 py-3">
+                  <span class="flex items-center gap-2 text-sm text-charcoal/70">
+                    <span class="w-2 h-2 rounded-full bg-charcoal/20"></span> v2
+                  </span>
+                  <span class="text-xs font-mono text-charcoal/40">roll back &rarr;</span>
+                </li>
+                <li class="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-4 py-3">
+                  <span class="flex items-center gap-2 text-sm text-charcoal/70">
+                    <span class="w-2 h-2 rounded-full bg-charcoal/20"></span> v1
+                  </span>
+                  <span class="text-xs font-mono text-charcoal/40">roll back &rarr;</span>
+                </li>
+              </ul>
+            </div>
+          </Reveal>
+
+          <div>
+            <Reveal>
+              <span class="inline-block text-xs font-mono bg-crimson/10 text-crimson px-2 py-0.5 rounded-full mb-4">
+                Studio editor
+              </span>
+              <h2 class="text-3xl sm:text-4xl font-bold text-black mb-4">
+                Build and version flows visually.
+              </h2>
+              <p class="text-charcoal/70 leading-relaxed mb-6">
+                The Studio flow editor is a node canvas with per-node edit forms,
+                undo/redo, and import/export. Edit a step's jq expression as a
+                graph and round-trip it back to jq. Save a flow and it becomes a
+                versioned preset - keep a full history and roll back to any
+                earlier version in one click.
+              </p>
+              <ul class="space-y-2.5 mb-6">
+                <li class="flex items-start gap-2 text-sm text-charcoal/70">
+                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                  Versioned presets with one-click rollback
+                </li>
+                <li class="flex items-start gap-2 text-sm text-charcoal/70">
+                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                  Node canvas with per-node forms, undo/redo, and import/export
+                </li>
+                <li class="flex items-start gap-2 text-sm text-charcoal/70">
+                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                  Run flows in-page and monitor them through the platform's run APIs
+                </li>
+              </ul>
+              <a
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-1 text-crimson font-semibold hover:text-burgundy transition-colors"
+              >
+                See the open platform on GitHub &rarr;
+              </a>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Validation -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div>
+            <Reveal>
+              <span class="inline-block text-xs font-mono bg-crimson/10 text-crimson px-2 py-0.5 rounded-full mb-4">
+                Validation
+              </span>
+              <h2 class="text-3xl sm:text-4xl font-bold text-black mb-4">
+                Nothing invalid ever ships.
+              </h2>
+              <p class="text-charcoal/70 leading-relaxed mb-6">
+                Every save is validated before it is stored: the flow's schema,
+                its jq expressions, and its structure are all checked, and the
+                editor blocks the save if anything is wrong. A flow you publish is
+                a flow that runs.
+              </p>
+              <ul class="space-y-2.5">
+                <li class="flex items-start gap-2 text-sm text-charcoal/70">
+                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                  Definition-time validation of schema, jq, and graph structure
+                </li>
+                <li class="flex items-start gap-2 text-sm text-charcoal/70">
+                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                  Saves blocked on any invalid flow - no broken definition reaches production
+                </li>
+              </ul>
+            </Reveal>
+          </div>
+
+          <!-- Validation terminal -->
+          <Reveal delay={200}>
+            <div class="rounded-xl bg-charcoal overflow-hidden shadow-2xl">
+              <div class="flex items-center gap-1.5 px-4 py-3 bg-black/30">
+                <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                <span class="ml-3 text-xs font-mono text-white/40">validate_flow</span>
+              </div>
+              <div class="px-5 py-5 font-mono text-sm leading-relaxed overflow-x-auto">
+                <div class="py-1 px-3">
+                  <span class="text-white/40"># Checked on every save</span>
+                </div>
+                <div class="py-1 px-3">
+                  <span class="text-white/80">$ validate_flow greet_user</span>
+                </div>
+                <div class="py-2"></div>
+                <div class="py-1 px-3 bg-success/10 border-l-2 border-success">
+                  <span class="text-success">&check;</span><span class="text-white/80"> schema ok</span>
+                </div>
+                <div class="py-1 px-3 bg-success/10 border-l-2 border-success">
+                  <span class="text-success">&check;</span><span class="text-white/80"> jq expressions ok</span>
+                </div>
+                <div class="py-1 px-3 bg-success/10 border-l-2 border-success">
+                  <span class="text-success">&check;</span><span class="text-white/80"> 3 steps, 2 edges - ready to publish</span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+
+    <Reveal>
+      <SecurityStrip />
+    </Reveal>
+
+    <!-- CTA -->
+    <section class="bg-white py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            Get deterministic.
+          </h2>
+          <p class="text-lg text-charcoal/70 max-w-xl mx-auto mb-10 leading-relaxed">
+            Babelfish Flows is a proprietary plugin for the open TAI42 platform.
+            Talk to us about access and self-hosting.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="/company/contact"
+              class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+            >
+              Talk to us
+            </a>
+            <a
+              href="/pricing"
+              class="inline-flex items-center justify-center border-2 border-crimson text-crimson hover:bg-crimson hover:text-white rounded-lg px-8 py-3.5 font-semibold transition-colors"
+            >
+              See pricing
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>

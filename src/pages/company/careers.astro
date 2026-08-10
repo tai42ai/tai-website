@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBar from "../../components/NavBar.astro";
+import Footer from "../../components/Footer.astro";
+import Reveal from "../../components/Reveal.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout title="Careers - TAI42">
+  <NavBar />
+
+  <main id="main-content" class="pt-20">
+    <!-- Hero section -->
+    <section class="bg-white py-20 lg:py-28">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mb-8 tracking-tight">
+            Build the Open Agent Platform.
+          </h1>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            We're a small, focused team building the open-source platform agents run on - and Babelfish Flows, our deterministic flow product on top of it.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Open roles section -->
+    <section class="bg-gray-50 py-20 lg:py-28">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <div class="bg-white rounded-xl border border-gray-200 p-8 lg:p-10 text-center">
+            <h2 class="text-2xl sm:text-3xl font-bold text-black mb-4">
+              Open roles
+            </h2>
+            <p class="text-charcoal/70 leading-relaxed mb-6 max-w-xl mx-auto">
+              We're hiring across engineering and go-to-market. If you're excited about open source, agent infrastructure, or developer tools - we want to talk.
+            </p>
+            <a
+              href="/company/contact"
+              class="inline-flex items-center text-base font-semibold text-crimson hover:text-burgundy transition-colors"
+            >
+              Get in touch &rarr;
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,107 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBar from "../../components/NavBar.astro";
+import Footer from "../../components/Footer.astro";
+import Reveal from "../../components/Reveal.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout title="Contact - TAI42">
+  <NavBar />
+  <main id="main-content" class="pt-20">
+    <!-- Header Section -->
+    <section class="bg-white py-20 sm:py-24">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mb-6">
+            Get in Touch.
+          </h1>
+        </Reveal>
+        <Reveal delay={100}>
+          <p class="text-lg sm:text-xl text-charcoal/70 max-w-2xl mx-auto">
+            Whether you're an investor, enterprise team, or developer - we'd love to hear from you.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Cards Grid Section -->
+    <section class="bg-gray-50 py-16 sm:py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+          <!-- For Investors -->
+          <Reveal delay={100}>
+            <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8 h-full">
+              <div class="w-12 h-12 mb-5 rounded-xl bg-crimson/10 flex items-center justify-center">
+                <!-- Briefcase icon -->
+                <svg class="w-6 h-6 text-crimson" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold text-black mb-3">For Investors</h3>
+              <p class="text-sm text-charcoal/70 leading-relaxed mb-4">
+                Interested in our Seed round? Reach out for a data room walkthrough.
+              </p>
+              <a
+                href="mailto:investors@tai42.ai"
+                class="text-sm font-medium text-crimson hover:text-burgundy transition-colors"
+              >
+                investors@tai42.ai
+              </a>
+              <p class="text-xs text-charcoal/50 mt-2">Request Data Room</p>
+            </div>
+          </Reveal>
+
+          <!-- For Enterprise -->
+          <Reveal delay={200}>
+            <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8 h-full">
+              <div class="w-12 h-12 mb-5 rounded-xl bg-crimson/10 flex items-center justify-center">
+                <!-- Building icon -->
+                <svg class="w-6 h-6 text-crimson" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold text-black mb-3">For Enterprise</h3>
+              <p class="text-sm text-charcoal/70 leading-relaxed mb-4">
+                Running &gt;100k agent calls per month? Let's talk about on-prem deployment and custom SLAs.
+              </p>
+              <a
+                href="mailto:bizdev@tai42.ai"
+                class="text-sm font-medium text-crimson hover:text-burgundy transition-colors"
+              >
+                bizdev@tai42.ai
+              </a>
+            </div>
+          </Reveal>
+
+          <!-- For Developers -->
+          <Reveal delay={300}>
+            <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8 h-full">
+              <div class="w-12 h-12 mb-5 rounded-xl bg-crimson/10 flex items-center justify-center">
+                <!-- Code icon -->
+                <svg class="w-6 h-6 text-crimson" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold text-black mb-3">For Developers</h3>
+              <p class="text-sm text-charcoal/70 leading-relaxed mb-4">
+                Join the community and start optimizing your agent pipelines today.
+              </p>
+              <a
+                href="mailto:devrel@tai42.ai"
+                class="text-sm font-medium text-crimson hover:text-burgundy transition-colors"
+              >
+                devrel@tai42.ai
+              </a>
+              <p class="text-xs text-charcoal/50 mt-2">
+                <a href="https://docs.tai42.ai" target="_blank" rel="noopener" class="hover:text-crimson transition-colors">View Docs &rarr;</a>
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
