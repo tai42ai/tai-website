@@ -5,9 +5,14 @@ export default defineConfig({
   site: "https://tai42.ai",
   output: "static",
   redirects: {
-    "/about": "/company/about",
-    "/contact": "/company/contact",
-    "/babelfish/agentic-to-flow": "/babelfish",
+    "/product/babelfish": "/platform",
+    "/product/nexus": "/platform",
+    "/how-it-works": "/method",
+    "/pricing": "/platform",
+    "/babelfish": "/platform",
+    "/babelfish/agentic-to-flow": "/platform",
+    "/company/about": "/about",
+    "/company/contact": "/contact",
   },
   vite: {
     plugins: [tailwindcss()],
