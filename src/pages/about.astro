@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+import Placeholder from "../components/Placeholder.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="The self-driving company, the honest way — tai42"
+  description="tai42 introduces the self-driving company — business functions that run themselves as production applications, humans at the named decisions."
+>
+  <NavBar />
+
+  <main id="main-content">
+    <!-- Hero + body -->
+    <section class="bg-white py-20 lg:py-28">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-6">
+            The self-driving company, the honest way
+          </h1>
+        </Reveal>
+        <Reveal delay={100}>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            Business automation used to mean quarters of consultants modeling
+            workflows. tai42 introduces the self-driving company — business
+            functions that run themselves as production applications, humans at
+            the named decisions. The industry's evidence says raw autonomy fails
+            and structured autonomy works — so we sell the structure, and we hold
+            ourselves to the same standard:
+            <strong class="font-semibold text-black">we run our own company on it, the same way we build it for our clients</strong>
+            — our product management, our operations, our own company. Our org
+            chart lists our agents next to our humans. When we say
+            production-grade, we mean: we live here.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Who built this -->
+    <section class="bg-gray-50 py-16 lg:py-20">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-2xl font-bold text-black mb-5">Who built this</h2>
+          <Placeholder
+            block
+            label="FOUNDER_CREDIBILITY_LINE"
+            note="founder supplies; do not write one"
+          />
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="bg-white py-16 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-2xl font-bold text-black mb-5">Team</h2>
+          <p class="text-charcoal/70 leading-relaxed mb-6">
+            humans (founders, engineers) and the agent workforce side by side,
+            each agent with a human owner —
+          </p>
+          <Placeholder
+            block
+            label="TEAM_AND_AGENT_ROSTER"
+            note="founder supplies; list only agents that run today"
+          />
+        </Reveal>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

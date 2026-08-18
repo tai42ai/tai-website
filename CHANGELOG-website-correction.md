@@ -124,3 +124,13 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
 - **New component**: `src/components/Placeholder.astro` — a bordered, muted,
   monospace "[LABEL — note]" chip used to keep every unfilled value visible in
   the rendered page. No new colors, fonts, or dependencies.
+
+## Step 9 — About (`/about`)
+
+- New page `src/pages/about.astro` with the §4.5 copy: H1 "The self-driving
+  company, the honest way", the body, "Who built this" and "Team".
+- Both gated items are rendered as visible placeholder chips:
+  [FOUNDER_CREDIBILITY_LINE] and [TEAM_AND_AGENT_ROSTER]. Nothing was written in
+  their place.
+- Deleted `src/pages/company/about.astro`; `/company/about` redirects to
+  `/about` (step 1).
