@@ -81,3 +81,30 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
   build → acceptance → run), the "Where humans stay" line, the honest filter,
   and the CTA "Book a production audit" (→ the booking link).
 - `/how-it-works` redirects here (step 1).
+
+## Step 7 — Platform (`/platform`)
+
+- New page `src/pages/platform.astro` with the §4.3 copy: H1 "BabelFish — the
+  platform behind every engagement", the sub, and the blocks "Enterprise by
+  design", "Own the logic", "The rule that makes it safe", "Getting started",
+  and the honest line. Page action: "Talk to us about a tenant" → `/contact`.
+- The one-sentence open-source contract appears verbatim in the honest-line
+  block.
+- Deleted `src/pages/babelfish/index.astro` (route redirects to `/platform`) and
+  `src/pages/pricing.astro` (route redirects to `/platform`).
+- §4.3 "existing material to keep":
+  - **Kept** — the control-plane visual, i.e. the flow-canvas SVG and the
+    version-history panel from the old Babelfish page, re-captioned "the visual
+    builder — guardrails, versioned flows, instant rollback."
+  - **Missing from the repo** — the "Observe → Identify → Compile" explanation
+    and the replay-validation line do not exist anywhere in this repo, so no
+    "the optimizer" feature block could be carried over. The optimizer is
+    described in the §4.3 sub-line only. Nothing was invented in its place.
+  - Nothing to remove: the "Edge compiler proxy / Governance control plane"
+    sub-brand split and the "Nexus" naming never existed in this repo.
+- The "Read the technical overview" link is **omitted entirely** (gate: white
+  paper sign-off) — the [WHITE_PAPER_URL] placeholder therefore does not appear
+  in the markup, per §4.3's instruction to omit the link.
+- The honest line's agents-door sentence ("If you're an AI agent, connect free
+  via our MCP gateway") is **omitted entirely** — it is conditional on `/agents`
+  being live, and the gate has not cleared.

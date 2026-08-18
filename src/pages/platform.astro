@@ -1,0 +1,226 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="BabelFish — the platform behind every engagement — tai42"
+  description="The deterministic flow engine, the visual builder, the governance layer, and the optimizer that watches live AI behavior and compiles it into fast, cheap, deterministic flows."
+>
+  <NavBar />
+
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="bg-white py-20 lg:py-28">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-6">
+            BabelFish — the platform behind every engagement
+          </h1>
+        </Reveal>
+        <Reveal delay={100}>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            The deterministic flow engine, the visual builder, the governance
+            layer, and the optimizer that watches live AI behavior and compiles
+            it into fast, cheap, deterministic flows — with human approval on
+            every promotion and instant rollback.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Enterprise by design / Own the logic -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+          <Reveal>
+            <div class="card-hover bg-white rounded-xl border border-gray-200 p-8 h-full">
+              <h2 class="text-2xl font-bold text-black mb-3">Enterprise by design</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                Private, dedicated tenants your team operates. Your AI keys, any
+                provider, swappable per step. Your data in your tenant,
+                EU-hosted. Every action traced, every flow versioned, every
+                rollback instant.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <div class="card-hover bg-white rounded-xl border border-gray-200 p-8 h-full">
+              <h2 class="text-2xl font-bold text-black mb-3">Own the logic</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                Your applications ship as configuration you keep — plain,
+                versioned, portable — independent of any model vendor. Swap the
+                model; keep the flows. No vendor holds your business logic,
+                including us.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+
+    <!-- The rule that makes it safe -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            The rule that makes it safe
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            The AI has no tools. Models write, interpret, and propose; only
+            deterministic flows touch data, systems, and money. Routing between
+            steps is a fixed rule, never the model's choice, and unsafe structure
+            is rejected before it can run.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- The visual builder (kept visuals from the former Babelfish page) -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <p class="text-center text-charcoal/70 leading-relaxed mb-10">
+            the visual builder — guardrails, versioned flows, instant rollback.
+          </p>
+        </Reveal>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+          <!-- Flow canvas -->
+          <Reveal delay={100}>
+            <div class="w-full border border-gray-200 rounded-xl bg-white p-4 sm:p-6">
+              <svg
+                class="w-full"
+                viewBox="0 0 780 160"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-label="Flow builder where Router, Extractor, and Validator steps are composed into a deterministic flow, with an add-step control"
+              >
+                <text x="390" y="16" text-anchor="middle" class="fill-charcoal/40 text-[10px] font-mono uppercase tracking-wider">
+                  deterministic flow
+                </text>
+
+                <!-- Router step -->
+                <rect x="20" y="34" width="200" height="100" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="20" y="34" width="200" height="30" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="20" y="52" width="200" height="12" fill="#F9FAFB" />
+                <circle cx="36" cy="52" r="4" fill="#10B981" />
+                <text x="48" y="56" class="fill-black text-xs font-bold">Router</text>
+                <text x="40" y="82" class="fill-charcoal/50 text-[10px]">classify &amp; route</text>
+                <circle cx="220" cy="84" r="5" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+
+                <path d="M225 84 C260 84, 265 84, 290 84" class="stroke-crimson stroke-draw" stroke-width="2" stroke-linecap="round" fill="none" />
+
+                <!-- Extractor step -->
+                <rect x="290" y="34" width="200" height="100" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="290" y="34" width="200" height="30" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="290" y="52" width="200" height="12" fill="#F9FAFB" />
+                <circle cx="306" cy="52" r="4" fill="#10B981" />
+                <text x="318" y="56" class="fill-black text-xs font-bold">Extractor</text>
+                <text x="310" y="82" class="fill-charcoal/50 text-[10px]">parse &amp; extract</text>
+                <circle cx="290" cy="84" r="5" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+                <circle cx="490" cy="84" r="5" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+
+                <path d="M495 84 C530 84, 535 84, 560 84" class="stroke-crimson stroke-draw" stroke-width="2" stroke-linecap="round" fill="none" />
+
+                <!-- Validator step -->
+                <rect x="560" y="34" width="200" height="100" rx="12" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="560" y="34" width="200" height="30" rx="12" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5" />
+                <rect x="560" y="52" width="200" height="12" fill="#F9FAFB" />
+                <circle cx="576" cy="52" r="4" fill="#10B981" />
+                <text x="588" y="56" class="fill-black text-xs font-bold">Validator</text>
+                <text x="580" y="82" class="fill-charcoal/50 text-[10px]">schema check</text>
+                <circle cx="560" cy="84" r="5" fill="white" stroke="#E5E7EB" stroke-width="1.5" />
+
+                <rect x="640" y="140" width="120" height="18" rx="9" fill="none" stroke="#DC143C" stroke-width="1.5" stroke-dasharray="4 3" />
+                <text x="700" y="152" text-anchor="middle" class="fill-crimson text-[9px] font-mono">+ add step</text>
+              </svg>
+            </div>
+          </Reveal>
+
+          <!-- Version history -->
+          <Reveal delay={200}>
+            <div class="w-full border border-gray-200 rounded-xl bg-white p-5 sm:p-6">
+              <p class="text-[11px] font-mono uppercase tracking-wider text-charcoal/40 mb-4">
+                greet_user &middot; version history
+              </p>
+              <ul class="space-y-2">
+                <li class="flex items-center justify-between bg-white border border-crimson/30 rounded-lg px-4 py-3">
+                  <span class="flex items-center gap-2 text-sm font-semibold text-black">
+                    <span class="w-2 h-2 rounded-full bg-success"></span> v3
+                  </span>
+                  <span class="text-xs font-mono text-crimson">active</span>
+                </li>
+                <li class="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-4 py-3">
+                  <span class="flex items-center gap-2 text-sm text-charcoal/70">
+                    <span class="w-2 h-2 rounded-full bg-charcoal/20"></span> v2
+                  </span>
+                  <span class="text-xs font-mono text-charcoal/40">roll back &rarr;</span>
+                </li>
+                <li class="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-4 py-3">
+                  <span class="flex items-center gap-2 text-sm text-charcoal/70">
+                    <span class="w-2 h-2 rounded-full bg-charcoal/20"></span> v1
+                  </span>
+                  <span class="text-xs font-mono text-charcoal/40">roll back &rarr;</span>
+                </li>
+              </ul>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+
+    <!-- Getting started -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            Getting started
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed mb-8">
+            Enterprise pricing, sized to your tenant and usage — <strong class="font-semibold text-black">talk to us</strong>.
+            The <strong class="font-semibold text-black">production audit is free</strong>: we assess your demo and your
+            integration surface, and you leave with a readiness report whether or
+            not we work together. No self-serve: the platform ships inside an
+            engagement or a guided onboarding, because production systems deserve
+            a running start.
+          </p>
+          <a
+            href="/contact"
+            class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+          >
+            Talk to us about a tenant
+          </a>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- The honest line -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            Looking for something free to try? Our open-source runtime is public
+            (→ <a href="/open-source" class="font-medium text-crimson hover:text-burgundy transition-colors">/open-source</a>).
+            If you're a builder who serves clients, join the founding waitlist
+            (→ <a href="/builders" class="font-medium text-crimson hover:text-burgundy transition-colors">/builders</a>).
+            The platform itself is for teams already in production.
+          </p>
+          <blockquote class="mt-8 border-l-2 border-crimson/30 pl-4 text-charcoal/70 leading-relaxed">
+            tai42 builds and runs its business on this runtime; the code is open;
+            the company sells the hosted platform and enterprise layer on top —
+            never a different core.
+          </blockquote>
+        </Reveal>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
