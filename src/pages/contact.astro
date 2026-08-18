@@ -1,0 +1,139 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+import Placeholder from "../components/Placeholder.astro";
+
+export const prerender = true;
+
+// Web3Forms — plain HTML POST, no dependency. The access key is created for
+// balin.miki@tai42.ai and stays a visible placeholder until the founder
+// supplies it.
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const WEB3FORMS_ACCESS_KEY = "[WEB3FORMS_ACCESS_KEY]";
+const THANK_YOU_REDIRECT = "https://tai42.ai/thank-you?page=contact";
+
+const inputClass =
+  "w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-charcoal placeholder:text-charcoal/30 focus:border-crimson focus:outline-none focus:ring-1 focus:ring-crimson transition-colors";
+const labelClass = "block text-sm font-medium text-black mb-2";
+---
+
+<BaseLayout
+  title="Three questions. They save us both a meeting. — tai42"
+  description="Three questions. They save us both a meeting."
+>
+  <NavBar />
+
+  <main id="main-content">
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-black leading-[1.1] mb-10">
+            Three questions. They save us both a meeting.
+          </h1>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <form
+            action={WEB3FORMS_ENDPOINT}
+            method="POST"
+            data-web3form
+            class="space-y-6"
+          >
+            <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+            <input type="hidden" name="subject" value="tai42.ai — production audit request" />
+            <input type="hidden" name="redirect" value={THANK_YOU_REDIRECT} />
+            <input type="hidden" name="source" value="" />
+            <!-- Web3Forms honeypot -->
+            <input
+              type="checkbox"
+              name="botcheck"
+              class="hidden"
+              style="display:none"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            />
+
+            <div>
+              <label class={labelClass} for="demo">
+                Do you have a working demo today? (link welcome)
+              </label>
+              <textarea id="demo" name="Do you have a working demo today?" rows="3" required class={inputClass}></textarea>
+            </div>
+
+            <div>
+              <label class={labelClass} for="breaks">
+                What breaks — or what's stopping you from putting it in front of
+                real users?
+              </label>
+              <textarea id="breaks" name="What breaks, or what's stopping you from putting it in front of real users?" rows="4" required class={inputClass}></textarea>
+            </div>
+
+            <div>
+              <label class={labelClass} for="success">
+                How will you measure success in production?
+              </label>
+              <textarea id="success" name="How will you measure success in production?" rows="3" required class={inputClass}></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label class={labelClass} for="name">Name</label>
+                <input id="name" name="name" type="text" required autocomplete="name" class={inputClass} />
+              </div>
+              <div>
+                <label class={labelClass} for="company">Company</label>
+                <input id="company" name="company" type="text" required autocomplete="organization" class={inputClass} />
+              </div>
+            </div>
+
+            <div>
+              <label class={labelClass} for="email">Email</label>
+              <input id="email" name="email" type="email" required autocomplete="email" class={inputClass} />
+            </div>
+
+            <button
+              type="submit"
+              class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+            >
+              Book your production audit
+            </button>
+
+            <p class="flex flex-wrap items-baseline gap-2 text-xs text-charcoal/50">
+              <span>Form delivery is inactive until the access key is filled in:</span>
+              <Placeholder label="WEB3FORMS_ACCESS_KEY" note="created for balin.miki@tai42.ai" />
+            </p>
+          </form>
+        </Reveal>
+      </div>
+    </section>
+
+    <script is:inline>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var utm = ["utm_source", "utm_medium", "utm_campaign"]
+      .map(function (key) {
+        return params.get(key);
+      })
+      .filter(Boolean)
+      .join("|");
+    var source = utm || document.referrer || "direct";
+
+    document.querySelectorAll("form[data-web3form]").forEach(function (form) {
+      var sourceInput = form.querySelector('input[name="source"]');
+      if (sourceInput) sourceInput.value = source;
+
+      var redirectInput = form.querySelector('input[name="redirect"]');
+      if (redirectInput) {
+        redirectInput.value =
+          redirectInput.value + "&source=" + encodeURIComponent(source);
+      }
+    });
+  })();
+    </script>
+  </main>
+
+  <Footer />
+</BaseLayout>

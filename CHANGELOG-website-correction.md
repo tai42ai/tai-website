@@ -134,3 +134,20 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
   their place.
 - Deleted `src/pages/company/about.astro`; `/company/about` redirects to
   `/about` (step 1).
+
+## Step 10 — Contact (`/contact`)
+
+- New page `src/pages/contact.astro` with the §4.6 copy: the intro line as the
+  page heading, the three questions as labeled textareas, plus name, company and
+  email inputs. Submit button: "Book your production audit".
+- Backend: plain HTML POST to `https://api.web3forms.com/submit` (no npm
+  dependency). Hidden fields: `access_key` (visible [WEB3FORMS_ACCESS_KEY]
+  placeholder), `subject`, `redirect` → `https://tai42.ai/thank-you?page=contact`,
+  and `source`. Web3Forms `botcheck` honeypot included.
+- A small inline script reads UTM params (or the referrer, else "direct"), fills
+  the hidden `source` input and appends `&source=…` to the redirect URL so the
+  thank-you page can fire the analytics event.
+- Native HTML validation only: `required` on every field, `type="email"` on the
+  email input.
+- Deleted `src/pages/company/contact.astro` (the investor / enterprise /
+  developer mailto cards); `/company/contact` redirects to `/contact` (step 1).
