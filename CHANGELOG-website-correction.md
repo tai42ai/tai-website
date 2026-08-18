@@ -189,3 +189,10 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
 - Gate: the MCP endpoint responds and the placeholders are filled. Only then add
   the footer link ("For AI agents →"), the Home doors-line entry, the Platform
   honest-line sentence, the `/llms.txt` MCP gateway line, and remove the noindex.
+
+## Step 14 — `/llms.txt`
+
+- New `public/llms.txt`, served at the site root, with the §5.5 content.
+- "- Docs: [DOCS_URL]" stays as a visible placeholder line.
+- The "## For agents" section and its "MCP gateway" line are **omitted
+  entirely** — the gate has not cleared. Add both when `/agents` goes live.
