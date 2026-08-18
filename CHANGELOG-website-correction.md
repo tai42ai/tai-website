@@ -26,3 +26,13 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
   redirects are created anyway per the change order (harmless).
 - No "Request access" destination exists in this repo, so the
   "Request access → /contact" redirect has no source route to map.
+
+## Step 2 — NavBar
+
+- `src/components/NavBar.astro` — navigation is now exactly the six links
+  (Home · Method · Platform · Open Source · About · Contact) plus the single
+  primary CTA button "Book a production audit", pointing at the existing
+  booking link (CALENDAR_URL). Applied to both the desktop and the mobile block.
+- Removed: the Company dropdown (and its mobile accordion plus the accordion
+  JS), the Docs link, the Babelfish and Pricing links, the mobile GitHub link,
+  and the old "Talk to us" CTA.
