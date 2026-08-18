@@ -1,0 +1,137 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+
+export const prerender = true;
+
+const CALENDAR_URL =
+  "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3qmPX-JW-HScqfCyMv1v_hyyxGRl2J8b7JOptbl36xFUSe7oz3AvSASK-SYjBeswKDpQcLIn2n";
+
+const STEPS = [
+  {
+    title: "The production audit (free, entry).",
+    body:
+      "We assess your demo, your definitions, and your integration surface. You leave with a readiness report and a proposal — whether or not you continue with us.",
+  },
+  {
+    title: "Stage 0 — the readiness gate.",
+    body:
+      "Scope, success metrics, and acceptance criteria agreed in writing. If your systems aren't ready, the clock pauses — your budget doesn't burn.",
+  },
+  {
+    title: "The build.",
+    body:
+      "Your system on our platform: deterministic where it must be, intelligent where it should be, instrumented everywhere — weeks, not quarters.",
+  },
+  {
+    title: "Acceptance (your verification).",
+    body:
+      "Pass/fail criteria you test yourself — functional acceptance is never hostage to business luck, and business results are measured openly at the gate.",
+  },
+  {
+    title: "Run (the license).",
+    body:
+      "Your team operates it on a private tenant — monitor, correct, and extend your own flows. We stay for the hard parts.",
+  },
+];
+---
+
+<BaseLayout
+  title="How an engagement works — tai42"
+  description="A readiness gate first. Weeks, not quarters, to a working system. Acceptance you verify yourself. A license only if you keep it."
+>
+  <NavBar />
+
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="bg-white py-20 lg:py-28">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-6">
+            How an engagement works
+          </h1>
+        </Reveal>
+        <Reveal delay={100}>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            A readiness gate first. Weeks, not quarters, to a working system.
+            Acceptance you verify yourself. A license only if you keep it.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- The five steps -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ol class="space-y-6">
+          {STEPS.map((step, i) => (
+            <Reveal delay={i * 75}>
+              <li class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8 flex gap-5">
+                <span class="shrink-0 w-9 h-9 rounded-full bg-crimson/10 text-crimson font-mono font-semibold flex items-center justify-center">
+                  {i + 1}
+                </span>
+                <div>
+                  <h2 class="text-lg font-bold text-black mb-2">{step.title}</h2>
+                  <p class="text-charcoal/70 leading-relaxed">{step.body}</p>
+                </div>
+              </li>
+            </Reveal>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- Where humans stay -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            Where humans stay
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            your people at the decisions you name; ours on call for the hard
+            cases — always with the full history attached.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- The honest filter -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            Who we work with (the honest filter)
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            you already have a demo. You've written down what it should achieve.
+            You know how you'd measure success. It doesn't work in production
+            yet. If that's you, the audit will be useful even if we never work
+            together. If you're still exploring what AI could do for you — we're
+            not your first stop, and we'll say so.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal>
+          <a
+            href={CALENDAR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+          >
+            Book a production audit
+          </a>
+        </Reveal>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

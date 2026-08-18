@@ -73,3 +73,11 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
   prices…", the `base_url` block, "No credit card needed", the "Request access"
   buttons, the trust-badge row) had no counterpart in this repo — none of those
   strings existed here.
+
+## Step 6 — Method (`/method`)
+
+- New page `src/pages/method.astro` with the §4.2 copy: H1 "How an engagement
+  works", the intro, the numbered five-step line (audit → readiness gate →
+  build → acceptance → run), the "Where humans stay" line, the honest filter,
+  and the CTA "Book a production audit" (→ the booking link).
+- `/how-it-works` redirects here (step 1).
