@@ -15,6 +15,4 @@ const { label, note, block = false } = Astro.props;
     block ? "flex" : "inline-flex",
     "items-baseline gap-1.5 rounded-md border border-dashed border-gray-300 bg-gray-50 px-2 py-1 font-mono text-xs text-charcoal/50",
   ]}
->
-  <span>[{label}{note ? ` — ${note}` : ""}]</span>
-</span>
+>[{label}{note ? ` — ${note}` : ""}]</span>

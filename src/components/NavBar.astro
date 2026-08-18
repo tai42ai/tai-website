@@ -1,13 +1,12 @@
 ---
+import { CALENDAR_URL } from "../consts";
+
 // NavBar — Home · Method · Platform · Open Source · About · Contact, plus the
 // one primary CTA ("Book a production audit").
 const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
 const isActive = (href: string) => href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
 const linkClass = (href: string) => isActive(href) ? "px-3 py-2 text-sm font-semibold text-crimson rounded-lg transition-colors" : "px-3 py-2 text-sm font-medium text-charcoal/70 hover:text-crimson rounded-lg transition-colors";
 const mobileClass = (href: string) => isActive(href) ? "mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-crimson hover:bg-gray-50 rounded-lg transition-colors" : "mobile-nav-link block px-3 py-2.5 text-sm font-medium text-charcoal/70 hover:text-crimson hover:bg-gray-50 rounded-lg transition-colors";
-
-const CALENDAR_URL =
-  "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3qmPX-JW-HScqfCyMv1v_hyyxGRl2J8b7JOptbl36xFUSe7oz3AvSASK-SYjBeswKDpQcLIn2n";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },

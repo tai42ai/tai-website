@@ -55,6 +55,12 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
   loading. Nothing else on the layout changed.
 - One event only: `qualified_form_submission` with `page` and `source` props,
   fired from `/thank-you` (step 11).
+- The plain `plausible.io/js/script.js` is the correct script here: it already
+  supports manually-fired custom events with props via `window.plausible(...)`.
+  The `script.tagged-events.js` / `script.pageview-props.js` variants exist only
+  for *auto-capture* (click-tagged elements, props attached to every pageview),
+  which this site does not use — so no variant script is needed for the single
+  `qualified_form_submission` event.
 - The script is inert until the founder creates the Plausible site for
   `tai42.ai` — see the activation instructions at the end of this changelog.
 
@@ -229,8 +235,8 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
 
 | Placeholder | Where it appears |
 |---|---|
-| `[WEB3FORMS_ACCESS_KEY]` | `src/pages/contact.astro` and `src/pages/builders.astro` — the `access_key` hidden input, plus a visible note under each submit button |
-| `[DOCS_URL]` | `src/pages/open-source.astro` (body + links line), `src/pages/agents.astro`, `public/llms.txt` |
+| `[WEB3FORMS_ACCESS_KEY]` | `src/pages/contact.astro` and `src/pages/builders.astro` — the `access_key` hidden input, plus a label-only chip under each submit button |
+| `[DOCS_URL]` | `src/pages/open-source.astro` (body + links line), `src/pages/agents.astro`, `public/llms.txt` — rendered label-only; the value is in the docs section below |
 | `[GITHUB_ORG_URL]` | `src/pages/open-source.astro` — links line (org and Discussions) |
 | `[OPEN_COMMERCIAL_BOUNDARY]` | `src/pages/open-source.astro` — note above the boundary table |
 | `[FOUNDER_CREDIBILITY_LINE]` | `src/pages/about.astro` — "Who built this" |
@@ -251,9 +257,9 @@ booking link, used by every "Book a production audit" CTA and by `/thank-you`.
    automation.
 2. Replace `[WEB3FORMS_ACCESS_KEY]` in `src/pages/contact.astro` and
    `src/pages/builders.astro` (constant at the top of each file), and delete the
-   visible "form delivery is inactive" note under each submit button.
+   `<Placeholder label="WEB3FORMS_ACCESS_KEY" />` chip under each submit button.
 3. Submit each form once to confirm the mail arrives and that the redirect lands
-   on `/thank-you?page=contact&source=…` / `?page=builders&source=…`.
+   on `/thank-you/?page=contact&source=…` / `?page=builders&source=…`.
 
 ### Activation: Plausible (founder, before publish)
 
@@ -268,7 +274,8 @@ booking link, used by every "Book a production audit" CTA and by `/thank-you`.
 
 1. Point `docs.tai42.ai` at the Mintlify custom domain (CNAME), then use that
    URL wherever `[DOCS_URL]` is still a placeholder; until the CNAME is live the
-   value is the Mintlify subdomain.
+   value is the Mintlify subdomain `tai42.mintlify.app`. That staging host is
+   recorded here only — it is deliberately not printed in any page's chip.
 2. Change the docs landing line from "TAI42 — the OS for AI tools" to
    "the tai42 runtime — the open runtime behind the tai42 platform".
 3. Add the one-sentence contract verbatim to the docs landing page:
@@ -294,3 +301,136 @@ booking link, used by every "Book a production audit" CTA and by `/thank-you`.
   generated redirect page under `dist/product/nexus/`. It appears nowhere in
   page copy, navigation, or as a product name. Drop the redirect if the zero-hit
   rule is meant to win (that route never existed in this repo anyway).
+
+## Step 17 — Cold-review fixes
+
+A fresh-context review of the branch found the items below. Each is a fix to
+work already on this branch; no §4 copy was changed except where a factual
+error made it wrong to publish.
+
+### ⚠️ Legal copy edited — founder/legal voice pass required before publish
+
+`/privacy` and `/terms` asserted things that this branch made untrue the moment
+it shipped Plausible and two Web3Forms forms. The false statements were
+corrected; **the corrected wording is engineering's best plain-language
+description of the actual behaviour, not approved legal copy — the founder (and
+legal, if involved) must read and sign off on `/privacy` §"What This Site
+Collects" / §"When You Contact Us" and `/terms` §5 before the site goes live.**
+
+- `src/pages/privacy.astro` — the page claimed "no accounts, no analytics, no
+  tracking, no cookies, and no forms that send us your data" and "We do not run
+  analytics … takes no data from you". Now stated accurately, in the page's own
+  voice and structure:
+  - Plausible is named as a cookie-free, privacy-respecting analytics service
+    that collects aggregate page statistics only — no cookies, no cross-site
+    tracking, no personal profile — plus the single
+    `qualified_form_submission` event fired on `/thank-you`.
+  - The contact and builders forms are described: they send exactly what the
+    visitor types, plus a `source` tag (how they arrived), via Web3Forms to our
+    email, used only to reply — no CRM, no automation, no resale. Booking runs
+    through Google Calendar's appointment page.
+  - Still-true statements kept and made precise: no accounts, and no cookies
+    (Plausible sets none). The GitHub Pages hosting-log card is unchanged.
+  - The H1's "We Collect Nothing on This Site" was factually false and became
+    "Here Is Exactly What This Site Collects."
+- `src/pages/terms.astro` §5 — "This website collects nothing about you" →
+  "This website's analytics are cookie-free and aggregate, and anything you send
+  through its forms is used only to respond to you." Nothing else in terms
+  changed except the naming fix below.
+
+### Naming — the sub-brand is "BabelFish"
+
+- "Babelfish Flows" (an invented sub-brand) → "BabelFish" in
+  `src/pages/privacy.astro`, `src/pages/terms.astro` (§1, §3 heading and body,
+  §4, §5), `src/pages/security.astro`, `src/pages/company/careers.astro`.
+  Word-level replacements only; one verb agreement followed ("Flows replace" →
+  "BabelFish replaces"). `grep -r "Babelfish" src/` is now 0.
+- `src/pages/platform.astro` — the section comment "the visual builder (kept
+  visuals from the former Babelfish page)" → "The visual builder". Comments
+  carry no migration history.
+
+### Careers page
+
+- `src/pages/company/careers.astro` — added `noindex` (the page is unlinked from
+  nav and footer, same treatment as `/agents` and `/thank-you`), plus its own
+  title and description.
+
+### Meta titles and descriptions — legal + careers pages
+
+`/privacy`, `/security`, `/terms` and `/company/careers` still carried the old
+"X - TAI42" titles and inherited the homepage description. Each now has a title
+in the site convention ("Privacy — tai42", "Security — tai42", "Terms of
+Service — tai42", "Careers — tai42") and a one-sentence description written
+from that page's own intro — no new claims.
+
+### Placeholder chips no longer leak values into rendered pages
+
+- `src/pages/contact.astro`, `src/pages/builders.astro` — the
+  `[WEB3FORMS_ACCESS_KEY]` chip carried the note "created for
+  balin.miki@tai42.ai", printing the founder's address into public page text.
+  The note is gone; the chip is label-only. The address and the full activation
+  steps stay in "Activation: Web3Forms" above.
+- The invented visible sentence "Form delivery is inactive until the access key
+  is filled in:" and its wrapping `<p>` were removed from both pages — it was
+  not §4 copy. The chip alone remains.
+- `src/pages/open-source.astro` (body + links line) and `src/pages/agents.astro`
+  — the `[DOCS_URL]` chips printed the staging host `tai42.mintlify.app`. Now
+  label-only; the staging host is recorded in "Outside this repo — docs" above.
+- `grep -ri balin dist/` and `grep -ri mintlify dist/` are 0, except the
+  deliberate `mailto:balin.miki@tai42.ai` contact link in `/terms` §8, which is
+  published contact copy, not a leak.
+
+### Open Source page
+
+- `src/pages/open-source.astro` — removed the invented H2 "What is open, what is
+  commercial" and the invented lead-in "Provisional structure, pending founder
+  confirmation:". The boundary table is unchanged, and the
+  `[OPEN_COMMERCIAL_BOUNDARY — founder confirms before publish]` chip still sits
+  directly above it.
+
+### Form script — consolidated and corrected
+
+- New `src/components/FormSourceScript.astro` holds the single `is:inline`
+  script that stamps `source` onto every `form[data-web3form]`. Both
+  `/contact` and `/builders` import it; the duplicated (and, on `/contact`,
+  mis-indented) 20-line copies are gone. The generic `form[data-web3form]`
+  selector is kept.
+- Referrer guard: `document.referrer` now counts as the source only when its
+  host differs from `location.host`. An in-site navigation used to be recorded
+  as the referrer instead of "direct".
+- Idempotence: the redirect value is derived from `redirectInput.defaultValue`,
+  so a re-run after a bfcache / history restore can no longer append
+  `&source=…` twice. `encodeURIComponent` is unchanged.
+- Both hidden `redirect` inputs now use a trailing slash —
+  `https://tai42.ai/thank-you/?page=contact` and `…?page=builders` — which
+  avoids an extra host-level redirect hop after the Web3Forms POST.
+- Each form gained a hidden `from_name` input ("tai42.ai contact form" /
+  "tai42.ai builders waitlist") so the notification mail is identifiable.
+
+### Markup and structure
+
+- `src/pages/method.astro` — `<Reveal>` renders a `<div>`, and it was wrapping
+  each `<li>` inside `<ol class="space-y-6">`, which is invalid HTML. The
+  reveal mechanism (`class="reveal"` + the `transition-delay` inline style) is
+  now applied to the `<li>` elements directly, so the `<ol>` has only `<li>`
+  children and the 75 ms stagger is preserved. Verified in the build output: no
+  non-`<li>` direct child of any `<ol>` in `dist/`.
+- `src/components/Placeholder.astro` — collapsed the redundant inner `<span>`;
+  the outer `class:list` span now holds the text directly.
+- `src/layouts/BaseLayout.astro` — added `og:image:alt` and `twitter:image:alt`
+  ("tai42 logo"), which the OG block was missing.
+
+### Shared constant
+
+- New `src/consts.ts` exports `CALENDAR_URL`. The literal was duplicated in
+  `src/pages/index.astro`, `src/pages/method.astro`, `src/pages/thank-you.astro`
+  and `src/components/NavBar.astro`; all four now import it.
+
+### Gates after the cold-review fixes
+
+- `npx astro check` — 0 errors, 0 warnings, 0 hints (22 files).
+- `npm run build` — 13 pages built, no errors.
+- Banned strings still 0 ("Nexus" outside the `astro.config.mjs` redirect path,
+  SOC, certified, autopilot, disrupt, "Request access", "No credit card", €,
+  `base_url`). The one-sentence contract still appears in 3 source locations
+  (Footer, `/open-source`, `/platform`) and the CTA label count is unchanged.

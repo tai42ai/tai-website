@@ -1,0 +1,45 @@
+---
+// FormSourceScript — stamps "how they arrived" onto every Web3Forms form on the
+// page: the hidden `source` input, and the same value on the thank-you redirect
+// so /thank-you can fire the one analytics event. Shared by /contact and
+// /builders.
+---
+
+<script is:inline>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var utm = ["utm_source", "utm_medium", "utm_campaign"]
+      .map(function (key) {
+        return params.get(key);
+      })
+      .filter(Boolean)
+      .join("|");
+
+    var referrer = "";
+    if (document.referrer) {
+      try {
+        var referrerHost = new URL(document.referrer).host;
+        if (referrerHost && referrerHost !== window.location.host) {
+          referrer = document.referrer;
+        }
+      } catch (e) {
+        /* unparseable referrer — treat as direct */
+      }
+    }
+
+    var source = utm || referrer || "direct";
+
+    document.querySelectorAll("form[data-web3form]").forEach(function (form) {
+      var sourceInput = form.querySelector('input[name="source"]');
+      if (sourceInput) sourceInput.value = source;
+
+      // Derived from defaultValue, so a re-run (bfcache / history restore)
+      // cannot append the source twice.
+      var redirectInput = form.querySelector('input[name="redirect"]');
+      if (redirectInput) {
+        redirectInput.value =
+          redirectInput.defaultValue + "&source=" + encodeURIComponent(source);
+      }
+    });
+  })();
+</script>
