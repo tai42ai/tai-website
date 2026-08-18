@@ -3,15 +3,35 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
-import FinalCTA from "../components/FinalCTA.astro";
 
 export const prerender = true;
 
-const GITHUB_URL = "https://github.com/tai42ai";
-const DOCS_URL = "https://docs.tai42.ai";
+const CALENDAR_URL =
+  "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3qmPX-JW-HScqfCyMv1v_hyyxGRl2J8b7JOptbl36xFUSe7oz3AvSASK-SYjBeswKDpQcLIn2n";
+
+const WHY_IT_HOLDS = [
+  {
+    title: "Gates, not promises.",
+    body:
+      "Phased delivery with written acceptance criteria and a stop-point at every phase. You can leave at any gate — which is exactly why clients don't.",
+  },
+  {
+    title: "Speed with receipts.",
+    body:
+      "Weeks, not quarters — on our own platform, with every claim measured on live deliveries before we publish it.",
+  },
+  {
+    title: "The AI can't touch your money.",
+    body:
+      "In our platform the AI has no tools — it writes and interprets; it cannot fetch data, quote a price, or take an action. Bookings, payments, and prices run as deterministic steps the model never sees. A wrong sentence stays a wrong sentence; it can't become a wrong charge.",
+  },
+];
 ---
 
-<BaseLayout>
+<BaseLayout
+  title="Your AI demo works. Production is where it dies. — tai42"
+  description="tai42 turns fragile AI demos into production systems that don't fall over — deterministic where money changes hands, intelligent where judgment is needed."
+>
   <NavBar />
 
   <main id="main-content">
@@ -19,150 +39,104 @@ const DOCS_URL = "https://docs.tai42.ai";
     <section class="bg-white py-20 lg:py-28">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Reveal>
-          <p class="text-xs uppercase tracking-widest font-mono text-crimson mb-4">
-            THE OPEN AGENT PLATFORM COMPANY
-          </p>
-
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-6">
-            Agents you can run, inspect, and trust.
+            Your AI demo works. Production is where it dies.
           </h1>
 
           <p class="text-lg text-charcoal/70 max-w-2xl mx-auto leading-relaxed mb-8">
-            TAI42 builds an open-source, MCP-native agent platform - framework,
-            plugin ecosystem, Studio UI, and CLI - plus Babelfish Flows, a
-            deterministic flow engine and Studio editor that turns agent behavior
-            into flows you can audit, version, and trust.
+            tai42 turns fragile AI demos into production systems that don't fall
+            over — deterministic where money changes hands, intelligent where
+            judgment is needed. Live with real users in weeks, not quarters —
+            against acceptance criteria you sign.
           </p>
 
           <div class="flex flex-wrap items-center justify-center gap-4">
             <a
-              href="/open-source"
-              class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-6 py-3 font-semibold transition-colors"
+              href={CALENDAR_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
             >
-              Explore the platform
-            </a>
-            <a
-              href="/babelfish"
-              class="inline-flex items-center justify-center border-2 border-crimson text-crimson hover:bg-crimson hover:text-white rounded-lg px-6 py-3 font-semibold transition-colors"
-            >
-              Meet Babelfish
+              Book a production audit
             </a>
           </div>
         </Reveal>
       </div>
     </section>
 
-    <!-- Two pillars -->
-    <section class="bg-gray-50 py-20 lg:py-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Proof strip + doors line -->
+    <section class="bg-gray-50 py-10">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Reveal>
-          <h2 class="text-3xl sm:text-4xl font-bold text-black text-center mb-14">
-            One company. Two ways to build.
-          </h2>
+          <p class="text-sm text-charcoal/70 leading-relaxed">
+            In production with a travel-tech marketplace &middot; Two further
+            engagements in delivery &middot; Built on our own platform — and we
+            run our own company on the same flows.
+          </p>
+          <p class="mt-4 text-sm">
+            <a href="/builders" class="font-medium text-crimson hover:text-burgundy transition-colors">
+              For builders → join the founding waitlist
+            </a>
+          </p>
         </Reveal>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          <!-- Open Source Platform -->
-          <Reveal delay={100}>
-            <div class="card-hover bg-white rounded-xl border border-gray-200 p-8 lg:p-10 h-full flex flex-col">
-              <span class="inline-block self-start text-xs font-mono bg-crimson/10 text-crimson px-2 py-0.5 rounded-full mb-5">
-                Open source
-              </span>
-              <h3 class="text-2xl font-bold text-black mb-3">The Open Source Platform</h3>
-              <p class="text-charcoal/70 leading-relaxed mb-6">
-                An MCP-native agent-platform ecosystem you can self-host end to
-                end: a framework skeleton for building agents, a plugin ecosystem
-                for extending them, a Studio UI for operating them, and a CLI for
-                automating everything.
-              </p>
-              <ul class="space-y-2.5 mb-8">
-                <li class="flex items-start gap-2 text-sm text-charcoal/70">
-                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                  Framework skeleton - agent runtime with MCP at the core
-                </li>
-                <li class="flex items-start gap-2 text-sm text-charcoal/70">
-                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                  Plugin ecosystem - install capabilities like packages
-                </li>
-                <li class="flex items-start gap-2 text-sm text-charcoal/70">
-                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                  Studio UI &amp; CLI - operate agents visually or from the terminal
-                </li>
-              </ul>
-              <div class="mt-auto flex flex-wrap items-center gap-4">
-                <a
-                  href={GITHUB_URL}
-                  target="_blank"
-                  rel="noopener"
-                  class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors"
-                >
-                  GitHub
-                </a>
-                <a
-                  href={DOCS_URL}
-                  target="_blank"
-                  rel="noopener"
-                  class="inline-flex items-center justify-center border-2 border-crimson text-crimson hover:bg-crimson hover:text-white rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors"
-                >
-                  Docs
-                </a>
-                <a href="/open-source" class="text-sm font-medium text-charcoal/60 hover:text-crimson transition-colors">
-                  Learn more &rarr;
-                </a>
-              </div>
-            </div>
-          </Reveal>
-
-          <!-- Babelfish -->
-          <Reveal delay={200}>
-            <div class="card-hover bg-white rounded-xl border border-gray-200 p-8 lg:p-10 h-full flex flex-col">
-              <span class="inline-block self-start text-xs font-mono bg-crimson/10 text-crimson px-2 py-0.5 rounded-full mb-5">
-                Paid product
-              </span>
-              <div class="flex items-center gap-3 mb-3">
-                <img src="/logos/babel-fish-logo.png" alt="Babelfish" class="h-9 w-auto" />
-                <h3 class="text-2xl font-bold text-black">Babelfish Flows</h3>
-              </div>
-              <p class="text-charcoal/70 leading-relaxed mb-6">
-                A deterministic flow engine and Studio editor for production
-                agents. Compose complex agentic systems as explicit, versioned
-                flows - minimum cost, minimum hallucination, maximum security and
-                accuracy, because every run is deterministic.
-              </p>
-              <ul class="space-y-2.5 mb-8">
-                <li class="flex items-start gap-2 text-sm text-charcoal/70">
-                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                  <span><span class="font-semibold text-black">Deterministic engine</span> - jq-based routing, loops, and checkpoints</span>
-                </li>
-                <li class="flex items-start gap-2 text-sm text-charcoal/70">
-                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                  <span><span class="font-semibold text-black">Studio editor</span> - build and version flows visually, roll back in one click</span>
-                </li>
-                <li class="flex items-start gap-2 text-sm text-charcoal/70">
-                  <svg class="w-4 h-4 text-crimson shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                  <span><span class="font-semibold text-black">Runs on your infrastructure</span> - installs as a plugin to the open platform</span>
-                </li>
-              </ul>
-              <div class="mt-auto flex flex-wrap items-center gap-4">
-                <a
-                  href="/babelfish"
-                  class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors"
-                >
-                  Explore Babelfish
-                </a>
-                <a href="/pricing" class="text-sm font-medium text-charcoal/60 hover:text-crimson transition-colors">
-                  Pricing &rarr;
-                </a>
-              </div>
-            </div>
-          </Reveal>
-        </div>
       </div>
     </section>
 
-    <Reveal>
-      <FinalCTA />
-    </Reveal>
+    <!-- The problem -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            The problem
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            The industry's own numbers: the best AI agents complete under a
+            third of real workplace tasks. Most enterprise AI pilots never touch
+            the P&amp;L. The gap isn't the model — it's the missing structure
+            around it.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- What we do -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            What we do
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            We rebuild your demo as a production system: deterministic flows
+            wherever money, prices, or commitments move; AI wherever judgment is
+            needed; humans at a named handful of decisions. Then we run it with
+            you, measure everything, and hand you the controls.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Why it holds -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black text-center mb-14">
+            Why it holds
+          </h2>
+        </Reveal>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          {WHY_IT_HOLDS.map((card, i) => (
+            <Reveal delay={100 + i * 75}>
+              <div class="card-hover bg-white rounded-xl border border-gray-200 p-8 h-full">
+                <h3 class="text-xl font-bold text-black mb-3">{card.title}</h3>
+                <p class="text-charcoal/70 leading-relaxed">{card.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
   </main>
 
   <Footer />

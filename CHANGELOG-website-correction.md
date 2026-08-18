@@ -57,3 +57,19 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
   fired from `/thank-you` (step 11).
 - The script is inert until the founder creates the Plausible site for
   `tai42.ai` — see the activation instructions at the end of this changelog.
+
+## Step 5 — Home (`/`)
+
+- `src/pages/index.astro` — replaced entirely with the §4.1 copy: hero H1 and
+  sub, the single primary CTA "Book a production audit" (→ the booking link),
+  the proof strip, the doors line (builders door only — the agents door is
+  omitted, gate not cleared), the "The problem" and "What we do" blocks, and the
+  three "Why it holds" text cards (Gates, not promises. / Speed with receipts. /
+  The AI can't touch your money.).
+- Removed with the old page: the "THE OPEN AGENT PLATFORM COMPANY" eyebrow, the
+  two-pillar Open Source / Babelfish product grid, the "Explore the platform" and
+  "Meet Babelfish" CTAs, the pricing link, and the `FinalCTA` band.
+- The removal list in §4.1 (AGENTIC GATEWAY eyebrow, "Stop paying frontier
+  prices…", the `base_url` block, "No credit card needed", the "Request access"
+  buttons, the trust-badge row) had no counterpart in this repo — none of those
+  strings existed here.
