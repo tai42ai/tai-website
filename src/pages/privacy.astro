@@ -28,8 +28,9 @@ export const prerender = true;
             <p class="text-charcoal/80 leading-relaxed">
               This website is a static site. It has no accounts, no cookies, and
               no cross-site tracking. Two things do reach us: aggregate page
-              statistics from a cookie-free analytics service, and whatever you
-              choose to type into one of our forms. Both are spelled out below.
+              statistics from an analytics service that sets no cookies, and
+              whatever you choose to type into one of our forms. Both are
+              spelled out below.
             </p>
           </div>
         </Reveal>
@@ -56,9 +57,12 @@ export const prerender = true;
                 <h3 class="text-lg font-bold text-black mb-2">No Accounts, No Cookies, No Tracking</h3>
                 <p class="text-sm text-charcoal/70 leading-relaxed">
                   We never ask you to create an account, and nothing here sets a
-                  cookie - not the site, not our analytics. You are not followed
-                  across other websites, and no personal profile of you is built
-                  anywhere in this.
+                  cookie - not the site, not our analytics. The one thing kept
+                  in your browser is a short-lived session-storage entry written
+                  by our thank-you page, used solely so that reloading it does
+                  not count the same form confirmation twice; it clears when you
+                  close the tab. You are not followed across other websites, and
+                  no personal profile of you is built.
                 </p>
               </div>
             </div>
@@ -75,11 +79,13 @@ export const prerender = true;
               <div>
                 <h3 class="text-lg font-bold text-black mb-2">Aggregate Page Statistics</h3>
                 <p class="text-sm text-charcoal/70 leading-relaxed">
-                  We use Plausible, a cookie-free, privacy-respecting analytics
-                  service. It counts page views in aggregate - which pages are
-                  read, roughly where in the world from - and nothing that
-                  identifies you. There is one event beyond page views: when a
-                  form submission lands on our thank-you page, we record that it
+                  We use Plausible, which counts page views in aggregate - which
+                  pages are read, and how often. Like any web request, the
+                  analytics request carries standard technical data (such as
+                  your IP address and browser type); Plausible sets no cookies,
+                  and what reaches us are aggregate totals, not individual
+                  visitors. There is one event beyond page views: when a form
+                  submission lands on our thank-you page, we record that it
                   happened, which form it came from, and how the visitor arrived.
                 </p>
               </div>
@@ -119,12 +125,14 @@ export const prerender = true;
         <Reveal delay={100}>
           <p class="text-charcoal/70 leading-relaxed max-w-3xl">
             The forms on our
-            <a href="/contact" class="font-medium text-crimson hover:text-burgundy transition-colors">contact page</a>
+            <a href="/contact/" class="font-medium text-crimson hover:text-burgundy transition-colors">contact page</a>
             and our
-            <a href="/builders" class="font-medium text-crimson hover:text-burgundy transition-colors">builders page</a>
-            send exactly what you type - your answers, your name, your company,
-            your email - plus a source tag recording how you arrived (a campaign
-            link, the site that referred you, or simply
+            <a href="/builders/" class="font-medium text-crimson hover:text-burgundy transition-colors">builders page</a>
+            send exactly what you type - your answers to the questions on the
+            page, plus the contact details that form asks for (the contact form:
+            your name, your company, your email; the builders form: your company
+            and your email) - plus a source tag recording how you arrived (a
+            campaign link, the site that referred you, or simply
             &ldquo;direct&rdquo;). Delivery runs through Web3Forms, which emails
             the submission to us. We use it only to reply: no CRM, no automated
             sequence, nothing sold or passed on. If you email us directly, the
@@ -140,14 +148,25 @@ export const prerender = true;
     <section class="bg-white py-16 sm:py-20">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <h2 class="text-2xl sm:text-3xl font-bold text-black mb-6">The Software You Self-Host</h2>
+          <h2 class="text-2xl sm:text-3xl font-bold text-black mb-6">The Runtime You Self-Host, the Platform We Host</h2>
         </Reveal>
         <Reveal delay={100}>
           <p class="text-charcoal/70 leading-relaxed max-w-3xl">
-            This policy covers this website only. The open-source platform and
-            BabelFish run entirely on your own infrastructure and make no
-            phone-home to us - your prompts, payloads, and data never reach our
-            servers because there is no server in that path.
+            This policy covers this website only. The open-source runtime runs
+            entirely on your own infrastructure when you self-host it, and makes
+            no phone-home to us - your prompts, payloads, and data never reach
+            our servers, because there is no server of ours in that path. The
+            hosted BabelFish platform is the other case: it runs in a private,
+            dedicated, EU-hosted tenant your team operates, and what it
+            processes there is governed by the agreement covering that tenant,
+            not by this policy.
+          </p>
+        </Reveal>
+        <Reveal delay={200}>
+          <p class="mt-6 text-charcoal/70 leading-relaxed max-w-3xl">
+            Questions about any of this, or about data you have sent us? Reach
+            us through our
+            <a href="/contact/" class="font-medium text-crimson hover:text-burgundy transition-colors">contact page</a>.
           </p>
         </Reveal>
       </div>

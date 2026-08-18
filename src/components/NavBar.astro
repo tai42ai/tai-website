@@ -3,18 +3,24 @@ import { CALENDAR_URL } from "../consts";
 
 // NavBar — Home · Method · Platform · Open Source · About · Contact, plus the
 // one primary CTA ("Book a production audit").
-const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
-const isActive = (href: string) => href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
+// Compare paths with trailing slashes stripped, so a link written as "/method/"
+// matches the request path whether or not it carries the slash.
+const normalize = (path: string) => path.replace(/\/+$/, "") || "/";
+const pathname = normalize(Astro.url.pathname);
+const isActive = (href: string) => {
+  const target = normalize(href);
+  return target === "/" ? pathname === "/" : pathname === target || pathname.startsWith(target + "/");
+};
 const linkClass = (href: string) => isActive(href) ? "px-3 py-2 text-sm font-semibold text-crimson rounded-lg transition-colors" : "px-3 py-2 text-sm font-medium text-charcoal/70 hover:text-crimson rounded-lg transition-colors";
 const mobileClass = (href: string) => isActive(href) ? "mobile-nav-link block px-3 py-2.5 text-sm font-semibold text-crimson hover:bg-gray-50 rounded-lg transition-colors" : "mobile-nav-link block px-3 py-2.5 text-sm font-medium text-charcoal/70 hover:text-crimson hover:bg-gray-50 rounded-lg transition-colors";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/method", label: "Method" },
-  { href: "/platform", label: "Platform" },
-  { href: "/open-source", label: "Open Source" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/method/", label: "Method" },
+  { href: "/platform/", label: "Platform" },
+  { href: "/open-source/", label: "Open Source" },
+  { href: "/about/", label: "About" },
+  { href: "/contact/", label: "Contact" },
 ];
 ---
 

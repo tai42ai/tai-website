@@ -7,6 +7,13 @@ colors, fonts, icon sets, animation libraries, or npm dependencies.
 Not deployed. The founder does the voice pass, fills the open placeholders (see
 "Open placeholders" at the bottom), and publishes.
 
+**Before publishing: `/privacy`, `/terms` and `/security` were rewritten by
+engineering to describe what this site and the products actually do. That
+wording is plain-language accuracy, not approved legal copy — the founder and
+legal counsel must read and sign off on all three pages, and counsel must add
+the controller identity, retention statement, and data-subject-rights section
+that `/privacy` still lacks.** Details in the Step 17 and Step 18 blocks below.
+
 ---
 
 ## Step 1 — changelog scaffold + redirects
@@ -207,14 +214,19 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
 
 - `/security`, `/privacy`, `/terms` and `/company/careers` were checked for
   certification / badge language (SOC, SOC 2, "certified", ISO 27001,
-  compliance badges): **none present**, so their copy is untouched.
+  compliance badges): **none present**, so no badge language was removed.
+  (Superseded: their copy did *not* stay untouched — Steps 17 and 18 corrected
+  factual claims on all three legal pages, and Step 18 edited the careers body.
+  See those steps for what changed and for the legal sign-off requirement.)
 - Two link fixes only: `src/pages/privacy.astro` and
   `src/pages/company/careers.astro` pointed at the deleted `/company/contact`;
   they now point at `/contact` directly instead of going through the redirect.
 - Deleted `src/components/FinalCTA.astro` and `src/components/SecurityStrip.astro`
   — both became unused (their only importers were the old Home and Babelfish
   pages). Nothing is commented out or hidden; the files are gone.
-- Careers stays at `/company/careers`, unchanged and unlinked from nav/footer.
+- Careers stays at `/company/careers`, unlinked from nav/footer. (Superseded:
+  Step 17 added `noindex`, a title and a description; Step 18 fixed a dash in
+  the body sentence.)
 
 ## Step 16 — Placeholder list, gates, and the work outside this repo
 
@@ -316,6 +328,19 @@ corrected; **the corrected wording is engineering's best plain-language
 description of the actual behaviour, not approved legal copy — the founder (and
 legal, if involved) must read and sign off on `/privacy` §"What This Site
 Collects" / §"When You Contact Us" and `/terms` §5 before the site goes live.**
+
+Added after Step 18 (same sign-off, wider scope):
+
+- `/security` is now in scope too — its self-hosting claims were rescoped to
+  the open-source runtime vs. the hosted BabelFish tenant (Step 18, fix 1).
+- **`/privacy` now describes real data processing (Plausible, Web3Forms, GitHub
+  Pages logs, a session-storage entry) but still has no controller identity, no
+  retention statement, and no data-subject-rights section. Engineering
+  deliberately did not invent those legal commitments — legal counsel must
+  draft them before publish.**
+- `/terms` "Effective date" was moved from February 2026 to **August 2026**
+  because §7 promises the date is updated on material change and Steps 17–18
+  changed §5. The founder must re-verify the date at the actual publish date.
 
 - `src/pages/privacy.astro` — the page claimed "no accounts, no analytics, no
   tracking, no cookies, and no forms that send us your data" and "We do not run
@@ -434,3 +459,143 @@ from that page's own intro — no new claims.
   SOC, certified, autopilot, disrupt, "Request access", "No credit card", €,
   `base_url`). The one-sentence contract still appears in 3 source locations
   (Footer, `/open-source`, `/platform`) and the CTA label count is unchanged.
+
+## Step 18 — Cold-review fix wave 2
+
+A second fresh-context review of the branch. Every fix below touches legal
+pages, layout wrappers, hrefs, meta, or this changelog — **no §4 marketing copy
+was altered** (home, method, platform, open-source, about, contact, builders,
+agents changed only in `href` values and one comment syntax).
+
+### Self-hosting claims rescoped to the right product
+
+The legal pages predate the corrected positioning and said the platform *and*
+BabelFish run on your own infrastructure. That is true of the **open-source
+runtime when you self-host it**; the **hosted BabelFish platform** runs in a
+private, dedicated, EU-hosted tenant your team operates (see `/platform`). Each
+claim was rewritten minimally, in its page's own structure and tone:
+
+- `src/pages/security.astro` — hero sub and meta description ("Open source,
+  self-hosted, and deterministic. Your data and your agents stay on your
+  infrastructure."), the "Self-Hosted by Design" card (now "Self-Host It, or Run
+  It in Your Own Tenant"), the "Open Source and Auditable" card ("Every layer of
+  the platform is open source" → the runtime underneath the platform), and the
+  "No Phone-Home" card (now explicitly the runtime you self-host). Determinism
+  card unchanged.
+- `src/pages/privacy.astro` — the closing section, now "The Runtime You
+  Self-Host, the Platform We Host": self-hosted runtime → nothing reaches our
+  servers; hosted BabelFish → private, dedicated, EU-hosted tenant, governed by
+  the agreement covering that tenant, not by this policy.
+- `src/pages/terms.astro` §5 — same split, with the tenant covered by its
+  separate agreement.
+
+### `/privacy` made precisely factual
+
+- Fixed the truncated sentence "…no personal profile of you is built anywhere in
+  this." → "…is built."
+- Analytics card: dropped the vendor-marketing and unverifiable phrasing
+  ("privacy-respecting", "roughly where in the world from", "nothing that
+  identifies you"). It now states what happens: Plausible counts page views in
+  aggregate; like any web request the analytics request carries standard
+  technical data (IP address, browser type) — mirroring the wording already used
+  for the GitHub Pages hosting card; Plausible sets no cookies; what reaches us
+  are aggregate totals, not individual visitors. The single
+  `qualified_form_submission` event description is unchanged.
+- Every "cookie-free" compound is gone, replaced with "sets no cookies" phrasing
+  (`/privacy` and `/terms`); the literal word "free" no longer appears on either
+  page.
+- Storage disclosure added where the no-cookies claim lives (the "No Accounts,
+  No Cookies, No Tracking" card): `/thank-you` writes one short-lived
+  `sessionStorage` entry, solely so a reload does not count the same form
+  confirmation twice, cleared when the tab closes. The claim is now honest.
+- Forms paragraph corrected: it claimed both forms send "your name", but the
+  builders form has no name field. Both are now described accurately — your
+  answers to the questions on the page, plus the contact details that form asks
+  for (contact: name, company, email; builders: company, email), plus the
+  `source` tag.
+- Added a one-line pointer at the end of the page directing data questions to
+  the contact page (no address, no new commitments).
+
+### `/terms`
+
+- §5 "cookie-free and aggregate" → "aggregate and set no cookies".
+- Effective date February 2026 → **August 2026** (see the sign-off note in Step
+  17: the founder re-verifies at publish).
+- Meta description rewritten from §1's own intro and now uses lowercase
+  "tai42" — it read "the TAI42 open-source platform".
+
+### `/company/careers`
+
+- The body sentence used a hyphen where the page's own meta description and the
+  site convention use an em dash: "agents run on - and BabelFish" → "— and
+  BabelFish".
+
+### Placeholder chip now sits under the submit button
+
+- `src/pages/contact.astro`, `src/pages/builders.astro` — the
+  `[WEB3FORMS_ACCESS_KEY]` chip is an `inline-flex` span and was a direct
+  sibling of the submit button, so it rendered *beside* the button. It is now
+  wrapped in a plain `<div>`, which the form's `space-y-6` rhythm spaces like
+  every other field, so it sits under the button at all widths. The Step 16
+  placeholder table's "under each submit button" is now accurate.
+
+### `/method` comment no longer ships
+
+- `src/pages/method.astro` — the HTML comment recording why the reveal is on the
+  `<li>` ("an `<ol>` may only have `<li>` children") was emitted into
+  `dist/method/index.html`. Converted to an Astro template comment
+  (`{/* … */}`), which is compile-time only. The invariant is still documented
+  in source; `grep "may only have" dist/method/index.html` is 0.
+
+### Internal links normalized to trailing slashes
+
+Astro builds directory-format URLs and the canonical tags are trailing-slash,
+but every internal `href` was written without one, costing a GitHub Pages 301
+per navigation.
+
+- Every internal page href in `src/` now ends in a slash: `NAV_LINKS`
+  (`src/components/NavBar.astro`), `SITE_LINKS` plus the doors and legal links
+  (`src/components/Footer.astro`), the home doors line (`src/pages/index.astro`),
+  the `/platform` CTA and honest-line links, `/privacy`'s contact and builders
+  links, `/terms` §5's privacy link, and the careers CTA. `"/"` stays `"/"`.
+- `src/pages/agents.astro`'s `/llms.txt` reference is a **file** path and keeps
+  no slash. `public/llms.txt` is untouched (its URLs are spec-verbatim). No
+  external URL, `mailto:`, or `#anchor` was touched. The two
+  `THANK_YOU_REDIRECT` constants already carried the slash.
+- `src/components/NavBar.astro` — the current-page highlight compared
+  `Astro.url.pathname` (trailing slash stripped) against the raw href, which the
+  slashed hrefs would have broken. Both sides are now normalized through one
+  `normalize()` helper, so highlighting works for `/method` and `/method/`
+  alike.
+- `astro.config.mjs` — the redirect *targets* now carry the slash too
+  (`"/platform/"`, `"/method/"`, `"/about/"`, `"/contact/"`), so the generated
+  meta-refresh pages no longer point at an unslashed URL that would itself
+  redirect. The legacy *source* paths, including `/product/nexus`, are unchanged
+  (see "Known conflict" above).
+
+### Changelog corrections
+
+- Step 15 claimed the legal pages' copy was "untouched" and careers was
+  "unchanged" — both were made false by Steps 17 and 18. Corrected in place,
+  with cross-references.
+- The legal sign-off requirement is now stated in bold in the header block at
+  the top of this document, not only inside Step 17.
+- Step 17's voice-pass block gained the missing-legal-sections note (controller
+  identity, retention, data-subject rights) and the effective-date re-verify
+  note.
+
+### Gates after wave 2
+
+- `npx astro check` — 0 errors, 0 warnings, 0 hints (22 files).
+- `npm run build` — 13 pages built, no errors.
+- `grep -nE '\bfree\b' src/pages/privacy.astro src/pages/terms.astro` — 0.
+- `grep -r "anywhere in this." dist/` — 0.
+- `grep "may only have" dist/method/index.html` — 0.
+- `grep -rEo 'href="/[a-z-]+"' dist/` — only `/llms.txt` file references remain;
+  0 internal page hrefs without a trailing slash.
+- The `[WEB3FORMS_ACCESS_KEY]` chip renders inside a block `<div>` under the
+  submit button on `/contact` and `/builders`.
+- Banned strings still 0 ("Nexus" outside the `astro.config.mjs` redirect path,
+  SOC, certified, autopilot, disrupt, "Request access", "No credit card", €,
+  `base_url`, "Babelfish Flows"). The one-sentence contract still appears in 3
+  source locations.
