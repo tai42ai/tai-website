@@ -196,3 +196,16 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
 - "- Docs: [DOCS_URL]" stays as a visible placeholder line.
 - The "## For agents" section and its "MCP gateway" line are **omitted
   entirely** — the gate has not cleared. Add both when `/agents` goes live.
+
+## Step 15 — Legal pages, careers, unused components
+
+- `/security`, `/privacy`, `/terms` and `/company/careers` were checked for
+  certification / badge language (SOC, SOC 2, "certified", ISO 27001,
+  compliance badges): **none present**, so their copy is untouched.
+- Two link fixes only: `src/pages/privacy.astro` and
+  `src/pages/company/careers.astro` pointed at the deleted `/company/contact`;
+  they now point at `/contact` directly instead of going through the redirect.
+- Deleted `src/components/FinalCTA.astro` and `src/components/SecurityStrip.astro`
+  — both became unused (their only importers were the old Home and Babelfish
+  pages). Nothing is commented out or hidden; the files are gone.
+- Careers stays at `/company/careers`, unchanged and unlinked from nav/footer.
