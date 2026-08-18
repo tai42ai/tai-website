@@ -164,3 +164,16 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
 - `src/layouts/BaseLayout.astro` — added an optional `noindex` prop (used here
   and by `/agents`) and updated the default title/description, which still
   described the old positioning.
+
+## Step 12 — Builders (`/builders`)
+
+- New page `src/pages/builders.astro` with the §4.7 copy verbatim: H1 "Your
+  clients. Our engine.", the sub, the body, and the honest line.
+- Waitlist form: company · what you deliver today (agency / dev shop / service
+  firm / operator) · roughly how many clients · email, button "Join the founding
+  waitlist". Same Web3Forms routing as `/contact`, redirecting to
+  `https://tai42.ai/thank-you?page=builders`, same hidden `source` handling and
+  `botcheck` honeypot.
+- Hard content rule honored: no dates, no prices, no speed numbers, no mechanism
+  names on this page.
+- Linked from the footer ("For builders →") and the Home doors line only.

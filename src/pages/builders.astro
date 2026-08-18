@@ -1,0 +1,167 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+import Placeholder from "../components/Placeholder.astro";
+
+export const prerender = true;
+
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const WEB3FORMS_ACCESS_KEY = "[WEB3FORMS_ACCESS_KEY]";
+const THANK_YOU_REDIRECT = "https://tai42.ai/thank-you?page=builders";
+
+const inputClass =
+  "w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-charcoal placeholder:text-charcoal/30 focus:border-crimson focus:outline-none focus:ring-1 focus:ring-crimson transition-colors";
+const labelClass = "block text-sm font-medium text-black mb-2";
+
+const DELIVERS = ["agency", "dev shop", "service firm", "operator"];
+---
+
+<BaseLayout
+  title="Your clients. Our engine. — tai42"
+  description="tai42's platform will open to a small group of founding partners — agencies, development shops, and service firms who deliver Service-as-Software to their own clients."
+>
+  <NavBar />
+
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="bg-white py-20 lg:py-28">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-6">
+            Your clients. Our engine.
+          </h1>
+        </Reveal>
+        <Reveal delay={100}>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            tai42's platform will open to a small group of founding partners —
+            agencies, development shops, and service firms who deliver
+            Service-as-Software to their own clients.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Body -->
+    <section class="bg-gray-50 py-16 lg:py-20">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            Founding Builders get a multi-tenant workspace to build, operate, and
+            bill your own clients — on the same engine behind our production
+            deliveries: deterministic flows where money moves, verified payments,
+            full audit, humans at the named decisions. Complete client
+            applications shipped as configuration, not product code. Economics
+            that scale with your clients, not your headcount. We run our own
+            company on this platform; founding partners will run their business
+            on it too.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- The honest line -->
+    <section class="bg-white py-16 lg:py-20">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-2xl font-bold text-black mb-5">The honest line</h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            Founding partners are invited in small batches as delivery capacity
+            opens. Pre-signing tells us who to build for first.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Waitlist form -->
+    <section class="bg-gray-50 py-16 lg:py-24">
+      <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <form
+            action={WEB3FORMS_ENDPOINT}
+            method="POST"
+            data-web3form
+            class="space-y-6 rounded-xl border border-gray-200 bg-white p-6 lg:p-8"
+          >
+            <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+            <input type="hidden" name="subject" value="tai42.ai — founding builders waitlist" />
+            <input type="hidden" name="redirect" value={THANK_YOU_REDIRECT} />
+            <input type="hidden" name="source" value="" />
+            <!-- Web3Forms honeypot -->
+            <input
+              type="checkbox"
+              name="botcheck"
+              class="hidden"
+              style="display:none"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            />
+
+            <div>
+              <label class={labelClass} for="company">Company</label>
+              <input id="company" name="company" type="text" required autocomplete="organization" class={inputClass} />
+            </div>
+
+            <div>
+              <label class={labelClass} for="delivers">What you deliver today</label>
+              <select id="delivers" name="what you deliver today" required class={inputClass}>
+                <option value="" selected disabled>Select one</option>
+                {DELIVERS.map((option) => <option value={option}>{option}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <label class={labelClass} for="clients">Roughly how many clients</label>
+              <input id="clients" name="roughly how many clients" type="text" required class={inputClass} />
+            </div>
+
+            <div>
+              <label class={labelClass} for="email">Email</label>
+              <input id="email" name="email" type="email" required autocomplete="email" class={inputClass} />
+            </div>
+
+            <button
+              type="submit"
+              class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+            >
+              Join the founding waitlist
+            </button>
+
+            <p class="flex flex-wrap items-baseline gap-2 text-xs text-charcoal/50">
+              <span>Form delivery is inactive until the access key is filled in:</span>
+              <Placeholder label="WEB3FORMS_ACCESS_KEY" note="created for balin.miki@tai42.ai" />
+            </p>
+          </form>
+        </Reveal>
+      </div>
+    </section>
+
+    <script is:inline>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var utm = ["utm_source", "utm_medium", "utm_campaign"]
+          .map(function (key) {
+            return params.get(key);
+          })
+          .filter(Boolean)
+          .join("|");
+        var source = utm || document.referrer || "direct";
+
+        document.querySelectorAll("form[data-web3form]").forEach(function (form) {
+          var sourceInput = form.querySelector('input[name="source"]');
+          if (sourceInput) sourceInput.value = source;
+
+          var redirectInput = form.querySelector('input[name="redirect"]');
+          if (redirectInput) {
+            redirectInput.value =
+              redirectInput.value + "&source=" + encodeURIComponent(source);
+          }
+        });
+      })();
+    </script>
+  </main>
+
+  <Footer />
+</BaseLayout>
