@@ -46,3 +46,14 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
 - No `/agents` link anywhere (gate not cleared). Careers is unlinked but the
   page is kept at `/company/careers`. The Docs, GitHub, Babelfish and Pricing
   links are gone.
+
+## Step 4 — Plausible analytics in the base layout
+
+- `src/layouts/BaseLayout.astro` — added the deferred Plausible script
+  (`data-domain="tai42.ai"`) plus the standard `window.plausible` queue stub, so
+  custom events with properties can be fired before the script finishes
+  loading. Nothing else on the layout changed.
+- One event only: `qualified_form_submission` with `page` and `source` props,
+  fired from `/thank-you` (step 11).
+- The script is inert until the founder creates the Plausible site for
+  `tai42.ai` — see the activation instructions at the end of this changelog.
