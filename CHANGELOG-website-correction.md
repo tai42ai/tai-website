@@ -36,3 +36,13 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
 - Removed: the Company dropdown (and its mobile accordion plus the accordion
   JS), the Docs link, the Babelfish and Pricing links, the mobile GitHub link,
   and the old "Talk to us" CTA.
+
+## Step 3 — Footer
+
+- `src/components/Footer.astro` — rebuilt: the six site links; a "Doors" column
+  with "For builders →" (`/builders`) only; the one-sentence open-source
+  contract verbatim; legal links (Security / Privacy / Terms); and the footer
+  line "tai42 — we take AI from demo to production."
+- No `/agents` link anywhere (gate not cleared). Careers is unlinked but the
+  page is kept at `/company/careers`. The Docs, GitHub, Babelfish and Pricing
+  links are gone.

@@ -1,39 +1,35 @@
 ---
-// Footer — column layout: Platform, Resources, Company, Legal
-const GITHUB_URL = "https://github.com/tai42ai";
-const DOCS_URL = "https://docs.tai42.ai";
+// Footer — the six site links, the builders door, the open-source contract,
+// legal links, and the footer line.
+const SITE_LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/method", label: "Method" },
+  { href: "/platform", label: "Platform" },
+  { href: "/open-source", label: "Open Source" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
 ---
 
 <footer class="bg-white border-t border-gray-200">
   <!-- Links grid -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-      <!-- Platform -->
-      <div>
-        <h3 class="text-xs font-semibold text-charcoal/40 uppercase tracking-wider mb-4">Platform</h3>
-        <ul class="space-y-2.5">
-          <li><a href="/open-source" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">Open Source</a></li>
-          <li><a href="/babelfish" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">Babelfish</a></li>
-          <li><a href="/pricing" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">Pricing</a></li>
+      <!-- Site -->
+      <div class="col-span-2">
+        <h3 class="text-xs font-semibold text-charcoal/40 uppercase tracking-wider mb-4">Site</h3>
+        <ul class="grid grid-cols-2 gap-x-8 gap-y-2.5">
+          {SITE_LINKS.map((link) => (
+            <li><a href={link.href} class="text-sm text-charcoal/60 hover:text-crimson transition-colors">{link.label}</a></li>
+          ))}
         </ul>
       </div>
 
-      <!-- Resources -->
+      <!-- Doors -->
       <div>
-        <h3 class="text-xs font-semibold text-charcoal/40 uppercase tracking-wider mb-4">Resources</h3>
+        <h3 class="text-xs font-semibold text-charcoal/40 uppercase tracking-wider mb-4">Doors</h3>
         <ul class="space-y-2.5">
-          <li><a href={DOCS_URL} target="_blank" rel="noopener" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">Docs</a></li>
-          <li><a href={GITHUB_URL} target="_blank" rel="noopener" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">GitHub</a></li>
-        </ul>
-      </div>
-
-      <!-- Company -->
-      <div>
-        <h3 class="text-xs font-semibold text-charcoal/40 uppercase tracking-wider mb-4">Company</h3>
-        <ul class="space-y-2.5">
-          <li><a href="/company/about" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">About</a></li>
-          <li><a href="/company/contact" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">Contact</a></li>
-          <li><a href="/company/careers" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">Careers</a></li>
+          <li><a href="/builders" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">For builders &rarr;</a></li>
         </ul>
       </div>
 
@@ -41,12 +37,19 @@ const DOCS_URL = "https://docs.tai42.ai";
       <div>
         <h3 class="text-xs font-semibold text-charcoal/40 uppercase tracking-wider mb-4">Legal</h3>
         <ul class="space-y-2.5">
-          <li><a href="/privacy" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">Privacy</a></li>
           <li><a href="/security" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">Security</a></li>
+          <li><a href="/privacy" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">Privacy</a></li>
           <li><a href="/terms" class="text-sm text-charcoal/60 hover:text-crimson transition-colors">Terms</a></li>
         </ul>
       </div>
     </div>
+
+    <!-- The one-sentence open-source contract -->
+    <p class="mt-10 max-w-3xl text-sm text-charcoal/60 leading-relaxed border-l-2 border-crimson/30 pl-4">
+      tai42 builds and runs its business on this runtime; the code is open; the
+      company sells the hosted platform and enterprise layer on top — never a
+      different core.
+    </p>
   </div>
 
   <!-- Bottom bar -->
@@ -54,14 +57,10 @@ const DOCS_URL = "https://docs.tai42.ai";
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-3">
-          <img src="/logos/tai42-logo.png" alt="TAI42" class="h-9 w-auto opacity-40" />
-          <p class="text-sm text-charcoal/40">&copy; {new Date().getFullYear()} TAI42. All rights reserved.</p>
+          <img src="/logos/tai42-logo.png" alt="tai42" class="h-9 w-auto opacity-40" />
+          <p class="text-sm text-charcoal/60">tai42 — we take AI from demo to production.</p>
         </div>
-        <div class="flex items-center gap-4">
-          <a href={GITHUB_URL} target="_blank" rel="noopener" class="text-sm text-charcoal/40 hover:text-crimson transition-colors">GitHub</a>
-          <a href={DOCS_URL} target="_blank" rel="noopener" class="text-sm text-charcoal/40 hover:text-crimson transition-colors">Docs</a>
-          <a href="/company/contact" class="text-sm text-charcoal/40 hover:text-crimson transition-colors">Contact</a>
-        </div>
+        <p class="text-sm text-charcoal/40">&copy; {new Date().getFullYear()} tai42. All rights reserved.</p>
       </div>
     </div>
   </div>
