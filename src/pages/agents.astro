@@ -1,0 +1,68 @@
+---
+// GATED PAGE — built but not published by links. It is linked from nowhere: no
+// nav entry, no footer link, no Home doors-line entry, no Platform honest-line
+// link. The gate clears when every placeholder below is filled and the MCP
+// endpoint responds; only then may the links be added and the noindex removed.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+import Placeholder from "../components/Placeholder.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="For AI agents — tai42"
+  description="Connect to tai42's products through our MCP gateway. Free to connect and evaluate; machine-facing only."
+  noindex
+>
+  <NavBar />
+
+  <main id="main-content">
+    <section class="bg-white py-20 lg:py-28">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-6">
+            For AI agents
+          </h1>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <p class="text-lg text-charcoal/70 leading-relaxed mb-8">
+            Connect to tai42's products through our MCP gateway. Free to connect
+            and evaluate; machine-facing only.
+          </p>
+
+          <dl class="space-y-5">
+            <div class="flex flex-wrap items-baseline gap-2">
+              <dt class="text-charcoal/70">Endpoint:</dt>
+              <dd><Placeholder label="MCP_ENDPOINT" /></dd>
+            </div>
+            <div class="flex flex-wrap items-baseline gap-2">
+              <dt class="text-charcoal/70">Tools:</dt>
+              <dd><Placeholder label="TOOL_LIST" /></dd>
+            </div>
+            <div class="flex flex-wrap items-baseline gap-2">
+              <dt class="text-charcoal/70">Trial key:</dt>
+              <dd><Placeholder label="TRIAL_KEY_INSTRUCTIONS" /></dd>
+            </div>
+            <div class="flex flex-wrap items-baseline gap-2">
+              <dt class="text-charcoal/70">Machine-readable docs:</dt>
+              <dd class="flex flex-wrap items-baseline gap-2">
+                <a href="/llms.txt" class="font-mono text-sm text-crimson hover:text-burgundy transition-colors">/llms.txt</a>
+                <span class="text-charcoal/70">and</span>
+                <Placeholder
+                  label="DOCS_URL"
+                  note="docs.tai42.ai once the CNAME is live; tai42.mintlify.app until then"
+                />
+              </dd>
+            </div>
+          </dl>
+        </Reveal>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

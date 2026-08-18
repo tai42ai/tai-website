@@ -177,3 +177,15 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
 - Hard content rule honored: no dates, no prices, no speed numbers, no mechanism
   names on this page.
 - Linked from the footer ("For builders →") and the Home doors line only.
+
+## Step 13 — Agents (`/agents`) — GATED, unlinked
+
+- New page `src/pages/agents.astro` with the §4.8 copy. Every value is a visible
+  placeholder: [MCP_ENDPOINT], [TOOL_LIST], [TRIAL_KEY_INSTRUCTIONS], [DOCS_URL].
+- The page is linked from **nowhere**: not in the nav, not in the footer, not in
+  the Home doors line, not in the Platform honest line. It also carries
+  `noindex, nofollow` because it is unpublished, machine-facing, and its gate
+  has not cleared.
+- Gate: the MCP endpoint responds and the placeholders are filled. Only then add
+  the footer link ("For AI agents →"), the Home doors-line entry, the Platform
+  honest-line sentence, the `/llms.txt` MCP gateway line, and remove the noindex.
