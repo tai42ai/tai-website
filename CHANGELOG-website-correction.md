@@ -269,7 +269,9 @@ booking link, used by every "Book a production audit" CTA and by `/thank-you`.
    automation.
 2. Replace `[WEB3FORMS_ACCESS_KEY]` in `src/pages/contact.astro` and
    `src/pages/builders.astro` (constant at the top of each file), and delete the
-   `<Placeholder label="WEB3FORMS_ACCESS_KEY" />` chip under each submit button.
+   `<Placeholder label="WEB3FORMS_ACCESS_KEY" />` chip under each submit button
+   together with its wrapping `<div>` (the chip is wrapped so it sits under the
+   button — see Step 18).
 3. Submit each form once to confirm the mail arrives and that the redirect lands
    on `/thank-you/?page=contact&source=…` / `?page=builders&source=…`.
 
@@ -337,7 +339,11 @@ Added after Step 18 (same sign-off, wider scope):
   Pages logs, a session-storage entry) but still has no controller identity, no
   retention statement, and no data-subject-rights section. Engineering
   deliberately did not invent those legal commitments — legal counsel must
-  draft them before publish.**
+  draft them before publish.** Note that the closing pointer added in Step 18
+  ("Questions about any of this, or about data you have sent us? Reach us
+  through our contact page.") can read as the data-subject-rights channel even
+  though it was written as a general contact line — counsel should confirm it as
+  that channel or replace it when drafting the rights section.
 - `/terms` "Effective date" was moved from February 2026 to **August 2026**
   because §7 promises the date is updated on material change and Steps 17–18
   changed §5. The founder must re-verify the date at the actual publish date.
@@ -465,7 +471,8 @@ from that page's own intro — no new claims.
 A second fresh-context review of the branch. Every fix below touches legal
 pages, layout wrappers, hrefs, meta, or this changelog — **no §4 marketing copy
 was altered** (home, method, platform, open-source, about, contact, builders,
-agents changed only in `href` values and one comment syntax).
+agents changed only in `href` values, one comment syntax, and the `<div>` now
+wrapping the placeholder chip on `/contact` and `/builders`).
 
 ### Self-hosting claims rescoped to the right product
 
@@ -595,6 +602,97 @@ per navigation.
   0 internal page hrefs without a trailing slash.
 - The `[WEB3FORMS_ACCESS_KEY]` chip renders inside a block `<div>` under the
   submit button on `/contact` and `/builders`.
+- Banned strings still 0 ("Nexus" outside the `astro.config.mjs` redirect path,
+  SOC, certified, autopilot, disrupt, "Request access", "No credit card", €,
+  `base_url`, "Babelfish Flows"). The one-sentence contract still appears in 3
+  source locations.
+
+## Step 19 — Cold-review fix wave 3
+
+A third fresh-context review. Text-level only: the two legal pages, `/security`,
+`/company/careers`, plus this changelog. **No §4 marketing copy was touched** — `git diff
+--name-only` lists no home, method, platform, open-source, about, contact,
+builders, or agents page.
+
+### `/security`
+
+- "Open Source and Auditable" card — "verify exactly what runs" was broader than
+  the card's own subject (the runtime underneath the platform, not everything
+  the visitor might run). Now "verify exactly what the runtime does". The card's
+  hyphen dash style is unchanged.
+- The section comment `<!-- Self-hosted by design -->` still named the card's
+  pre-Step-18 heading. Now `<!-- Self-host or hosted tenant -->`, matching
+  "Self-Host It, or Run It in Your Own Tenant".
+- Meta description was 206 characters (search results truncate near 160). Now
+  160, keeping both halves: self-host the open-source runtime, or run the hosted
+  BabelFish platform in a private, dedicated, EU-hosted tenant. The hero sub is
+  unchanged and still carries the full phrasing.
+
+### `/terms` — the open-source side is the "runtime" everywhere
+
+The site calls the open-source side the **runtime** and reserves "platform" for
+the hosted BabelFish platform; `/terms` still said "platform" for both, which
+after Step 18 left "the platform" ambiguous inside the same document. Word-level
+renames only — no section changed legal meaning:
+
+- §1 "the TAI42 open-source platform" → "the TAI42 open-source runtime" (the
+  definition of "Services").
+- §2 heading "The Open-Source Platform" → "The Open-Source Runtime"; body "The
+  TAI42 platform - the framework, plugin ecosystem, Studio UI, and CLI -" → "The
+  TAI42 runtime - …". Section comment updated to match.
+- §3 "the open-source license that covers the platform" → "…covers the runtime"
+  (it can only mean the open-source side; "the platform" would now read as
+  BabelFish, which is the thing that section excludes).
+- §4 "the platform software" → "the runtime software"; "the open-source license
+  that governs the platform" → "…governs the runtime".
+- §5 "The open-source platform runs on your own infrastructure" → "The
+  open-source runtime runs …".
+- "the hosted BabelFish platform" is deliberately unchanged in §5 — BabelFish is
+  the platform.
+- Meta description was 184 characters. Now 154, still derived from §1's intro,
+  still lowercase "tai42", and now naming the runtime: "The terms governing the
+  tai42 open-source runtime, BabelFish, and associated APIs, documentation, and
+  websites — acceptance, licensing, and data handling." (The §4 topic dropped
+  from the list to fit; §4 itself is unchanged.)
+### `/company/careers`
+
+- The same rename, for the same reason: "the open-source platform agents run on"
+  → "the open-source runtime agents run on", in the meta description and in the
+  one body sentence that repeats it. `grep -c "open-source platform" src/` is
+  now 0 sitewide.
+
+### `/privacy`
+
+- The section comment `<!-- The software you self-host -->` predated Step 18's
+  heading. Now `<!-- The runtime you self-host, the platform we host -->`,
+  matching "The Runtime You Self-Host, the Platform We Host".
+- Analytics card: "counts page views in aggregate - which pages are read, and
+  how often" read as an exhaustive list, but Plausible also aggregates country,
+  device, browser and referrer. Now "…which pages are read, how often, and other
+  aggregate dimensions such as country and device type" — non-exhaustive and
+  factual. The rest of the card (standard technical data, no cookies, aggregate
+  totals, the single `qualified_form_submission` event) is unchanged.
+
+### Changelog corrections
+
+- Step 18's intro said the locked pages changed "only in `href` values and one
+  comment syntax"; the chip wrapper `<div>` on `/contact` and `/builders` was a
+  third change and is now named there.
+- "Activation: Web3Forms" step 2 said to delete the chip; deleting it alone
+  would leave an empty wrapper `<div>` in the form's `space-y-6` rhythm. It now
+  says to delete the chip **and** its wrapping `<div>`.
+- Step 17's legal voice-pass block gained a note that `/privacy`'s new closing
+  contact-page pointer may read as the data-subject-rights channel — counsel
+  should confirm or replace it when drafting the rights section.
+
+### Gates after wave 3
+
+- `npx astro check` — 0 errors, 0 warnings, 0 hints (22 files).
+- `npm run build` — 13 pages built, no errors.
+- Meta descriptions: `/security` 160 chars, `/terms` 154 chars (both ≤ 160).
+- `grep -c "open-source platform" src/` — 0. `grep "Self-hosted by design"
+  src/` — 0. `grep -i "software you self-host" src/` — 0.
+- `grep -nE '\bfree\b' src/pages/privacy.astro src/pages/terms.astro` — 0.
 - Banned strings still 0 ("Nexus" outside the `astro.config.mjs` redirect path,
   SOC, certified, autopilot, disrupt, "Request access", "No credit card", €,
   `base_url`, "Babelfish Flows"). The one-sentence contract still appears in 3
