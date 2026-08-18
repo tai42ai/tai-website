@@ -274,6 +274,19 @@ booking link, used by every "Book a production audit" CTA and by `/thank-you`.
    button — see Step 18).
 3. Submit each form once to confirm the mail arrives and that the redirect lands
    on `/thank-you/?page=contact&source=…` / `?page=builders&source=…`.
+4. **Once the form flow is live** (key installed, round-trip tested in step 3),
+   switch the primary "Book a production audit" CTA from the calendar link to
+   `/contact/`, per change order §4.1 — the spec makes the contact form the
+   primary conversion path and the calendar the secondary one, so the swap only
+   happens after the form is known to deliver. The sites are
+   `src/components/NavBar.astro` (both the desktop and the mobile button) and
+   the home page hero plus the `/method` closing CTA. All four consume
+   `CALENDAR_URL` from `src/consts.ts`, so "switching" means pointing those four
+   `href` values at `/contact/` — not editing `src/consts.ts`, which the
+   thank-you page still needs.
+   **Exception — `/thank-you` keeps `CALENDAR_URL`.** Its CTA is the
+   post-submission booking step; the visitor has just submitted the form, so
+   pointing it at `/contact/` would loop them back to the form they came from.
 
 ### Activation: Plausible (founder, before publish)
 
@@ -347,6 +360,19 @@ Added after Step 18 (same sign-off, wider scope):
 - `/terms` "Effective date" was moved from February 2026 to **August 2026**
   because §7 promises the date is updated on material change and Steps 17–18
   changed §5. The founder must re-verify the date at the actual publish date.
+- **`/terms` §2 vs. `/open-source`'s boundary table — possible scope conflict,
+  for counsel/founder to resolve.** §2 licenses "the framework, plugin
+  ecosystem, **Studio UI**, and CLI" under Apache-2.0, while the boundary table
+  on `/open-source` places "the visual builder and optimizer as an operated
+  service" on the commercial side. If "Studio UI" and "the visual builder" name
+  the same artifact, §2 grants an open-source licence over something the
+  boundary table sells — and the terms wording needs to be aligned (for example
+  by naming what is open and what is the operated service). If they are
+  different artifacts, both statements stand as written. Engineering did not
+  change this blind: which artifact each name refers to is a product/legal fact,
+  not a copy edit. Note the boundary table still carries its
+  `[OPEN_COMMERCIAL_BOUNDARY — founder confirms before publish]` chip, so this
+  is inside an already-open confirmation.
 
 - `src/pages/privacy.astro` — the page claimed "no accounts, no analytics, no
   tracking, no cookies, and no forms that send us your data" and "We do not run
@@ -697,3 +723,88 @@ renames only — no section changed legal meaning:
   SOC, certified, autopilot, disrupt, "Request access", "No credit card", €,
   `base_url`, "Babelfish Flows"). The one-sentence contract still appears in 3
   source locations.
+
+## Step 20 — Cold-review fix wave 4
+
+A fourth fresh-context review. Three source fixes on the four legacy pages
+(`/company/careers`, `/terms`, `/privacy`, `/security`) plus changelog
+corrections. **No §4 marketing copy was touched** — `git diff --name-only` lists
+only those four pages and this changelog: no home, method, platform,
+open-source, about, contact, builders, or agents page.
+
+### `/company/careers`
+
+- **H1 retired positioning.** "Build the Open Agent **Platform**." →
+  "Build the Open Agent **Runtime**." The open thing is the runtime; the
+  BabelFish platform is hosted and proprietary, so the old H1 offered a
+  candidate a role building an open platform that does not exist. A word-level
+  rename — the H1's structure, classes and surrounding markup are unchanged, and
+  it now matches the runtime/platform split Steps 18–19 settled everywhere else.
+- **Dash consistency.** The "Open roles" sentence used a hyphen as a dash
+  ("developer tools - we want to talk"). Now an em dash, matching the hero
+  sentence and this page's own meta description, both of which already use one.
+  `grep -n " - " src/pages/company/careers.astro` is now 0.
+
+### Top spacing unified across all pages
+
+- `<main id="main-content" class="pt-20">` → `<main id="main-content">` in
+  `src/pages/terms.astro`, `src/pages/privacy.astro`, `src/pages/security.astro`
+  and `src/pages/company/careers.astro`. These four are the pages this branch did
+  not rebuild; the nine corrected pages all render `<main>` with no extra top
+  padding, and each page's first section carries its own vertical rhythm
+  (`py-20`/`py-24`/`lg:py-28`), so `pt-20` was a fifth of a screen of dead space
+  on the legacy pages only. Verified in the build output, not just the source:
+  `grep -rho '<main[^>]*>' dist/` now returns `<main id="main-content">` 13
+  times out of 13 pages.
+
+### Changelog corrections
+
+- **"Activation: Web3Forms" was missing the spec §4.1 CTA switch.** The step
+  list stopped at the round-trip test and never said to make `/contact/` the
+  primary CTA destination once the form works — the spec's whole reason for
+  building the form. Now step 4, naming the four `href` sites (NavBar desktop +
+  mobile, home hero, `/method` closing CTA), stating that they all consume
+  `CALENDAR_URL` from `src/consts.ts` so the switch is per-`href` and not a
+  constant edit, and recording the exception: `/thank-you` keeps the calendar
+  link, because it is the post-submission booking step and `/contact/` would
+  loop a visitor who just submitted back to the form.
+- **Spec §3's `/blog` row is a no-op, now recorded as one.** The change order
+  asks that `/blog` be unlinked from navigation while its URLs stay alive; this
+  repo has no blog — no `/blog` route, no post collection, no nav or footer link
+  — so there was nothing to unlink and no URL to keep alive. The row required no
+  change rather than having been missed.
+- **Dash rationale reconciled.** Step 18 changed a careers hyphen to an em dash
+  while Step 19 explicitly left `/security`'s hyphen dashes alone, which read as
+  two rules. There is one rule: **page-internal consistency, not a sitewide
+  sweep.** `/company/careers` is now fully em-dashed because its own meta
+  description and hero already were, so its one hyphen was the odd element on
+  the page. `/terms`, `/privacy` and `/security` are internally consistent in
+  their original hyphen-dash style and stay that way — converting them would be
+  a typographic rewrite of legal copy awaiting counsel sign-off, which is out of
+  scope for a correction branch.
+- **`/terms` casing is deliberate.** Body copy says "TAI42" because §1 defines it
+  as the legal-entity term (`TAI42, Inc. ("TAI42," "we," "us," or "our")`) and a
+  defined term must be used as defined; the meta descriptions say "tai42"
+  because that is the brand casing used in every `<title>` and description
+  sitewide. Reviewers have flagged this twice as an inconsistency — it is not
+  one, and neither side should be "fixed" to match the other.
+- The `/terms` §2 vs. `/open-source` boundary-table scope question ("Studio UI"
+  vs. "the visual builder and optimizer as an operated service") was added to
+  the legal sign-off block above, where the other counsel items live.
+
+### Gates after wave 4
+
+- `npx astro check` — 0 errors, 0 warnings, 0 hints (22 files).
+- `npm run build` — 13 pages built, no errors.
+- `grep -rni "open agent platform" src/` — 0.
+- `grep -n " - " src/pages/company/careers.astro` — 0.
+- `grep -rn "pt-20" src/` — 0; `dist/` renders `<main id="main-content">` on all
+  13 pages.
+- `grep -nE '\bfree\b'` on `/privacy`, `/terms`, `/security` — 0.
+- Banned strings still 0 ("Nexus" outside the `astro.config.mjs` redirect path,
+  SOC, certified, autopilot, disrupt, "Request access", "No credit card", €,
+  `base_url`, "Babelfish Flows"). The one-sentence contract still appears in 3
+  source locations.
+- §4 marketing pages untouched — `git diff --name-only` lists only
+  `src/pages/company/careers.astro`, `src/pages/terms.astro`,
+  `src/pages/privacy.astro`, `src/pages/security.astro`, and this changelog.
