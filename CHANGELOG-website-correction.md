@@ -151,3 +151,16 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
   email input.
 - Deleted `src/pages/company/contact.astro` (the investor / enterprise /
   developer mailto cards); `/company/contact` redirects to `/contact` (step 1).
+
+## Step 11 — Thank you (`/thank-you`)
+
+- New page `src/pages/thank-you.astro`. Copy is deliberately minimal and
+  neutral (this page's wording is not specified in §4): one short line, then the
+  booking link as the prominent action, using the sitewide CTA label.
+- Fires `qualified_form_submission` once per session via `window.plausible`,
+  with the `page` and `source` props read from the query string (both are set by
+  the form's redirect URL). No event fires without a `page` param.
+- `noindex, nofollow` meta.
+- `src/layouts/BaseLayout.astro` — added an optional `noindex` prop (used here
+  and by `/agents`) and updated the default title/description, which still
+  described the old positioning.
