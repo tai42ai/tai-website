@@ -209,3 +209,88 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
   — both became unused (their only importers were the old Home and Babelfish
   pages). Nothing is commented out or hidden; the files are gone.
 - Careers stays at `/company/careers`, unchanged and unlinked from nav/footer.
+
+## Step 16 — Placeholder list, gates, and the work outside this repo
+
+### Gates and build results
+
+- `npx astro check` — 0 errors, 0 warnings, 0 hints (20 files).
+- `npm run build` — 13 pages built, no errors. Routes: `/`, `/method`,
+  `/platform`, `/open-source`, `/about`, `/contact`, `/builders`, `/thank-you`,
+  `/agents` (unlinked, noindex), `/security`, `/privacy`, `/terms`,
+  `/company/careers`, plus the redirect pages.
+- Redirects are Astro static redirect pages (meta refresh + canonical +
+  `noindex`), not HTTP 301s — GitHub Pages cannot emit true 301s. Verified in
+  the build output: `/pricing`, `/babelfish`, `/babelfish/agentic-to-flow`,
+  `/product/babelfish`, `/product/nexus`, `/how-it-works`, `/company/about`,
+  `/company/contact`.
+
+### Open placeholders (founder fills these before publishing)
+
+| Placeholder | Where it appears |
+|---|---|
+| `[WEB3FORMS_ACCESS_KEY]` | `src/pages/contact.astro` and `src/pages/builders.astro` — the `access_key` hidden input, plus a visible note under each submit button |
+| `[DOCS_URL]` | `src/pages/open-source.astro` (body + links line), `src/pages/agents.astro`, `public/llms.txt` |
+| `[GITHUB_ORG_URL]` | `src/pages/open-source.astro` — links line (org and Discussions) |
+| `[OPEN_COMMERCIAL_BOUNDARY]` | `src/pages/open-source.astro` — note above the boundary table |
+| `[FOUNDER_CREDIBILITY_LINE]` | `src/pages/about.astro` — "Who built this" |
+| `[TEAM_AND_AGENT_ROSTER]` | `src/pages/about.astro` — "Team" |
+| `[MCP_ENDPOINT]` (gated) | `src/pages/agents.astro`; also the omitted `/llms.txt` MCP line |
+| `[TOOL_LIST]` (gated) | `src/pages/agents.astro` |
+| `[TRIAL_KEY_INSTRUCTIONS]` (gated) | `src/pages/agents.astro` |
+| `[WHITE_PAPER_URL]` (gated) | Nowhere — the "Read the technical overview" link is omitted entirely until engineering sign-off |
+
+Resolved, no longer placeholders: FOUNDER_EMAIL = `balin.miki@tai42.ai` (the
+Web3Forms account address) and CALENDAR_URL = the existing Google Calendar
+booking link, used by every "Book a production audit" CTA and by `/thank-you`.
+
+### Activation: Web3Forms (founder, before publish)
+
+1. Create a Web3Forms access key for **balin.miki@tai42.ai** at
+   https://web3forms.com — submissions are emailed to that address; no CRM, no
+   automation.
+2. Replace `[WEB3FORMS_ACCESS_KEY]` in `src/pages/contact.astro` and
+   `src/pages/builders.astro` (constant at the top of each file), and delete the
+   visible "form delivery is inactive" note under each submit button.
+3. Submit each form once to confirm the mail arrives and that the redirect lands
+   on `/thank-you?page=contact&source=…` / `?page=builders&source=…`.
+
+### Activation: Plausible (founder, before publish)
+
+1. Register the site **tai42.ai** in Plausible (or swap the provider in
+   `src/layouts/BaseLayout.astro` — it is a single script tag plus the queue
+   stub). Until the site exists, the script loads and records nothing.
+2. The only custom event is `qualified_form_submission`, with the properties
+   `page` (contact / builders) and `source` (UTM string, referrer, or "direct").
+   Enable those two custom properties in the Plausible dashboard to see them.
+
+### Outside this repo — docs (change order §5.6)
+
+1. Point `docs.tai42.ai` at the Mintlify custom domain (CNAME), then use that
+   URL wherever `[DOCS_URL]` is still a placeholder; until the CNAME is live the
+   value is the Mintlify subdomain.
+2. Change the docs landing line from "TAI42 — the OS for AI tools" to
+   "the tai42 runtime — the open runtime behind the tai42 platform".
+3. Add the one-sentence contract verbatim to the docs landing page:
+   > tai42 builds and runs its business on this runtime; the code is open; the company sells the hosted platform and enterprise layer on top — never a different core.
+4. Add a link back to tai42.ai from the docs landing page.
+
+### Outside this repo — GitHub org (change order §5.7)
+
+1. Enable Discussions on the organization (it is the community forum the
+   `/open-source` links line points to).
+2. Open the org README with the one-sentence contract, verbatim, as the first
+   line:
+   > tai42 builds and runs its business on this runtime; the code is open; the company sells the hosted platform and enterprise layer on top — never a different core.
+3. Make the license file visible at the org/repo root.
+4. Send the org URL back so `[GITHUB_ORG_URL]` can be filled on `/open-source`.
+
+### Known conflict, reported not worked around
+
+- Change order §5.1 requires the redirect `/product/nexus` → `/platform`, while
+  §1 and acceptance test #1 require zero repo-wide hits for "Nexus". The
+  redirect is implemented as specified; the string therefore survives **only**
+  as the legacy source path `"/product/nexus"` in `astro.config.mjs` and in the
+  generated redirect page under `dist/product/nexus/`. It appears nowhere in
+  page copy, navigation, or as a product name. Drop the redirect if the zero-hit
+  rule is meant to win (that route never existed in this repo anyway).
