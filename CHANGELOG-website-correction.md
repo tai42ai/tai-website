@@ -108,3 +108,19 @@ Not deployed. The founder does the voice pass, fills the open placeholders (see
 - The honest line's agents-door sentence ("If you're an AI agent, connect free
   via our MCP gateway") is **omitted entirely** — it is conditional on `/agents`
   being live, and the gate has not cleared.
+
+## Step 8 — Open Source (`/open-source`)
+
+- `src/pages/open-source.astro` — reworked to the §4.4 copy: H1 "The runtime is
+  open", the body with the [DOCS_URL] placeholder in place, the one-sentence
+  contract as a blockquote, the links line (GitHub org · GitHub Discussions ·
+  docs, all still placeholders), and the two-column open/commercial boundary
+  table built against the provisional structure, with the
+  [OPEN_COMMERCIAL_BOUNDARY] confirmation note visible above it.
+- Removed with the old page: the four-block "what's in the platform" grid, the
+  self-host section, the "TAI42 Cloud" managed-service card and its pricing link,
+  and the hard-coded GitHub/docs URLs (they are founder-confirmed placeholders
+  now).
+- **New component**: `src/components/Placeholder.astro` — a bordered, muted,
+  monospace "[LABEL — note]" chip used to keep every unfilled value visible in
+  the rendered page. No new colors, fonts, or dependencies.
