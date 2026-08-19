@@ -580,3 +580,26 @@ Remaining "audit" hits in `src/` after this step, every one classified:
 | `src/pages/contact.astro:103` — submit button "Book your production audit" | human-facing — replaced in step 19 with "Get your readiness report" |
 
 `npx astro check`: 25 files, 0 errors / 0 warnings / 0 hints.
+
+## Wave B, step 19 (spec 7d): `/contact` — the demo question made prominent
+
+`src/pages/contact.astro`. The intro and H1 ("Three questions. They save us both
+a meeting.") are unchanged.
+
+Question 1 — the demo field — is now the prominent first field: it sits in its
+own card (the existing `rounded-xl border border-gray-200` text-card token on a
+`bg-gray-50` fill), its label is set one step larger and semibold, and the
+helper text sits directly under the label, verbatim: "Paste a link, a video, or
+a sentence — anything that shows what you've built."
+
+The field is now OPTIONAL — `required` removed. Because the helper says
+"optional but encouraged", that fact is carried in the label itself —
+"Do you have a working demo today? (optional)" — following the site's form
+idiom, so it reaches screen readers rather than living only in visual copy. The
+helper paragraph is wired to the textarea with `aria-describedby="demo-help"`,
+and the box is one row taller to invite a longer answer. The other two questions
+and the name / company / email fields stay required.
+
+Submit button: "Book your production audit" → "Get your readiness report".
+
+`npx astro check`: 25 files, 0 errors / 0 warnings / 0 hints.

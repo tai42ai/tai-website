@@ -58,11 +58,24 @@ const labelClass = "block text-sm font-medium text-black mb-2";
               aria-hidden="true"
             />
 
-            <div>
-              <label class={labelClass} for="demo">
-                Do you have a working demo today? (link welcome)
+            <!-- The demo question, given the weight it deserves: it is the one
+                 answer the readiness report is built from. Optional but
+                 encouraged — said in the label, not only in the helper text, so
+                 it reaches screen readers as well. -->
+            <div class="rounded-xl border border-gray-200 bg-gray-50 p-5 lg:p-6">
+              <label class="block text-base font-semibold text-black mb-1.5" for="demo">
+                Do you have a working demo today? (optional)
               </label>
-              <textarea id="demo" name="Do you have a working demo today?" rows="3" required class={inputClass}></textarea>
+              <p id="demo-help" class="text-sm text-charcoal/60 leading-relaxed mb-3">
+                Paste a link, a video, or a sentence — anything that shows what
+                you've built.
+              </p>
+              <textarea
+                id="demo"
+                name="Do you have a working demo today?"
+                rows="4"
+                aria-describedby="demo-help"
+                class={inputClass}></textarea>
             </div>
 
             <div>
@@ -100,7 +113,7 @@ const labelClass = "block text-sm font-medium text-black mb-2";
               type="submit"
               class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
             >
-              Book your production audit
+              Get your readiness report
             </button>
 
             <div>
