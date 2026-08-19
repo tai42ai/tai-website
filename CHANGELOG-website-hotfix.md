@@ -251,3 +251,13 @@ No new components, colors, or classes (the only class added anywhere is a
 This supersedes the earlier verbatim-lowercase ruling in the correction
 changelog — founder instruction. Other intentionally lowercase copy elsewhere
 on the site was left untouched.
+
+## Step 10 — /thank-you CTA label (hotfix §2.2)
+
+`src/pages/thank-you.astro` — the calendar button label changed from
+"Book a production audit" to **"Book your production audit"**. It is the same
+`CALENDAR_URL` link with the same styling; nothing else on the page changed.
+
+The site's single-primary-CTA rule is unaffected: the nav and mobile-menu CTAs
+still read "Book a production audit" (2 instances on this page), and the
+possessive wording is the post-submission variant the hotfix asks for.
