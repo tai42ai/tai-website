@@ -3,15 +3,38 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
-import Placeholder from "../components/Placeholder.astro";
 
 export const prerender = true;
 
-// Both sections below are written and kept, but not rendered: the founder
-// supplies the credibility line and the roster before either publishes.
-// Flip a flag to true to bring that section back — nothing else changes.
-const SHOW_WHO_BUILT_THIS = false;
-const SHOW_TEAM = false;
+// The agent roster is written and kept, but not rendered: the founder supplies
+// the roster before it publishes. Flip this to true to bring the section back —
+// nothing else has to change.
+//
+// Entry format (agent + owner role, never a person's name), e.g.:
+//   { agent: "Status & reporting agent", owner: "engineering" }
+const SHOW_AGENT_ROSTER = false;
+
+const AGENT_ROSTER: { agent: string; owner: string }[] = [];
+
+const LAYERS = [
+  {
+    title: "The open-source runtime.",
+    body:
+      // The closing sentence is the one-sentence contract, byte-identical to
+      // the footer's and to the /open-source blockquote.
+      "The engine underneath everything we do is public: read the code, run it on your own infrastructure, extend it. It exists so that a small company can be deep tech an enterprise can rely on — you don't have to take our word for what the engine does. Permissions, audit, and delegated access are part of the open core, because governance is the product, not the paywall. The one-sentence contract: tai42 builds and runs its business on this runtime; the code is open; the company sells the hosted platform and enterprise layer on top — never a different core.",
+  },
+  {
+    title: "BabelFish, the platform.",
+    body:
+      "Built on that runtime and operated by us: the deterministic flow engine, the visual builder, the governance layer, and the optimizer that watches live behavior and compiles it into fast, cheap, deterministic flows. Delivered as a private, dedicated tenant your team operates — your keys, any model, your data in your tenant. One rule makes it safe: the AI has no tools. Models write, interpret, and propose; only flows touch data, systems, and money.",
+  },
+  {
+    title: "The engagements.",
+    body:
+      "We take your working demo to a production application — the readiness review, the gate, the build, acceptance you verify, a license only if you keep it. Deterministic where money moves, AI where judgment is needed, humans at a named handful of decisions. What you keep is a running application on your tenant, your flows as configuration, and us on call for the hard parts.",
+  },
+];
 ---
 
 <BaseLayout
@@ -21,7 +44,7 @@ const SHOW_TEAM = false;
   <NavBar />
 
   <main id="main-content">
-    <!-- Hero + body -->
+    <!-- Hero + opening -->
     <section class="bg-white py-20 lg:py-28">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
@@ -34,53 +57,107 @@ const SHOW_TEAM = false;
             Business automation used to mean quarters of consultants modeling
             workflows. tai42 introduces the self-driving company — business
             functions that run themselves as production applications, humans at
-            the named decisions. The industry's evidence says raw autonomy fails
-            and structured autonomy works — so we sell the structure, and we hold
-            ourselves to the same standard:
-            <strong class="font-semibold text-black">we run our own company on it, the same way we build it for our clients</strong>
-            — our product management, our operations, our own company. Our org
-            chart lists our agents next to our humans. When we say
-            production-grade, we mean: we live here.
+            the named decisions. The industry's own evidence says raw autonomy
+            fails and structured autonomy works — in Carnegie Mellon's benchmark
+            of real workplace tasks the best agents completed under a third; MIT
+            found most enterprise pilots never touched the P&amp;L; Anthropic's
+            Project Vend turned a loss into a profit purely by adding oversight
+            structure. That is why, in the applications we build, the AI has no
+            tools and humans sit at the named decisions: we sell the structure,
+            and we hold ourselves to the same standard.
           </p>
         </Reveal>
       </div>
     </section>
 
-    <!-- Who built this -->
-    {SHOW_WHO_BUILT_THIS && (
-      <section class="bg-gray-50 py-16 lg:py-20">
+    <!-- How the company is built — three layers -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-10 lg:mb-14">
+            How the company is built — three layers
+          </h2>
+        </Reveal>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          {LAYERS.map((layer, i) => (
+            <Reveal delay={100 + i * 75}>
+              <div class="card-hover bg-white rounded-xl border border-gray-200 p-6 lg:p-8 h-full">
+                <h3 class="text-xl font-bold text-black mb-3">{layer.title}</h3>
+                <p class="text-charcoal/70 leading-relaxed">{layer.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={325}>
+          <p class="max-w-3xl mt-10 lg:mt-12 text-lg text-charcoal/70 leading-relaxed">
+            <strong class="font-semibold text-black">Why the layers are separate.</strong>
+            The runtime earns trust; the platform earns its keep; the engagements
+            earn the proof. Each does one job, and none is asked to do the
+            other's — which is why the code can stay open, the platform can stay
+            private, and the engagements can stay short.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- How we hold ourselves to it -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            How we hold ourselves to it
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            Every function we automate for a client, we run inside tai42 — our
+            product management, our operations, our own company. Our org chart
+            lists our agents next to our humans, each agent with a human owner.
+            We publish no number we haven't measured on a live delivery. We claim
+            no certification we can't hand over. And every role here, including
+            the founders', ends with the same clause: …until a flow can do it.
+            When we say production-grade, we mean: we live here.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- The agent roster — hidden until the founder supplies it -->
+    {SHOW_AGENT_ROSTER && (
+      <section class="bg-gray-50 py-20 lg:py-24">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <h2 class="text-2xl font-bold text-black mb-5">Who built this</h2>
-            <Placeholder
-              block
-              label="FOUNDER_CREDIBILITY_LINE"
-              note="founder supplies; do not write one"
-            />
+            <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+              The agent roster — how tai42 runs on itself
+            </h2>
+            <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8">
+              <ul class="space-y-3">
+                {AGENT_ROSTER.map((entry) => (
+                  <li class="flex flex-wrap items-baseline gap-2 text-charcoal/70">
+                    <span class="font-semibold text-black">{entry.agent}</span>
+                    <span>— owner: {entry.owner}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Reveal>
         </div>
       </section>
     )}
 
-    <!-- Team -->
-    {SHOW_TEAM && (
-      <section class="bg-white py-16 lg:py-24">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <h2 class="text-2xl font-bold text-black mb-5">Team</h2>
-            <p class="text-charcoal/70 leading-relaxed mb-6">
-              humans (founders, engineers) and the agent workforce side by side,
-              each agent with a human owner —
-            </p>
-            <Placeholder
-              block
-              label="TEAM_AND_AGENT_ROSTER"
-              note="founder supplies; list only agents that run today"
-            />
-          </Reveal>
-        </div>
-      </section>
-    )}
+    <!-- CTA -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal>
+          <a
+            href="/contact/"
+            class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+          >
+            Get your readiness report
+          </a>
+        </Reveal>
+      </div>
+    </section>
   </main>
 
   <Footer />

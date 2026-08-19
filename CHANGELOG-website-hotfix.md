@@ -351,3 +351,40 @@ Wave B's homepage passes its own four compressed steps with `link: "/method/"`.
 Sections 4 and 5 render as two cards in one band (the security-page two-column
 card idiom) so that every text card keeps the site's white-card-on-gray-50
 contrast.
+
+## Step 13 — `/about` rebuilt (v2 §7i; supersedes §1.3 and §7g)
+
+`src/pages/about.astro` rewritten to the 7i copy, verbatim. H1 unchanged
+("The self-driving company, the honest way"). Body, in order:
+
+1. the 7i opening paragraph — it carries the 7g evidence (Carnegie Mellon, MIT,
+   Anthropic's Project Vend) as design rationale with the sources named, which
+   is where site rule 7g allows it; the meta description is derived from it;
+2. "How the company is built — three layers" — three text cards
+   (The open-source runtime. / BabelFish, the platform. / The engagements.)
+   followed by the "Why the layers are separate." paragraph;
+3. "How we hold ourselves to it" — one paragraph, rendered plainly, including
+   the clause "…until a flow can do it." (no emphasis invented beyond the
+   spec's own);
+4. the gated agent-roster section "The agent roster — how tai42 runs on itself"
+   — present but not rendered (`SHOW_AGENT_ROSTER = false`), with the entry
+   format ("Status & reporting agent" + owner: engineering) in a source comment
+   only, never rendered, and no person names anywhere;
+5. CTA **"Get your readiness report" → `/contact/`**.
+
+**"Who built this" is REMOVED**, not hidden, per v2 §1.3: the section, its
+`SHOW_WHO_BUILT_THIS` flag, the `Placeholder` import and the
+`FOUNDER_CREDIBILITY_LINE` slot are all gone from the file — zero hits for
+"Who built this" in `src/` and in `dist/`. The v1 pass had only hidden it; git
+history keeps the old markup.
+
+The one-sentence contract closes the open-source-runtime card and is
+byte-identical to the footer's. To make that literal rather than approximate,
+`src/components/Footer.astro` now holds the sentence on a single source line
+(whitespace-only change, no visual difference); the same single-line string is
+used on `/about` and, in step 15, on `/open-source`. Verified in `dist/`: an
+exact-string grep matches twice on `/about/` (card + footer).
+
+Note for the founder: the 7i paragraph contains "We claim no certification we
+can't hand over." That is a disclaimer, not a certification claim, and it is
+spec-verbatim; the banned term "certified" still has zero hits.
