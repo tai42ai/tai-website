@@ -178,3 +178,11 @@ it cannot resolve, so one page catches every deep doc path.
    does not help non-JS clients (curl, some bots, package-index link checkers).
 2. **README links in the next package release should point at
    https://docs.tai42.ai directly** rather than relying on this catcher.
+
+## Step 6 — /llms.txt Docs line filled
+
+`public/llms.txt` line 10: `- Docs: [DOCS_URL]` → `- Docs: https://docs.tai42.ai`.
+
+Nothing else on the file changed. **Confirmed: the file contains no `agents`
+line** (case-insensitive grep for "agent" in `llms.txt` returns nothing), so
+unrouting `/agents` in step 4 left no stale entry here.

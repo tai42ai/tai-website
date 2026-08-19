@@ -7,4 +7,4 @@
 - Open source: https://tai42.ai/open-source
 - About: https://tai42.ai/about
 - Builders (founding waitlist): https://tai42.ai/builders
-- Docs: [DOCS_URL]
+- Docs: https://docs.tai42.ai
