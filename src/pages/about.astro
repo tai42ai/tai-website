@@ -6,6 +6,12 @@ import Reveal from "../components/Reveal.astro";
 import Placeholder from "../components/Placeholder.astro";
 
 export const prerender = true;
+
+// Both sections below are written and kept, but not rendered: the founder
+// supplies the credibility line and the roster before either publishes.
+// Flip a flag to true to bring that section back — nothing else changes.
+const SHOW_WHO_BUILT_THIS = false;
+const SHOW_TEAM = false;
 ---
 
 <BaseLayout
@@ -41,36 +47,40 @@ export const prerender = true;
     </section>
 
     <!-- Who built this -->
-    <section class="bg-gray-50 py-16 lg:py-20">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <h2 class="text-2xl font-bold text-black mb-5">Who built this</h2>
-          <Placeholder
-            block
-            label="FOUNDER_CREDIBILITY_LINE"
-            note="founder supplies; do not write one"
-          />
-        </Reveal>
-      </div>
-    </section>
+    {SHOW_WHO_BUILT_THIS && (
+      <section class="bg-gray-50 py-16 lg:py-20">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <h2 class="text-2xl font-bold text-black mb-5">Who built this</h2>
+            <Placeholder
+              block
+              label="FOUNDER_CREDIBILITY_LINE"
+              note="founder supplies; do not write one"
+            />
+          </Reveal>
+        </div>
+      </section>
+    )}
 
     <!-- Team -->
-    <section class="bg-white py-16 lg:py-24">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <h2 class="text-2xl font-bold text-black mb-5">Team</h2>
-          <p class="text-charcoal/70 leading-relaxed mb-6">
-            humans (founders, engineers) and the agent workforce side by side,
-            each agent with a human owner —
-          </p>
-          <Placeholder
-            block
-            label="TEAM_AND_AGENT_ROSTER"
-            note="founder supplies; list only agents that run today"
-          />
-        </Reveal>
-      </div>
-    </section>
+    {SHOW_TEAM && (
+      <section class="bg-white py-16 lg:py-24">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <h2 class="text-2xl font-bold text-black mb-5">Team</h2>
+            <p class="text-charcoal/70 leading-relaxed mb-6">
+              humans (founders, engineers) and the agent workforce side by side,
+              each agent with a human owner —
+            </p>
+            <Placeholder
+              block
+              label="TEAM_AND_AGENT_ROSTER"
+              note="founder supplies; list only agents that run today"
+            />
+          </Reveal>
+        </div>
+      </section>
+    )}
   </main>
 
   <Footer />

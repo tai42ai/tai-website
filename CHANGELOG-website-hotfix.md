@@ -113,3 +113,22 @@ remain, because that step is parked.
 
 Verified in `dist/open-source/index.html`: 4 × `docs.tai42.ai`, 1 × org link,
 1 × discussions link, 0 × `<table`, 0 × bracket chips.
+
+## Step 3 — /about: "Who built this" and "Team" hidden
+
+`src/pages/about.astro`:
+
+- Two frontmatter gates added — `const SHOW_WHO_BUILT_THIS = false;` and
+  `const SHOW_TEAM = false;` — with each section's markup kept verbatim inside
+  `{FLAG && (...)}`. The `Placeholder` chips for `FOUNDER_CREDIBILITY_LINE` and
+  `TEAM_AND_AGENT_ROSTER` are preserved inside the hidden markup, so the
+  founder-facing markers survive for whoever re-enables the sections.
+- The page now renders hero + body only; the footer follows directly.
+- Verified absent from `dist/about/index.html`: the instruction sentence
+  "humans (founders, engineers) and the agent workforce side by side, each
+  agent with a human owner —" (0 hits), `FOUNDER_CREDIBILITY_LINE` (0),
+  `TEAM_AND_AGENT_ROSTER` (0), the `Team` heading (0). Only the site's usual
+  `<!-- Who built this -->` / `<!-- Team -->` section-label comments remain in
+  the HTML source, matching the comment idiom used on every other page.
+- Gate rationale lives in frontmatter comments (not emitted), so page source
+  does not advertise what is being withheld.
