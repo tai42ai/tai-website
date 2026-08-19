@@ -545,3 +545,38 @@ The hero CTA button still reads "Book a production audit" at this commit; the
 sitewide rename and retarget are step 18 (7c/7d), kept separate as specified.
 
 `npx astro check`: 25 files, 0 errors / 0 warnings / 0 hints.
+
+## Wave B, step 18 (spec 7c + 7d): primary CTA renamed and retargeted
+
+"audit" is retired from every human-facing CTA; the primary call to action is
+"Get your readiness report" and it points at `/contact/` — form first, calendar
+second.
+
+| File | Change |
+| --- | --- |
+| `src/components/NavBar.astro` | Both CTA buttons (desktop header + mobile panel): label "Book a production audit" → "Get your readiness report"; `href={CALENDAR_URL}` → `"/contact/"`; `target="_blank"` and `rel="noopener noreferrer"` removed (the link is internal now); the `CALENDAR_URL` import removed — it had no other use in the file; header comment updated |
+| `src/pages/index.astro` | Hero CTA: same label change, `href="/contact/"`, external attributes and the `CALENDAR_URL` import removed |
+| `src/pages/thank-you.astro` | Button label "Book your production audit" → "Get your readiness report" — an interim sweep; the page is rebuilt as the contact thank-you with the "Pick a time." calendar button in step 21 |
+| `src/consts.ts` | Comment updated: `CALENDAR_URL` is now documented as appearing in exactly one place on the site, the contact thank-you page. The constant itself is unchanged |
+
+Verified already correct from wave A, unchanged here: `/method`'s bottom CTA
+("Get your readiness report" → `/contact/`) and `/platform`'s two actions
+("Talk to us about a tenant" → `/contact/`, "Get your readiness report" →
+`/contact/`), plus `/platform`'s "Getting started" paragraph, which already
+carries 7c's "The readiness report is free …" wording.
+
+Remaining "audit" hits in `src/` after this step, every one classified:
+
+| Hit | Classification |
+| --- | --- |
+| `src/pages/security.astro:41,48` — "Open and auditable" (comment + heading) | product property — keep (7c exempts "auditable") |
+| `src/pages/open-source.astro:22` — boundary-table cell "permissions, audit, delegated access" (hidden) | product property — keep |
+| `src/pages/open-source.astro:79` — "Permissions, audit, and delegated access are part of the open core" | product property — keep |
+| `src/pages/about.astro:25` — same sentence inside the runtime layer card | product property — keep |
+| `src/pages/builders.astro:55` — "full audit, humans at the named decisions" | product property — keep (7c exempts "full audit") |
+| `src/pages/platform.astro:150` — card 5 title "Audit and observability, by construction." | product property — keep |
+| `src/pages/platform.astro:159,160` — hidden slot `audit-observability.png` + its alt | product property — keep (asset name from the card title) |
+| `src/pages/contact.astro:46` — hidden `subject` value "tai42.ai — production audit request" | human-facing (email subject) — replaced in step 20 with the Formspree `_subject` "[tai42] Readiness report request" |
+| `src/pages/contact.astro:103` — submit button "Book your production audit" | human-facing — replaced in step 19 with "Get your readiness report" |
+
+`npx astro check`: 25 files, 0 errors / 0 warnings / 0 hints.

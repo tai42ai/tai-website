@@ -5,7 +5,6 @@ import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
 import StepLine from "../components/StepLine.astro";
 import type { Step } from "../components/StepLine.astro";
-import { CALENDAR_URL } from "../consts";
 
 export const prerender = true;
 
@@ -80,12 +79,10 @@ const WHY_IT_HOLDS = [
 
           <div class="flex flex-wrap items-center justify-center gap-4">
             <a
-              href={CALENDAR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/contact/"
               class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
             >
-              Book a production audit
+              Get your readiness report
             </a>
           </div>
         </Reveal>
