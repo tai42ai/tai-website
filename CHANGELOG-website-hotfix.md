@@ -711,3 +711,43 @@ lands on the page without a query still counts.
 `npx astro check`: 25 files → 0 errors / 0 warnings / 0 hints (with the two new
 components, 27 files checked). `npm run build`: 14 pages (was 13 — the new
 builders thank-you), complete, no warnings.
+
+## Wave B, step 22: `CALENDAR_URL` reduced to one consumer
+
+Verification step, per 7d's "the calendar URL appears on the contact thank-you
+page and nowhere else". After steps 18 and 21, `grep -rn "CALENDAR_URL" src/`
+returns exactly three lines: the export in `src/consts.ts`, its single import in
+`src/pages/thank-you.astro`, and the one `href` on that page's "Pick a time."
+button. `NavBar.astro`, `index.astro`, and `method.astro` no longer import it.
+
+Nothing dead was left to remove: `src/consts.ts` exports only `CALENDAR_URL`,
+which still has a live consumer, so the file stays. Its comment now records the
+one-consumer rule so a future edit does not quietly reintroduce a second use.
+`src/components/Placeholder.astro` also stays — after the two Web3Forms chips
+came out in step 20 its only remaining user is the unrouted `_agents.astro`.
+
+## Gates and self-checks after wave B (steps 16–22)
+
+`npx astro check` — 27 files (two new components), **0 errors, 0 warnings,
+0 hints**.
+`npm run build` (clean `dist/`) — **14 pages, complete, no warnings**.
+
+| Check | Result |
+| --- | --- |
+| "production audit" / "Book a production audit" / "Book your production audit" | **0** in `src/`, **0** in `dist/` |
+| Remaining "audit" hits (case-insensitive, `src/`) | 8, every one a product property: `builders.astro:59` "full audit" · `open-source.astro:22` hidden boundary-table cell "permissions, audit, delegated access" · `open-source.astro:79` "Permissions, audit, and delegated access …" · `about.astro:25` the same sentence in the runtime layer card · `platform.astro:150` card 5 title "Audit and observability, by construction." · `platform.astro:159,160` the hidden `audit-observability.png` slot and its alt · `security.astro:41,48` "Open and auditable" (comment + heading). No human-facing CTA use remains |
+| Calendar URL in the build | exactly **one** file — `dist/thank-you/index.html`. `dist/thank-you-builders/index.html`: 0 hits |
+| "Get your readiness report" → `/contact/` | every occurrence: nav desktop + nav mobile (×2 on all 14 pages), home hero, home bottom CTA, `/method` bottom, `/about` bottom, `/platform` action. The one exception is `/contact`'s own submit button, which is the form's `<button type="submit">` and has no href. Home checked in `dist/index.html`: 4 anchors carrying the label, all `href="/contact/"` |
+| "travel-tech marketplace" / "Two further engagements" / "The problem" / "Why it holds" in `dist/` | **0 / 0 / 0 / 0** |
+| "under a third" in `dist/` | **1**, and only in `dist/about/index.html` — 7i's opening paragraph, where the evidence is required and the sources are named. **0** on Home, as 7f requires |
+| Home section order in `dist/index.html` | H1 "AI, from demo to production." → h2 "How it works" → the four step cards → the "Three things, one company." card → h2 "What we build" → h2 "Why it works" + the three cards → "Two other doors." + the builders door → the CTA. Matches 7f exactly |
+| Home step-line links | 4 step cards → `/method/` |
+| Bracket regex `\[[A-Z_]+[^\]]*\]` in `dist/` | **0** |
+| "web3form" in `src/` | **0** |
+| Form endpoints in `dist/` | both `action="https://formspree.io/f/PENDING_FOUNDER"` — **flagged: the two form IDs are pending the founder; the forms are wired but not live until they are swapped in** |
+| Hidden fields in `dist/` | contact: `_subject="[tai42] Readiness report request"`, `_next="https://tai42.ai/thank-you/"`, `source=""`, `_gotcha`. builders: `_subject="[tai42] Founding builder"`, `_next="https://tai42.ai/thank-you-builders/"`, `source=""`, `_gotcha` |
+| `/contact` demo field | label carries "(optional)", `aria-describedby="demo-help"` present, and `required` now appears 5× on the page (the two other questions + name, company, email) — the demo textarea is not among them |
+| `public/llms.txt` | **UNCHANGED** — no diff against the wave A tip |
+| New design-system surface | none — no new colours, fonts, or dependencies. One new component, `FormSubmissionEvent.astro`, which renders no markup at all (an inline script only), plus the new page `/thank-you-builders/` built from the existing page frame |
+
+Nothing was pushed.
