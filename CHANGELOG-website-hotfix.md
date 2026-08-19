@@ -210,3 +210,32 @@ Contact, plus the single CTA.
   `https://docs.tai42.ai`, none with `target`. On `/open-source/` — the page
   most likely to false-positive — the Docs entries render in the inactive
   style, so the active highlight is unaffected.
+
+## Step 8 — /security rewritten
+
+`src/pages/security.astro` — body replaced with the supplied copy, verbatim.
+Layout idiom unchanged: the same centered hero plus the same 2-column grid of
+four bordered cards, reusing the existing classes and the existing check icon.
+No new components, colors, or classes (the only class added anywhere is a
+`mt-3` between the two paragraphs of the fourth card).
+
+- H1: "Secure by Architecture." → **"Security by architecture"**.
+- Intro, and the four block headings and bodies, now read exactly as specified:
+  "Open and auditable", "Your infrastructure, or your tenant", "Deterministic
+  where it matters", "No outbound calls from the self-hosted runtime".
+  Rendered text was diffed against the supplied copy — verbatim match.
+- The fourth block is two separate paragraphs, each preceded by
+  `<!-- VERIFY: engineering -->`, as required: one above "The open-source
+  runtime you self-host makes no outbound calls back to us and has no required
+  cloud dependency." and one above "Nothing about your workloads is reported to
+  tai42."
+- Removed as demanded: "maximum security and accuracy, with no surprises in
+  production", "no black boxes, no hidden telemetry", every Title-Case heading
+  (all headings are sentence case now), and every " - " hyphen-as-dash — em
+  dashes throughout. Verified: `grep -c " - "` = 0 in both the source and the
+  built page; each removed phrase = 0 hits in `dist/`.
+- Meta description updated to the new intro sentence. `noindex` stays **off**,
+  as today; the section-label HTML comments were renamed to the new headings.
+- Note: the two `VERIFY: engineering` comments are HTML comments, so they do
+  ship in `dist/security/index.html` page source (2 hits). That is the
+  requested form — remove them once engineering signs the two sentences off.
