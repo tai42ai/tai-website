@@ -504,3 +504,44 @@ copy, and nothing else in this commit.
 
 The old H1 ("Your AI demo works. Production is where it dies.") now returns 0
 hits repo-wide outside the changelog and the v1 acceptance report.
+
+## Wave B, step 17 (spec 7e + 7f + 7i home card): homepage restructured
+
+`src/pages/index.astro` rebuilt to the 7f section order — hero · How it works ·
+What we build · Why it works · doors · CTA · footer.
+
+**Removed entirely (7e/7f):** the proof strip section ("In production with a
+travel-tech marketplace · Two further engagements in delivery · Built on our own
+platform — and we run our own company on the same flows."), with no replacement;
+the "The problem" heading and its paragraph (the industry statistic — no
+third-party statistics on Home); the "What we do" heading and paragraph
+(superseded by "How it works"); the heading "Why it holds". The hero is now H1 ·
+sub · CTA only, and the doors line has left it.
+
+**How it works** — the 7f paragraph verbatim, then the compressed four-step line
+built on wave A's `StepLine` component: four steps, each card linking to
+`/method/`, no stop-point labels here (`stopAfter` omitted). Step texts verbatim
+from 7f, with step 1 in the "Production readiness review (free)." form.
+
+**Three things, one company.** — 7i's text card, verbatim, directly after the
+step line and before "What we build". Its closing "(→ About)" renders as a link
+to `/about/`, so the sentence reads as written and the arrow is the affordance.
+
+**What we build** — 7f's paragraph verbatim, new section.
+
+**Why it works** — the three existing cards, byte-identical bodies and titles;
+only the section heading text changed from "Why it holds".
+
+**The doors block (7e)** — its own section after "Why it works", visually
+separated, using the existing text-card styling (`bg-white rounded-xl border
+border-gray-200` on a `bg-gray-50` band): lead line "Two other doors." then the
+builders door, "For builders → join the founding waitlist" → `/builders/`. The
+agents door is NOT rendered — `/agents` is not live. The footer "Doors" list is
+untouched.
+
+**Bottom CTA** — "Get your readiness report" → `/contact/`.
+
+The hero CTA button still reads "Book a production audit" at this commit; the
+sitewide rename and retarget are step 18 (7c/7d), kept separate as specified.
+
+`npx astro check`: 25 files, 0 errors / 0 warnings / 0 hints.

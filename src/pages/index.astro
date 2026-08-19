@@ -3,9 +3,39 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
+import StepLine from "../components/StepLine.astro";
+import type { Step } from "../components/StepLine.astro";
 import { CALENDAR_URL } from "../consts";
 
 export const prerender = true;
+
+// The compressed four-step form of the /method step line: same component, no
+// stop-point labels here, every step links through to the full five-step page.
+const STEPS: Step[] = [
+  {
+    title: "Production readiness review (free).",
+    body:
+      "From a walkthrough and, if you can share them, structural traces — no access, no data — we assess your demo, your definitions, and your integration surface.",
+    link: "/method/",
+  },
+  {
+    title: "Build.",
+    body:
+      "Your system on our platform — deterministic where it must be, intelligent where it should be, instrumented everywhere.",
+    link: "/method/",
+  },
+  {
+    title: "Acceptance.",
+    body: "Pass/fail criteria you test yourself.",
+    link: "/method/",
+  },
+  {
+    title: "Run.",
+    body:
+      "Your team operates it on a private tenant; we stay for the hard parts.",
+    link: "/method/",
+  },
+];
 
 const WHY_IT_HOLDS = [
   {
@@ -33,7 +63,7 @@ const WHY_IT_HOLDS = [
   <NavBar />
 
   <main id="main-content">
-    <!-- Hero -->
+    <!-- Hero — H1 · sub · CTA only -->
     <section class="bg-white py-20 lg:py-28">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Reveal>
@@ -62,64 +92,73 @@ const WHY_IT_HOLDS = [
       </div>
     </section>
 
-    <!-- Proof strip + doors line -->
-    <section class="bg-gray-50 py-10">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <Reveal>
-          <p class="text-sm text-charcoal/70 leading-relaxed">
-            In production with a travel-tech marketplace &middot; Two further
-            engagements in delivery &middot; Built on our own platform — and we
-            run our own company on the same flows.
-          </p>
-          <p class="mt-4 text-sm">
-            <a href="/builders/" class="font-medium text-crimson hover:text-burgundy transition-colors">
-              For builders → join the founding waitlist
-            </a>
-          </p>
-        </Reveal>
-      </div>
-    </section>
-
-    <!-- The problem -->
-    <section class="bg-white py-20 lg:py-24">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
-            The problem
-          </h2>
-          <p class="text-lg text-charcoal/70 leading-relaxed">
-            The industry's own numbers: the best AI agents complete under a
-            third of real workplace tasks. Most enterprise AI pilots never touch
-            the P&amp;L. The gap isn't the model — it's the missing structure
-            around it.
-          </p>
-        </Reveal>
-      </div>
-    </section>
-
-    <!-- What we do -->
+    <!-- How it works -->
     <section class="bg-gray-50 py-20 lg:py-24">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
-            What we do
+            How it works
           </h2>
           <p class="text-lg text-charcoal/70 leading-relaxed">
-            We rebuild your demo as a production system: deterministic flows
-            wherever money, prices, or commitments move; AI wherever judgment is
-            needed; humans at a named handful of decisions. Then we run it with
-            you, measure everything, and hand you the controls.
+            We rebuild your demo as a production application: deterministic
+            flows wherever money, prices, or commitments move; AI wherever
+            judgment is needed; humans at a named handful of decisions. Then we
+            run it with you, measure everything, and hand you the controls.
+          </p>
+        </Reveal>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 lg:mt-16">
+        <StepLine steps={STEPS} />
+      </div>
+
+      <!-- Three things, one company -->
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 lg:mt-20">
+        <Reveal>
+          <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8">
+            <h3 class="text-xl font-bold text-black mb-3">
+              Three things, one company.
+            </h3>
+            <p class="text-charcoal/70 leading-relaxed">
+              An open-source runtime — the engine, public, read it and run it.
+              BabelFish, the platform built on that runtime — private tenants
+              your team operates, where the engineering lives. And the
+              engagements we deliver with it — your demo to a production
+              application, humans at the decisions you name. We run our own
+              company on all three. (<a
+                href="/about/"
+                class="font-medium text-crimson hover:text-burgundy transition-colors"
+                >&rarr; About</a
+              >)
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- What we build -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            What we build
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            Customer-facing commerce applications on messaging channels —
+            WhatsApp, Telegram, SMS, web. Internal operating systems in the
+            tools your team already uses — Slack, Jira. Machine-facing products
+            behind an MCP gateway. One engine behind all of them.
           </p>
         </Reveal>
       </div>
     </section>
 
-    <!-- Why it holds -->
+    <!-- Why it works -->
     <section class="bg-white py-20 lg:py-24">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <h2 class="text-3xl sm:text-4xl font-bold text-black text-center mb-14">
-            Why it holds
+            Why it works
           </h2>
         </Reveal>
 
@@ -133,6 +172,41 @@ const WHY_IT_HOLDS = [
             </Reveal>
           ))}
         </div>
+      </div>
+    </section>
+
+    <!-- The other doors -->
+    <section class="bg-gray-50 py-16 lg:py-20">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <p class="text-lg text-charcoal/70 leading-relaxed mb-6">
+            Two other doors.
+          </p>
+          <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8">
+            <p>
+              <a
+                href="/builders/"
+                class="font-medium text-crimson hover:text-burgundy transition-colors"
+              >
+                For builders &rarr; join the founding waitlist
+              </a>
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal>
+          <a
+            href="/contact/"
+            class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+          >
+            Get your readiness report
+          </a>
+        </Reveal>
       </div>
     </section>
   </main>
