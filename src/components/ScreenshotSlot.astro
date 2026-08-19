@@ -1,8 +1,9 @@
 ---
 // ScreenshotSlot — a product screenshot that is not published yet. The slot
 // stays in the page with its real path and alt text; nothing renders (no <img>,
-// no empty frame) until the file exists and `show` is flipped to true on that
-// one instance. No placeholder text is ever shown to a visitor.
+// no empty frame) until `show` is flipped to true on that one instance — the
+// flag alone gates the markup, so drop the file into public/ BEFORE flipping
+// or the image renders broken. No placeholder text is ever shown to a visitor.
 
 interface Props {
   /** Path under /public, e.g. "/images/platform/visual-builder.png". */

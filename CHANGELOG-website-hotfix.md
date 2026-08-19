@@ -62,9 +62,9 @@ This list supersedes every earlier "parked" note in this file.
    correct and stays as written** — it is the org's canonical Discussions path
    and starts resolving the moment a source repo is designated; the fix is on
    GitHub, not in this repo.
-8. **"Read the technical overview" returns to `/platform` card 1** once
+9. **"Read the technical overview" returns to `/platform` card 1** once
    engineering signs the overview off; 7j removed the link for now.
-9. **Live end-to-end form test** — blocked on item 1. The procedure will be in
+10. **Live end-to-end form test** — blocked on item 1. The procedure will be in
    `HOTFIX-REPORT.md`.
 
 ---
@@ -1056,4 +1056,4 @@ Gates after this wave: `npx astro check` — 27 files, **0 errors, 0 warnings,
 unchanged (byte-identical, all 40 files). Files touched:
 `src/pages/about.astro`, `CHANGELOG-website-hotfix.md`.
 
-Nothing was committed or pushed.
+Nothing was pushed.
