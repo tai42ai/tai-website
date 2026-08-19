@@ -461,3 +461,25 @@ Verified in `dist/open-source/index.html`: the contract sentence matches the
 footer's byte for byte (2 exact-string hits: body + footer), "free forever" has
 0 hits (table hidden), and the docs / GitHub / Discussions URLs are the §0
 values.
+
+## Gates and self-checks after wave A (steps 11–15)
+
+`npx astro check` — 25 files, **0 errors, 0 warnings, 0 hints**.
+`npm run build` (clean `dist/`) — **13 pages, complete, no warnings**.
+
+| Check | Result |
+| --- | --- |
+| "Method" as a nav label or page title | 0 — gone from `src/` and from every built page; the route `/method/` is unchanged and `/how-it-works` is still the legacy redirect stub |
+| `/method` step line | 5 numbered steps + exactly 2 "you can leave here" stop-points in `dist/method/index.html`; six sections render in the 7h order |
+| "Who built this" | 0 hits in `src/`, 0 in `dist/` (removed, not hidden) |
+| Screenshot slots | 3 `ScreenshotSlot` instances on `/platform`, all `show=false`; `dist/platform/index.html` contains no `images/platform` reference and no `<img>` beyond the two chrome logos |
+| Old /platform mock | `Router` 0, `Extractor` 0, `greet_user` 0, `version history` 0, `technical overview` 0 in `dist/platform/index.html` |
+| Contract sentence | byte-identical everywhere: footer on all 13 real pages, plus a second exact-string hit on `/about` (runtime card) and on `/open-source` (blockquote). **Not** in the `/platform` body — see the conflict flagged in step 14 |
+| Banned strings in `dist/` | Nexus 0 · Text-to-Flow 0 · Text to Flow 0 · Request access 0 · No credit card 0 · AGENTIC GATEWAY 0 · autopilot 0 · disrupt 0 · SOC 2 0 · SOC2 0 · certified 0 · € 0 · 3,500 0 · base_url 0 |
+| "production audit" | 30 hits, all outside wave A's pages' bodies and all wave B's to sweep (7c/7d): 27 × the nav/mobile CTA "Book a production audit" (2 per page × 13 + 1 homepage hero), 2 × "Book your production audit" (thank-you), 1 × the `/contact` form subject value |
+| Bracket regex `\[[A-Z_]+[^\]]*\]` in `dist/` | 4 × `[WEB3FORMS_ACCESS_KEY]` only (contact + builders) — wave B |
+| Internal links in the touched files | all trailing-slashed: `/contact/` ×4, `/open-source/` ×2, `/method/`, `/builders/` |
+| New design-system surface | none — no new colours, fonts, or dependencies. Two components added (`StepLine.astro`, `ScreenshotSlot.astro`) and one button variant composed from existing tokens (white/gray-200 outline) for the secondary action next to the primary CTA on `/platform` and `/open-source` |
+
+Wave A did not touch: the homepage, the CTA button label/target, `/contact`,
+`/builders`, `/thank-you`. Nothing was pushed.
