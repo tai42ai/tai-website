@@ -147,3 +147,34 @@ Verified in `dist/open-source/index.html`: 4 × `docs.tai42.ai`, 1 × org link,
 - Verified: a clean `npm run build` emits **12** pages (was 13) and there is no
   `dist/agents/` directory. A repo-wide grep finds no remaining link to
   `/agents` in any page, component, or `public/llms.txt`.
+
+## Step 5 — doc-path redirects via the 404 page
+
+New file `src/pages/404.astro`. GitHub Pages serves `404.html` for every route
+it cannot resolve, so one page catches every deep doc path.
+
+- Site-styled and minimal: `BaseLayout` (with `noindex`), `NavBar`, one `<h1>`
+  ("Page not found"), one line of body copy, one link home using the existing
+  crimson button classes, `Footer`. No new components, colors, or copy patterns.
+- At the very top of the body, before the nav renders, an `is:inline` script
+  matches `^/(getting-started|concepts|guides|reference)(/|$)` against
+  `location.pathname` and, on a match, `location.replace()`s to
+  `"https://docs.tai42.ai" + pathname + search + hash` — path, query, and
+  fragment are all preserved. Regex behaviour spot-checked:
+  `/getting-started/installation`, `/concepts/layering`, `/guides/`,
+  `/reference`, `/reference/cli/run` all match; `/getting-startedX`, `/about/`,
+  `/platform/`, `/` do not.
+- This fixes the PyPI `tai42-*` README links to `https://tai42.ai/getting-started/*`,
+  `/concepts/*`, `/guides/*`, `/reference/*`, which all 404 today.
+- Verified: the build emits `dist/404.html` and the redirect script is present
+  inside it.
+
+**Flagged — two caveats:**
+
+1. **This is a client-side redirect, not a true 301.** GitHub Pages cannot serve
+   server-side wildcard redirects, so the browser first receives the 404 page
+   (HTTP 404) and the script then replaces the location. It works for humans and
+   for crawlers that execute JS; it does not pass link equity like a 301 and it
+   does not help non-JS clients (curl, some bots, package-index link checkers).
+2. **README links in the next package release should point at
+   https://docs.tai42.ai directly** rather than relying on this catcher.

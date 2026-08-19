@@ -1,0 +1,60 @@
+---
+// 404 — also the doc-path redirector. GitHub Pages serves this file for every
+// unknown route, so the inline script below catches the deep doc paths that
+// PyPI package READMEs point at (/getting-started/*, /concepts/*, /guides/*,
+// /reference/*) and sends them to the docs site. Client-side, not a 301:
+// GitHub Pages cannot do server-side wildcard redirects.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="Page not found — tai42"
+  description="That page doesn't exist on tai42.ai."
+  noindex
+>
+  <script is:inline>
+    (function () {
+      var docPaths = /^\/(getting-started|concepts|guides|reference)(\/|$)/;
+      var path = window.location.pathname;
+      if (docPaths.test(path)) {
+        window.location.replace(
+          "https://docs.tai42.ai" +
+            path +
+            window.location.search +
+            window.location.hash
+        );
+      }
+    })();
+  </script>
+
+  <NavBar />
+
+  <main id="main-content">
+    <!-- Not found -->
+    <section class="bg-white py-20 lg:py-28">
+      <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-6">
+            Page not found
+          </h1>
+          <p class="text-lg text-charcoal/70 leading-relaxed mb-10">
+            That page doesn't exist here.
+          </p>
+          <a
+            href="/"
+            class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+          >
+            Go to the homepage
+          </a>
+        </Reveal>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
