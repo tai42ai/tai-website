@@ -1,0 +1,23 @@
+---
+// ScreenshotSlot — a product screenshot that is not published yet. The slot
+// stays in the page with its real path and alt text; nothing renders (no <img>,
+// no empty frame) until the file exists and `show` is flipped to true on that
+// one instance. No placeholder text is ever shown to a visitor.
+
+interface Props {
+  /** Path under /public, e.g. "/images/platform/visual-builder.png". */
+  src: string;
+  alt: string;
+  /** Flip to true once the file is in the repo. */
+  show?: boolean;
+  class?: string;
+}
+
+const { src, alt, show = false, class: className = "" } = Astro.props;
+---
+
+{show && (
+  <figure class:list={["mt-6 overflow-hidden rounded-xl border border-gray-200 bg-white", className]}>
+    <img src={src} alt={alt} class="block w-full h-auto" loading="lazy" decoding="async" />
+  </figure>
+)}

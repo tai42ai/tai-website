@@ -388,3 +388,50 @@ exact-string grep matches twice on `/about/` (card + footer).
 Note for the founder: the 7i paragraph contains "We claim no certification we
 can't hand over." That is a disclaimer, not a certification claim, and it is
 spec-verbatim; the banned term "certified" still has zero hits.
+
+## Step 14 — `/platform` rebuilt, benefits-led (v2 §7j; supersedes §6)
+
+`src/pages/platform.astro` rewritten to the 7j copy, verbatim: H1 · sub ·
+"What it runs" · "What you get" (the six text cards, in the spec's order) ·
+"Getting started" · "The honest line" · actions. The actions row carries the
+primary **"Get your readiness report" → `/contact/`** plus
+**"Talk to us about a tenant" → `/contact/`**; the meta description is the new
+sub-line. The `<title>` ("BabelFish — one engine for business functions in
+production — tai42") is composed, not spec copy — 7j gives no title.
+
+Removed, per the 7j remove-list: the HTML builder mock (the flow-canvas SVG with
+the Router / Extractor / Validator steps and the `greet_user` version-history
+widget), the standalone visual-builder caption, the old "Enterprise by design" /
+"Own the logic" / "The rule that makes it safe" blocks and the
+Observe→Identify→Compile-adjacent captions (that content now lives in card 1),
+any sub-brand split, and the "Read the technical overview" link. Zero hits in
+`dist/platform/index.html` for `Router`, `Extractor`, `greet_user`,
+`version history`, `Nexus`, `technical overview`, `€`.
+
+The agents sentence is deliberately **not** in the honest line: `/agents` is not
+live, so the gate 7c/7j sets is not cleared.
+
+Three hidden screenshot slots via the new `src/components/ScreenshotSlot.astro`
+(props: `src`, `alt`, `show` — default `false`). Nothing renders while `show` is
+false: no `<img>`, no empty frame, no placeholder text. Instances:
+
+| Card | File (drop into `/public/images/platform/`) | alt |
+| --- | --- | --- |
+| 1 | `example-flow.png` | "Deterministic where it matters, generative where it's wanted." |
+| 4 | `visual-builder.png` | "the visual builder — guardrails, versioned flows, instant rollback" (§0) |
+| 5 | `audit-observability.png` | "Audit and observability, by construction." |
+
+Verified: `images/platform` has zero hits in the built page.
+
+### ⚠ CONFLICT FOR THE FOUNDER — the /platform contract instance
+
+**7j removes the `/platform` contract instance required by Change Order v1.5
+§4.4 — the footer instance still renders on every page; founder should confirm.**
+The v1 hotfix recorded the one-sentence open-source contract in three places
+(footer, `/open-source` body, `/platform` body) because v1.5 §4.4 required it in
+the `/platform` honest-line block. The 7j copy for `/platform` does not contain
+that sentence, and nothing was invented into the page — so the body instance is
+gone. The sentence is still present *on* `/platform` because the footer renders
+on every page (exact-string grep: 1 hit on `dist/platform/index.html`). v2's own
+acceptance (§7k, §8) only requires the footer, `/open-source`, and `/about`
+instances, all of which match verbatim. Founder decides whether §4.4 stands.
