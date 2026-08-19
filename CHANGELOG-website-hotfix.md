@@ -435,3 +435,29 @@ gone. The sentence is still present *on* `/platform` because the footer renders
 on every page (exact-string grep: 1 hit on `dist/platform/index.html`). v2's own
 acceptance (§7k, §8) only requires the footer, `/open-source`, and `/about`
 instances, all of which match verbatim. Founder decides whether §4.4 stands.
+
+## Step 15 — `/open-source` rebuilt (v2 §7k; supersedes the §1.2 fixes)
+
+`src/pages/open-source.astro` rewritten to the 7k copy, verbatim, in the spec's
+order: H1 "The runtime is open" · "Why we did it" · "What it is" (with the
+`Links: Docs · GitHub` line) · the one-sentence contract as a blockquote · the
+hidden boundary table · "What we promise about it" · "How we run it" (GitHub
+Discussions linked; "Install from PyPI; start at the docs." with the docs
+linked) · actions **"Read the docs" → https://docs.tai42.ai** and
+**"GitHub" → https://github.com/tai42ai**. The meta description is the first
+sentence of "Why we did it".
+
+License: the page states Apache-2.0 as the spec writes it — confirmed by the
+orchestrator against the GitHub API for all public `tai42ai` repos (§0/§7k).
+
+The boundary table keeps the existing `SHOW_BOUNDARY_TABLE = false` mechanism
+(nothing rendered while false); its cell contents are updated to the 7k lists,
+one item per line per cell — Open (the engine · self-hosting · permissions,
+audit, delegated access) and Commercial (managed private tenants · the visual
+builder and optimizer as an operated service · delivery guarantees and
+acceptance-backed engagements · support) — under the 7k column headings.
+
+Verified in `dist/open-source/index.html`: the contract sentence matches the
+footer's byte for byte (2 exact-string hits: body + footer), "free forever" has
+0 hits (table hidden), and the docs / GitHub / Discussions URLs are the §0
+values.

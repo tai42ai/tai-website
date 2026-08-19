@@ -15,10 +15,11 @@ const DOCS_URL = "https://docs.tai42.ai";
 const GITHUB_ORG_URL = "https://github.com/tai42ai";
 const GITHUB_DISCUSSIONS_URL = "https://github.com/orgs/tai42ai/discussions";
 
+// One item per line per cell.
 const OPEN_ROWS = [
-  "flow engine",
+  "the engine",
   "self-hosting",
-  "permissions, audit, and delegated access",
+  "permissions, audit, delegated access",
 ];
 
 const COMMERCIAL_ROWS = [
@@ -31,82 +32,89 @@ const COMMERCIAL_ROWS = [
 
 <BaseLayout
   title="The runtime is open — tai42"
-  description="The core engine behind our platform is public — read the code, run it, extend it."
+  description="Everything we build runs on one engine — our own company included."
 >
   <NavBar />
 
   <main id="main-content">
-    <!-- Hero -->
+    <!-- Hero + Why we did it -->
     <section class="bg-white py-20 lg:py-28">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-6">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-10">
             The runtime is open
           </h1>
         </Reveal>
         <Reveal delay={100}>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            Why we did it
+          </h2>
           <p class="text-lg text-charcoal/70 leading-relaxed">
-            The core engine behind our platform is public — read the code, run
-            it, extend it. Documentation lives at <a href={DOCS_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">docs.tai42.ai</a>.
-            We answer issues weekly, in
-            batches, because our engineers' first job is shipping client systems
-            on this same runtime. That's the point: this isn't a showcase repo —
-            it's the thing we bet our own delivery on.
+            Everything we build runs on one engine — our own company included.
+            That engine is public, under the Apache-2.0 license: read it, run it
+            on your own infrastructure, take it, change it, build on it. We did
+            this for three reasons. Trust: a small company can be deep tech an
+            enterprise relies on only if you don't have to take our word for
+            what the engine does. Honesty: we say the AI has no tools and money
+            moves only through verified flows — the code is how you check. And a
+            foundation for others: the runtime is the on-ramp for builders who
+            will one day serve their own clients on our platform, and the
+            backbone everything we operate stands on.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- What it is -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            What it is
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            An open-source runtime for MCP tools, agents, and workflows — the
+            server that runs them: where tools live, who may call them, what
+            happens when one needs OAuth, a schedule, or a human sign-off.
+            Permissions, audit, and delegated access are part of the open core,
+            because governance is the product, not the paywall.
+          </p>
+          <p class="mt-6 text-lg text-charcoal/70 leading-relaxed">
+            Links:
+            <a href={DOCS_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">Docs</a>
+            ·
+            <a href={GITHUB_ORG_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">GitHub</a>
           </p>
         </Reveal>
       </div>
     </section>
 
     <!-- The one-sentence contract -->
-    <section class="bg-gray-50 py-16 lg:py-20">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <blockquote class="border-l-2 border-crimson/30 pl-5 text-xl text-charcoal/80 leading-relaxed">
-            tai42 builds and runs its business on this runtime; the code is open;
-            the company sells the hosted platform and enterprise layer on top —
-            never a different core.
-          </blockquote>
-        </Reveal>
-      </div>
-    </section>
-
-    <!-- Links -->
     <section class="bg-white py-16 lg:py-20">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <h2 class="text-2xl font-bold text-black mb-5">Links</h2>
-          <ul class="space-y-3 text-charcoal/70">
-            <li class="flex flex-wrap items-baseline gap-2">
-              <span>GitHub org</span>
-              <a href={GITHUB_ORG_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">github.com/tai42ai</a>
-            </li>
-            <li class="flex flex-wrap items-baseline gap-2">
-              <span>GitHub Discussions (the community forum)</span>
-              <a href={GITHUB_DISCUSSIONS_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">github.com/orgs/tai42ai/discussions</a>
-            </li>
-            <li class="flex flex-wrap items-baseline gap-2">
-              <span>docs</span>
-              <a href={DOCS_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">docs.tai42.ai</a>
-            </li>
-          </ul>
+          <blockquote class="border-l-2 border-crimson/30 pl-5 text-xl text-charcoal/80 leading-relaxed">tai42 builds and runs its business on this runtime; the code is open; the company sells the hosted platform and enterprise layer on top — never a different core.</blockquote>
         </Reveal>
       </div>
     </section>
 
-    <!-- Boundary table -->
+    <!-- What's open, what's commercial — hidden until the founder confirms -->
     {SHOW_BOUNDARY_TABLE && (
       <section class="bg-gray-50 py-16 lg:py-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
+            <h2 class="text-3xl sm:text-4xl font-bold text-black mb-8">
+              What's open, what's commercial
+            </h2>
             <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white">
               <table class="w-full text-left border-collapse">
                 <thead>
                   <tr class="border-b border-gray-200">
                     <th class="w-1/2 px-6 py-4 text-sm font-bold text-black align-top">
-                      Open (the runtime, free forever)
+                      Open — the runtime, free forever
                     </th>
                     <th class="w-1/2 px-6 py-4 text-sm font-bold text-black align-top border-l border-gray-200">
-                      Commercial (the platform)
+                      Commercial — BabelFish, the platform
                     </th>
                   </tr>
                 </thead>
@@ -130,6 +138,64 @@ const COMMERCIAL_ROWS = [
         </div>
       </section>
     )}
+
+    <!-- What we promise about it -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            What we promise about it
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            The license stays what it is — no relicensing, no moving the line.
+            Nothing we call open is anything less than open. The runtime we
+            publish is the runtime we run.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- How we run it -->
+    <section class="bg-white py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+            How we run it
+          </h2>
+          <p class="text-lg text-charcoal/70 leading-relaxed">
+            We answer issues weekly, in batches, because our engineers' first job
+            is shipping client systems on this same runtime — that's the point:
+            this isn't a showcase repo, it's the thing we bet our own delivery
+            on. Questions and proposals:
+            <a href={GITHUB_DISCUSSIONS_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">GitHub Discussions</a>.
+            Install from PyPI; start at
+            <a href={DOCS_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">the docs</a>.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+
+    <!-- Actions -->
+    <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={DOCS_URL}
+              class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+            >
+              Read the docs
+            </a>
+            <a
+              href={GITHUB_ORG_URL}
+              class="btn-hover inline-flex items-center justify-center bg-white text-charcoal border border-gray-200 hover:border-crimson/40 hover:text-crimson rounded-lg px-8 py-3.5 font-semibold transition-colors"
+            >
+              GitHub
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
   </main>
 
   <Footer />
