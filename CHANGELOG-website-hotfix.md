@@ -186,3 +186,27 @@ it cannot resolve, so one page catches every deep doc path.
 Nothing else on the file changed. **Confirmed: the file contains no `agents`
 line** (case-insensitive grep for "agent" in `llms.txt` returns nothing), so
 unrouting `/agents` in step 4 left no stale entry here.
+
+## Step 7 — Docs tab in the nav and the footer
+
+Order is now Home · Method · Platform · Open Source · **Docs** · About ·
+Contact, plus the single CTA.
+
+- `src/components/NavBar.astro` — one entry added to the `NAV_LINKS` array
+  (`{ href: "https://docs.tai42.ai", label: "Docs" }`), which feeds **both** the
+  desktop block and the mobile panel, so the external href flows through
+  cleanly and Docs is styled identically to the other items in each block. No
+  `target="_blank"`: it opens in the same tab, as required.
+- `isActive()` now returns `false` immediately for any href that does not start
+  with `/`. Without that guard `normalize()` would have compared the request
+  path against a full URL — harmless in practice, but the explicit guard makes
+  "off-site links are never highlighted" a rule rather than an accident. The
+  header comment was updated to the new order.
+- `src/components/Footer.astro` — the same entry added in the same position to
+  `SITE_LINKS` (the site-links column), rendered with the column's existing
+  link styling. The column now carries seven links; its comment was updated.
+- Verified in `dist/about/index.html`: exactly 3 `Docs` links
+  (desktop nav, mobile panel, footer), all pointing at
+  `https://docs.tai42.ai`, none with `target`. On `/open-source/` — the page
+  most likely to false-positive — the Docs entries render in the inactive
+  style, so the active highlight is unaffected.

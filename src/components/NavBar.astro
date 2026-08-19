@@ -1,13 +1,16 @@
 ---
 import { CALENDAR_URL } from "../consts";
 
-// NavBar — Home · Method · Platform · Open Source · About · Contact, plus the
-// one primary CTA ("Book a production audit").
+// NavBar — Home · Method · Platform · Open Source · Docs · About · Contact,
+// plus the one primary CTA ("Book a production audit"). Docs points at the
+// separate docs site and opens in the same tab, styled like every other item.
 // Compare paths with trailing slashes stripped, so a link written as "/method/"
-// matches the request path whether or not it carries the slash.
+// matches the request path whether or not it carries the slash. Absolute
+// (off-site) hrefs are never active.
 const normalize = (path: string) => path.replace(/\/+$/, "") || "/";
 const pathname = normalize(Astro.url.pathname);
 const isActive = (href: string) => {
+  if (!href.startsWith("/")) return false;
   const target = normalize(href);
   return target === "/" ? pathname === "/" : pathname === target || pathname.startsWith(target + "/");
 };
@@ -19,6 +22,7 @@ const NAV_LINKS = [
   { href: "/method/", label: "Method" },
   { href: "/platform/", label: "Platform" },
   { href: "/open-source/", label: "Open Source" },
+  { href: "https://docs.tai42.ai", label: "Docs" },
   { href: "/about/", label: "About" },
   { href: "/contact/", label: "Contact" },
 ];
