@@ -670,3 +670,44 @@ Roadmap: replace the third-party form backend with an intake endpoint on the
 tai42 runtime — the first internal inbound flow.
 
 `npx astro check`: 25 files, 0 errors / 0 warnings / 0 hints.
+
+## Wave B, step 21 (spec 7d): the thank-you pages split in two
+
+One thank-you page could not serve both forms once 7d moved the calendar behind
+the contact form only, so there are now two — and the route, not a query
+parameter, says which form was submitted.
+
+**`src/pages/thank-you.astro` — the CONTACT thank-you** (the contact form's
+`_next`). Rebuilt to the 7d copy: heading "Thanks — we'll read this before we
+meet.", the single line "Pick a time and we'll come to the call having read what
+you sent.", and the calendar as a button reading "Pick a time." pointing at
+`CALENDAR_URL`. This is the ONLY place on the site the calendar URL appears —
+confirmed in the build: `calendar.google.com` matches exactly one file in
+`dist/`, `dist/thank-you/index.html`. The link keeps `target="_blank"` and
+`rel="noopener noreferrer"` because it is genuinely external. `noindex` kept.
+
+**`src/pages/thank-you-builders.astro` → `/thank-you-builders/` — the BUILDERS
+thank-you** (new; the builders form's `_next`). Same page frame, same tokens,
+deliberately no calendar: founding partners are contacted, not booked. Heading
+"Thanks — you're on the list."; the body says back the /builders honest line
+rather than inventing a new promise — "Founding partners are invited in small
+batches as delivery capacity opens. We'll be in touch when it opens for yours."
+`noindex` set. `dist/thank-you-builders/index.html` contains 0 calendar hits.
+
+**`src/components/FormSubmissionEvent.astro`** (new) — the Plausible
+`qualified_form_submission` event, lifted out of the old thank-you page so both
+pages share one implementation. It takes a `page` prop, so the event's `page`
+property comes from the route (`"contact"` / `"builders"`) and can no longer be
+lost or spoofed by a redirect that drops its query string. `source` still
+arrives in the query, stamped onto `_next` by `FormSourceScript`, and the
+sessionStorage dedupe key (page + source) is unchanged. Verified in the build:
+`page = "contact"` in `dist/thank-you/`, `page = "builders"` in
+`dist/thank-you-builders/`.
+
+**Dropped:** the old `?page=` query mechanism, and with it the old script's
+`if (!page) return;` guard — the route now encodes the form, so a visitor who
+lands on the page without a query still counts.
+
+`npx astro check`: 25 files → 0 errors / 0 warnings / 0 hints (with the two new
+components, 27 files checked). `npm run build`: 14 pages (was 13 — the new
+builders thank-you), complete, no warnings.
