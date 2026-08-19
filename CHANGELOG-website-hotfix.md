@@ -317,3 +317,37 @@ in step 12.
 
 The CTA button's label and target are untouched here — 7c/7d retarget it in
 wave B.
+
+## Step 12 — `/method` rebuilt as "How it works" (v2 §7h)
+
+`src/pages/method.astro` rewritten to the 7h copy, verbatim. Six sections in
+order:
+
+1. the five steps, as a horizontal step line (new component, below) with the two
+   "you can leave here" stop-points between steps 2→3 and 4→5;
+2. "What's in the readiness report" — text card with the intro line and the
+   six-item list;
+3. "Where humans stay";
+4. "What we ask of you" — text card;
+5. "What you keep" — text card;
+6. "Who we work with (the honest filter)".
+
+H1 is "How it works"; the intro is the 7h paragraph and the meta description is
+derived from it. Bottom CTA: **"Get your readiness report" → `/contact/`** (the
+calendar link is gone from this page — 7d puts it on the contact thank-you page
+only). Step 1 now reads "The production readiness review (free, entry)." per
+7h, which supersedes the 7c wording.
+
+New component `src/components/StepLine.astro` — the only markup this wave adds.
+It takes `steps` (`{ title, body, link? }[]`), optional `stopAfter` (1-based
+step numbers a stop-point follows) and `stopLabel` (default
+"you can leave here"). Horizontal rail with numbered nodes on `lg:` and up,
+stacked on mobile; when a step carries `link`, its card becomes an anchor. It is
+built only from existing tokens and idioms — the crimson/10 numbered node from
+the old /method list, the `bg-white rounded-xl border border-gray-200` card, the
+`.reveal` and `.card-hover` classes. No new colours, fonts, or dependencies.
+Wave B's homepage passes its own four compressed steps with `link: "/method/"`.
+
+Sections 4 and 5 render as two cards in one band (the security-page two-column
+card idiom) so that every text card keeps the site's white-card-on-gray-50
+contrast.

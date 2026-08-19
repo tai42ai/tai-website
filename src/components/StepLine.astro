@@ -1,0 +1,90 @@
+---
+// StepLine — the numbered step line used on /method (five steps) and, in the
+// compressed four-step form, on the homepage. Horizontal on desktop (a rail
+// with numbered nodes and one card per step), stacked on mobile.
+//
+// Stop-points: `stopAfter` lists the 1-based step numbers a stop-point marker
+// follows, e.g. stopAfter={[2, 4]} puts a marker between steps 2→3 and 4→5.
+// The marker label defaults to "you can leave here".
+//
+// Nothing new in the design system: crimson/gray tokens, the existing
+// bg-white rounded-xl border border-gray-200 card, and the .reveal animation.
+
+export interface Step {
+  title: string;
+  body: string;
+  /** Optional destination — the whole card becomes a link. */
+  link?: string;
+}
+
+interface Props {
+  steps: Step[];
+  stopAfter?: number[];
+  stopLabel?: string;
+  class?: string;
+}
+
+const {
+  steps,
+  stopAfter = [],
+  stopLabel = "you can leave here",
+  class: className = "",
+} = Astro.props;
+
+// Flatten steps and stop-points into one ordered list so the row lays out in
+// a single flex line on desktop and a single column on mobile.
+type Item =
+  | { kind: "step"; step: Step; number: number; last: boolean }
+  | { kind: "stop" };
+
+const items: Item[] = [];
+steps.forEach((step, i) => {
+  const number = i + 1;
+  items.push({ kind: "step", step, number, last: number === steps.length });
+  if (stopAfter.includes(number) && number !== steps.length) {
+    items.push({ kind: "stop" });
+  }
+});
+---
+
+<ol class:list={["flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-0", className]}>
+  {items.map((item, i) =>
+    item.kind === "stop" ? (
+      <li class="reveal flex flex-col lg:shrink-0 lg:px-3" style={`transition-delay: ${i * 60}ms`}>
+        <div class="flex h-9 items-center justify-center mb-4">
+          <span class="whitespace-nowrap rounded-full border border-dashed border-crimson/40 bg-white px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-crimson">
+            {stopLabel}
+          </span>
+        </div>
+      </li>
+    ) : (
+      <li
+        class="reveal flex flex-col flex-1 lg:basis-0 lg:px-3"
+        style={`transition-delay: ${i * 60}ms`}
+      >
+        {/* Rail: the numbered node, then the line running on to the next node. */}
+        <div class="flex items-center mb-4">
+          <span class="shrink-0 w-9 h-9 rounded-full bg-crimson/10 text-crimson font-mono font-semibold flex items-center justify-center">
+            {item.number}
+          </span>
+          {!item.last && <span class="hidden lg:block ml-3 h-px flex-1 bg-gray-200"></span>}
+        </div>
+
+        {item.step.link ? (
+          <a
+            href={item.step.link}
+            class="card-hover flex-1 bg-white rounded-xl border border-gray-200 p-5 lg:p-6 block hover:border-crimson/30 transition-colors"
+          >
+            <h3 class="text-base font-bold text-black mb-2">{item.step.title}</h3>
+            <p class="text-sm text-charcoal/70 leading-relaxed">{item.step.body}</p>
+          </a>
+        ) : (
+          <div class="flex-1 bg-white rounded-xl border border-gray-200 p-5 lg:p-6">
+            <h3 class="text-base font-bold text-black mb-2">{item.step.title}</h3>
+            <p class="text-sm text-charcoal/70 leading-relaxed">{item.step.body}</p>
+          </div>
+        )}
+      </li>
+    )
+  )}
+</ol>

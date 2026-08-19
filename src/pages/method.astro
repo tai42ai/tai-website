@@ -3,20 +3,24 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
-import { CALENDAR_URL } from "../consts";
+import StepLine from "../components/StepLine.astro";
+import type { Step } from "../components/StepLine.astro";
 
 export const prerender = true;
 
-const STEPS = [
+// The route stays /method — "How it works" is only the label. /how-it-works is
+// an existing legacy redirect into this page, not a second page.
+
+const STEPS: Step[] = [
   {
-    title: "The production audit (free, entry).",
+    title: "The production readiness review (free, entry).",
     body:
-      "We assess your demo, your definitions, and your integration surface. You leave with a readiness report and a proposal — whether or not you continue with us.",
+      "From what you show us — a walkthrough of your demo and, if you can share them, its structural traces: the call graph without the data — we assess your demo, your definitions, and your integration surface. No system access. You leave with a written readiness report and a proposal — whether or not you continue with us.",
   },
   {
     title: "Stage 0 — the readiness gate.",
     body:
-      "Scope, success metrics, and acceptance criteria agreed in writing. If your systems aren't ready, the clock pauses — your budget doesn't burn.",
+      "Scope, success metrics, and acceptance criteria agreed in writing. With access in place, we run your full traces through our platform and sharpen the flow map to what the system actually does. If your systems aren't ready, the clock pauses — your budget doesn't burn.",
   },
   {
     title: "The build.",
@@ -34,11 +38,20 @@ const STEPS = [
       "Your team operates it on a private tenant — monitor, correct, and extend your own flows. We stay for the hard parts.",
   },
 ];
+
+const REPORT_CONTENTS = [
+  "The flow map — deterministic vs. generative. From your walkthrough — and from your structural traces if you can share them — we map your application: which steps are deterministic and belong in explicit flows — prices, lookups, routing, commitments, anything that must be right every time — and which genuinely need a model and stay generative. Structural traces are the call graph of your demo without its data: which step calls which system or model, in what order — the default most tracing tools export when prompts and outputs are hidden. (Once we're working together, we run your full traces through our platform and sharpen the map from evidence.)",
+  "A readiness verdict in the production-readiness-review convention: ready, ready with conditions, or not ready — with blockers (fix before launch) and conditions (fix within an agreed window).",
+  "A review of your definitions — what \"working\" means, and whether it's measurable as written.",
+  "A map of your integration surface — the systems, data, channels, and payment paths a production application must touch.",
+  "The gaps, in plain language, and what it would take to go live.",
+  "A proposal, if we think we're the right team.",
+];
 ---
 
 <BaseLayout
   title="How it works — tai42"
-  description="A readiness gate first. Weeks, not quarters, to a working system. Acceptance you verify yourself. A license only if you keep it."
+  description="A production readiness review first. Weeks, not quarters, to a working system. Acceptance you verify yourself. A license only if you keep it."
 >
   <NavBar />
 
@@ -48,42 +61,51 @@ const STEPS = [
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Reveal>
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black leading-[1.1] mb-6">
-            How an engagement works
+            How it works
           </h1>
         </Reveal>
         <Reveal delay={100}>
           <p class="text-lg text-charcoal/70 leading-relaxed">
-            A readiness gate first. Weeks, not quarters, to a working system.
-            Acceptance you verify yourself. A license only if you keep it.
+            A production readiness review first. Weeks, not quarters, to a
+            working system. Acceptance you verify yourself. A license only if
+            you keep it.
           </p>
         </Reveal>
       </div>
     </section>
 
-    <!-- The five steps -->
+    <!-- 1 — the five steps · 2 — what's in the readiness report -->
     <section class="bg-gray-50 py-20 lg:py-24">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* The reveal is applied to the <li> itself — an <ol> may only have <li> children. */}
-        <ol class="space-y-6">
-          {STEPS.map((step, i) => (
-            <li
-              class="reveal bg-white rounded-xl border border-gray-200 p-6 lg:p-8 flex gap-5"
-              style={i > 0 ? `transition-delay: ${i * 75}ms` : undefined}
-            >
-              <span class="shrink-0 w-9 h-9 rounded-full bg-crimson/10 text-crimson font-mono font-semibold flex items-center justify-center">
-                {i + 1}
-              </span>
-              <div>
-                <h2 class="text-lg font-bold text-black mb-2">{step.title}</h2>
-                <p class="text-charcoal/70 leading-relaxed">{step.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <StepLine steps={STEPS} stopAfter={[2, 4]} />
+      </div>
+
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 lg:mt-20">
+        <Reveal>
+          <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-black mb-5">
+              What's in the readiness report
+            </h2>
+            <p class="text-charcoal/70 leading-relaxed">
+              A short written document, built from your three answers, one
+              working session in which you walk us through your demo, and — if
+              you can share them — its structural traces. No system access, no
+              data. Yours whether or not we work together. It contains:
+            </p>
+            <ul class="mt-6 space-y-4">
+              {REPORT_CONTENTS.map((entry) => (
+                <li class="flex gap-3 text-charcoal/70 leading-relaxed">
+                  <span class="mt-2.5 shrink-0 w-1.5 h-1.5 rounded-full bg-crimson/60"></span>
+                  <span>{entry}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
       </div>
     </section>
 
-    <!-- Where humans stay -->
+    <!-- 3 — Where humans stay -->
     <section class="bg-white py-20 lg:py-24">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
@@ -98,8 +120,47 @@ const STEPS = [
       </div>
     </section>
 
-    <!-- The honest filter -->
+    <!-- 4 — What we ask of you · 5 — What you keep -->
     <section class="bg-gray-50 py-20 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+          <Reveal>
+            <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8 h-full">
+              <h2 class="text-2xl font-bold text-black mb-4">
+                What we ask of you
+              </h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                A working demo you can walk us through. If you can, its
+                structural traces — the call graph without the content:
+                exported from your tracing tool with prompts, outputs, and tool
+                payloads hidden; we'll tell you exactly how. No system access
+                and no data for the report. Written answers to what it should
+                achieve and how you'll measure it. A named person who can
+                decide. And, once we're working together: full traces and access
+                to the systems the application must touch before the build
+                starts — because when those are ready, the build is short, and
+                when they aren't, we pause rather than pretend.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8 h-full">
+              <h2 class="text-2xl font-bold text-black mb-4">What you keep</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                A running production application on a private tenant your team
+                operates. Your flows as configuration you keep, independent of
+                any model vendor. The acceptance record. The report. And us, on
+                call for the hard parts.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 — Who we work with (the honest filter) -->
+    <section class="bg-white py-20 lg:py-24">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
@@ -108,7 +169,7 @@ const STEPS = [
           <p class="text-lg text-charcoal/70 leading-relaxed">
             You already have a demo. You've written down what it should achieve.
             You know how you'd measure success. It doesn't work in production
-            yet. If that's you, the audit will be useful even if we never work
+            yet. If that's you, the report will be useful even if we never work
             together. If you're still exploring what AI could do for you — we're
             not your first stop, and we'll say so.
           </p>
@@ -117,16 +178,14 @@ const STEPS = [
     </section>
 
     <!-- CTA -->
-    <section class="bg-white py-20 lg:py-24">
+    <section class="bg-gray-50 py-20 lg:py-24">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Reveal>
           <a
-            href={CALENDAR_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/contact/"
             class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
           >
-            Book a production audit
+            Get your readiness report
           </a>
         </Reveal>
       </div>
