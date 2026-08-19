@@ -261,3 +261,31 @@ on the site was left untouched.
 The site's single-primary-CTA rule is unaffected: the nav and mobile-menu CTAs
 still read "Book a production audit" (2 instances on this page), and the
 possessive wording is the post-submission variant the hotfix asks for.
+
+---
+
+## Gates and self-checks after step 10
+
+`npx astro check` — 23 files, **0 errors, 0 warnings, 0 hints**.
+`npm run build` (clean `dist/`) — **13 pages, complete, no warnings**.
+
+| Check | Result |
+| --- | --- |
+| Rendered bracket placeholders in `dist/` | `4 × [WEB3FORMS_ACCESS_KEY]` only — every other placeholder is gone (was 16 instances across 10 distinct labels) |
+| `dist/agents/` | absent; `/agents` will 404 |
+| `dist/404.html` | present, carries the doc-path redirect script (`getting-started\|concepts\|guides\|reference` → `https://docs.tai42.ai`) and `robots: noindex, nofollow` |
+| `dist/llms.txt` Docs line | `- Docs: https://docs.tai42.ai` |
+| Docs in nav + footer | 3 × `Docs` on every page — desktop nav, mobile panel, footer — never in the active style |
+| `docs.tai42.ai` links in `dist/` | 41 `href` instances across 13 HTML files: 39 chrome (13 pages × 3) + 2 in the `/open-source` body and Links list |
+| Banned strings in `dist/` | `Text-to-Flow` 0, `Request access` 0, `No credit card` 0, `SOC 2` 0, `certified` 0, `autopilot` 0, `disrupt` 0, `€` 0, `base_url` 0. `Nexus` 1 — the pre-existing `/product/nexus/` legacy-URL redirect stub (noindex meta-refresh to `/platform/`, from `astro.config.mjs` on `main`, untouched by this hotfix) |
+| Open-source contract sentence | present in all 3 required places — the footer (so on all 13 pages), the `/open-source` body, the `/platform` body — verbatim, whitespace-normalized comparison |
+| `" - "` on `/security` | 0 in the source and 0 in the built page |
+| `VERIFY: engineering` comments | 2 in `src/pages/security.astro` (also emitted into `dist/security/index.html`) |
+| Internal links | all internal `href`s in touched files keep trailing slashes (`/`, `/builders/`, `/security/`, `/privacy/`, `/terms/`) |
+
+Still open after this hotfix — both parked by instruction:
+
+1. `[WEB3FORMS_ACCESS_KEY]` in `/contact` and `/builders` (4 rendered instances).
+2. The `/platform` visual-builder mock.
+
+Nothing was pushed.
