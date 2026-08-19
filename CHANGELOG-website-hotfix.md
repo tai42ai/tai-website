@@ -289,3 +289,31 @@ Still open after this hotfix — both parked by instruction:
 2. The `/platform` visual-builder mock.
 
 Nothing was pushed.
+
+---
+
+# Hotfix v2 — wave A (spec `_state/task2-hotfix-v2.md`, sections 7h · 7i · 7j · 7k)
+
+Wave A covers: nav rename + `/method` rebuild (7h), `/about` rebuild (7i — the
+Home card in 7i is wave B), `/platform` rebuild (7j), `/open-source` rebuild
+(7k). Copy is verbatim from the spec. No new colours, fonts, or dependencies;
+two small components added, both built from the existing card/Reveal idiom.
+
+## Step 11 — nav label "Method" → "How it works" (v2 §7h, §4b)
+
+`src/components/NavBar.astro`, `src/components/Footer.astro` — the nav item
+label changed from "Method" to "How it works". The route is unchanged
+(`/method/`): `/how-it-works` is an existing legacy redirect *into* `/method`
+and was deliberately not created as a page.
+
+Final order in both the header (desktop + mobile panel) and the footer "Site"
+list: Home · How it works · Platform · Open Source · Docs · About · Contact,
+then the primary CTA button — i.e. the order 7h asks for, already satisfied by
+the existing sequence once the label changed.
+
+`src/pages/method.astro` — page `<title>` is now `How it works — tai42` (it also
+feeds the OG and Twitter titles through `BaseLayout`). The page body is rebuilt
+in step 12.
+
+The CTA button's label and target are untouched here — 7c/7d retarget it in
+wave B.

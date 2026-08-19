@@ -1,7 +1,7 @@
 ---
 import { CALENDAR_URL } from "../consts";
 
-// NavBar — Home · Method · Platform · Open Source · Docs · About · Contact,
+// NavBar — Home · How it works · Platform · Open Source · Docs · About · Contact,
 // plus the one primary CTA ("Book a production audit"). Docs points at the
 // separate docs site and opens in the same tab, styled like every other item.
 // Compare paths with trailing slashes stripped, so a link written as "/method/"
@@ -19,7 +19,7 @@ const mobileClass = (href: string) => isActive(href) ? "mobile-nav-link block px
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/method/", label: "Method" },
+  { href: "/method/", label: "How it works" },
   { href: "/platform/", label: "Platform" },
   { href: "/open-source/", label: "Open Source" },
   { href: "https://docs.tai42.ai", label: "Docs" },
