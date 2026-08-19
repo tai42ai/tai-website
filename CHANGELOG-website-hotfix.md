@@ -79,3 +79,37 @@ Bracket instances counted in the pre-hotfix `dist/`:
 
 Target after this hotfix: only the four `[WEB3FORMS_ACCESS_KEY]` instances
 remain, because that step is parked.
+
+## Step 2 — /open-source: real links, boundary table hidden
+
+`src/pages/open-source.astro`:
+
+- Frontmatter now carries the three resolved URLs as consts (`DOCS_URL`,
+  `GITHUB_ORG_URL`, `GITHUB_DISCUSSIONS_URL`) plus the gate flag.
+- Hero body sentence now reads "Documentation lives at docs.tai42.ai." with
+  `docs.tai42.ai` as a real `<a href="https://docs.tai42.ai">` in the page's
+  existing inline-link styling (`font-medium text-crimson hover:text-burgundy
+  transition-colors`). The space before the host and the sentence-final period
+  are correct in the rendered output (verified in `dist/`).
+- Links list: "GitHub org" → https://github.com/tai42ai; "GitHub Discussions
+  (the community forum)" (copy unchanged) → https://github.com/orgs/tai42ai/discussions;
+  "docs" → https://docs.tai42.ai. All three replace `Placeholder` chips and use
+  the same inline-link styling, in the same `flex flex-wrap items-baseline`
+  row pattern the list already used.
+- New external links open in the **same tab** (no `target="_blank"`), matching
+  the treatment the hotfix mandates for the Docs nav entry, so docs/GitHub
+  links behave consistently across the site. The calendar CTA keeps its
+  existing `target="_blank"`.
+- Open/commercial boundary table: **hidden, not deleted.** The whole section is
+  gated behind `const SHOW_BOUNDARY_TABLE = false;` +
+  `{SHOW_BOUNDARY_TABLE && (...)}`. Re-enabling is one flag flip.
+- The `[OPEN_COMMERCIAL_BOUNDARY — founder confirms before publish]` chip is
+  **removed entirely** (not merely hidden) — it was the founder-facing marker
+  for the gate, and the gate is now the flag.
+- Table cells were already one item per `<li>` inside a `<ul>` per cell
+  (driven by the `OPEN_ROWS` / `COMMERCIAL_ROWS` arrays) — no concatenated "·"
+  run existed, so the required structure is confirmed rather than changed.
+- `Placeholder` import dropped from this page (no call sites left).
+
+Verified in `dist/open-source/index.html`: 4 × `docs.tai42.ai`, 1 × org link,
+1 × discussions link, 0 × `<table`, 0 × bracket chips.

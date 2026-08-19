@@ -3,9 +3,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
-import Placeholder from "../components/Placeholder.astro";
 
 export const prerender = true;
+
+// The open/commercial boundary table is written and kept, but not rendered:
+// the founder confirms the split before it publishes. Flip this to true to
+// bring the whole section back — nothing else has to change.
+const SHOW_BOUNDARY_TABLE = false;
+
+const DOCS_URL = "https://docs.tai42.ai";
+const GITHUB_ORG_URL = "https://github.com/tai42ai";
+const GITHUB_DISCUSSIONS_URL = "https://github.com/orgs/tai42ai/discussions";
 
 const OPEN_ROWS = [
   "flow engine",
@@ -39,8 +47,8 @@ const COMMERCIAL_ROWS = [
         <Reveal delay={100}>
           <p class="text-lg text-charcoal/70 leading-relaxed">
             The core engine behind our platform is public — read the code, run
-            it, extend it. Documentation lives at
-            <Placeholder label="DOCS_URL" />. We answer issues weekly, in
+            it, extend it. Documentation lives at <a href={DOCS_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">docs.tai42.ai</a>.
+            We answer issues weekly, in
             batches, because our engineers' first job is shipping client systems
             on this same runtime. That's the point: this isn't a showcase repo —
             it's the thing we bet our own delivery on.
@@ -70,15 +78,15 @@ const COMMERCIAL_ROWS = [
           <ul class="space-y-3 text-charcoal/70">
             <li class="flex flex-wrap items-baseline gap-2">
               <span>GitHub org</span>
-              <Placeholder label="GITHUB_ORG_URL" />
+              <a href={GITHUB_ORG_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">github.com/tai42ai</a>
             </li>
             <li class="flex flex-wrap items-baseline gap-2">
               <span>GitHub Discussions (the community forum)</span>
-              <Placeholder label="GITHUB_ORG_URL" note="Discussions tab of the org" />
+              <a href={GITHUB_DISCUSSIONS_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">github.com/orgs/tai42ai/discussions</a>
             </li>
             <li class="flex flex-wrap items-baseline gap-2">
               <span>docs</span>
-              <Placeholder label="DOCS_URL" />
+              <a href={DOCS_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">docs.tai42.ai</a>
             </li>
           </ul>
         </Reveal>
@@ -86,44 +94,42 @@ const COMMERCIAL_ROWS = [
     </section>
 
     <!-- Boundary table -->
-    <section class="bg-gray-50 py-16 lg:py-24">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <div class="mb-6">
-            <Placeholder label="OPEN_COMMERCIAL_BOUNDARY" note="founder confirms before publish" />
-          </div>
-
-          <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white">
-            <table class="w-full text-left border-collapse">
-              <thead>
-                <tr class="border-b border-gray-200">
-                  <th class="w-1/2 px-6 py-4 text-sm font-bold text-black align-top">
-                    Open (the runtime, free forever)
-                  </th>
-                  <th class="w-1/2 px-6 py-4 text-sm font-bold text-black align-top border-l border-gray-200">
-                    Commercial (the platform)
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="px-6 py-5 align-top">
-                    <ul class="space-y-2.5 text-sm text-charcoal/70">
-                      {OPEN_ROWS.map((row) => <li>{row}</li>)}
-                    </ul>
-                  </td>
-                  <td class="px-6 py-5 align-top border-l border-gray-200">
-                    <ul class="space-y-2.5 text-sm text-charcoal/70">
-                      {COMMERCIAL_ROWS.map((row) => <li>{row}</li>)}
-                    </ul>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </Reveal>
-      </div>
-    </section>
+    {SHOW_BOUNDARY_TABLE && (
+      <section class="bg-gray-50 py-16 lg:py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-gray-200">
+                    <th class="w-1/2 px-6 py-4 text-sm font-bold text-black align-top">
+                      Open (the runtime, free forever)
+                    </th>
+                    <th class="w-1/2 px-6 py-4 text-sm font-bold text-black align-top border-l border-gray-200">
+                      Commercial (the platform)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="px-6 py-5 align-top">
+                      <ul class="space-y-2.5 text-sm text-charcoal/70">
+                        {OPEN_ROWS.map((row) => <li>{row}</li>)}
+                      </ul>
+                    </td>
+                    <td class="px-6 py-5 align-top border-l border-gray-200">
+                      <ul class="space-y-2.5 text-sm text-charcoal/70">
+                        {COMMERCIAL_ROWS.map((row) => <li>{row}</li>)}
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    )}
   </main>
 
   <Footer />
