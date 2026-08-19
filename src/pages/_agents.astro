@@ -1,8 +1,10 @@
 ---
-// GATED PAGE — built but not published by links. It is linked from nowhere: no
-// nav entry, no footer link, no Home doors-line entry, no Platform honest-line
-// link. The gate clears when every placeholder below is filled and the MCP
-// endpoint responds; only then may the links be added and the noindex removed.
+// UNROUTED PAGE — the underscore prefix keeps Astro from emitting a route for
+// this file, so https://tai42.ai/agents returns 404. It is also linked from
+// nowhere: no nav entry, no footer link, no Home doors-line entry, no Platform
+// honest-line link. The gate clears when every placeholder below is filled and
+// the MCP endpoint responds; re-publishing is then a rename back to
+// agents.astro, plus adding the links and removing the noindex.
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
@@ -10,6 +12,8 @@ import Reveal from "../components/Reveal.astro";
 import Placeholder from "../components/Placeholder.astro";
 
 export const prerender = true;
+
+const DOCS_URL = "https://docs.tai42.ai";
 ---
 
 <BaseLayout
@@ -52,7 +56,7 @@ export const prerender = true;
               <dd class="flex flex-wrap items-baseline gap-2">
                 <a href="/llms.txt" class="font-mono text-sm text-crimson hover:text-burgundy transition-colors">/llms.txt</a>
                 <span class="text-charcoal/70">and</span>
-                <Placeholder label="DOCS_URL" />
+                <a href={DOCS_URL} class="font-medium text-crimson hover:text-burgundy transition-colors">docs.tai42.ai</a>
               </dd>
             </div>
           </dl>

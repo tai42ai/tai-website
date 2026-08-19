@@ -132,3 +132,18 @@ Verified in `dist/open-source/index.html`: 4 × `docs.tai42.ai`, 1 × org link,
   the HTML source, matching the comment idiom used on every other page.
 - Gate rationale lives in frontmatter comments (not emitted), so page source
   does not advertise what is being withheld.
+
+## Step 4 — /agents returns 404 (page hidden, not deleted)
+
+- `src/pages/agents.astro` → **`src/pages/_agents.astro`** (`git mv`).
+  Underscore-prefixed files in `src/pages/` are not routed by Astro, so
+  https://tai42.ai/agents now 404s: no page is emitted and nothing links to it.
+  Re-publishing the agent door is a rename back to `agents.astro`.
+- While the file was open, its `DOCS_URL` chip was filled with a real link to
+  https://docs.tai42.ai (same inline-link styling as the neighbouring
+  `/llms.txt` link), so re-enabling really is just the rename.
+- The header comment was updated from "GATED PAGE — built but not published by
+  links" to describe the unrouted state accurately.
+- Verified: a clean `npm run build` emits **12** pages (was 13) and there is no
+  `dist/agents/` directory. A repo-wide grep finds no remaining link to
+  `/agents` in any page, component, or `public/llms.txt`.
