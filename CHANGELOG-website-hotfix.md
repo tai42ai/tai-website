@@ -483,3 +483,24 @@ values.
 
 Wave A did not touch: the homepage, the CTA button label/target, `/contact`,
 `/builders`, `/thank-you`. Nothing was pushed.
+
+## Wave B, step 16 (spec 7b): homepage hero strings
+
+`src/pages/index.astro` — the three hero strings replaced verbatim with 7b's
+copy, and nothing else in this commit.
+
+* H1: "AI, from demo to production."
+* Sub-line: "tai42 takes AI into production — turning your working demo into a
+  production application: deterministic where money moves, AI where judgment is
+  needed, humans at the decisions you name. Live with real users in weeks, not
+  quarters, against acceptance criteria you sign."
+* `BaseLayout title` = "AI, from demo to production. — tai42" — the layout feeds
+  the same string to `<title>`, `og:title`, and `twitter:title`, so one prop
+  covers all three.
+* `BaseLayout description` = "tai42 takes AI into production — turning your
+  working demo into a production application: deterministic where money moves,
+  AI where judgment is needed, humans at the decisions you name." — likewise
+  feeds `meta description`, `og:description`, and `twitter:description`.
+
+The old H1 ("Your AI demo works. Production is where it dies.") now returns 0
+hits repo-wide outside the changelog and the v1 acceptance report.
