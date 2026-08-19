@@ -1,8 +1,18 @@
 ---
-// FormSourceScript — stamps "how they arrived" onto every Web3Forms form on the
-// page: the hidden `source` input, and the same value on the thank-you redirect
-// so /thank-you can fire the one analytics event. Shared by /contact and
-// /builders.
+// FormSourceScript — the shared inline script behind every form on the site
+// (currently /contact and /builders). It stamps three things onto each form
+// marked `data-source-form`:
+//
+//   * `source`   — how the visitor arrived (UTM, off-site referrer, or "direct")
+//   * `_next`    — Formspree's custom redirect, with the same source passed on
+//                  in the query so the thank-you page can fire one analytics
+//                  event with it
+//   * `_subject` — Formspree's subject line, with the company appended live as
+//                  the visitor types it
+//
+// Every write is derived from the input's `defaultValue` (the value attribute
+// rendered by Astro), so a re-run — bfcache, history restore, a second keypress
+// — recomputes rather than appends twice.
 ---
 
 <script is:inline>
@@ -29,16 +39,30 @@
 
     var source = utm || referrer || "direct";
 
-    document.querySelectorAll("form[data-web3form]").forEach(function (form) {
+    document.querySelectorAll("form[data-source-form]").forEach(function (form) {
       var sourceInput = form.querySelector('input[name="source"]');
       if (sourceInput) sourceInput.value = source;
 
-      // Derived from defaultValue, so a re-run (bfcache / history restore)
-      // cannot append the source twice.
-      var redirectInput = form.querySelector('input[name="redirect"]');
-      if (redirectInput) {
-        redirectInput.value =
-          redirectInput.defaultValue + "&source=" + encodeURIComponent(source);
+      var nextInput = form.querySelector('input[name="_next"]');
+      if (nextInput) {
+        var base = nextInput.defaultValue;
+        nextInput.value =
+          base +
+          (base.indexOf("?") === -1 ? "?" : "&") +
+          "source=" +
+          encodeURIComponent(source);
+      }
+
+      var subjectInput = form.querySelector('input[name="_subject"]');
+      var companyInput = form.querySelector('input[name="company"]');
+      if (subjectInput && companyInput) {
+        var syncSubject = function () {
+          var company = companyInput.value.trim();
+          subjectInput.value =
+            subjectInput.defaultValue + (company ? " — " + company : "");
+        };
+        companyInput.addEventListener("input", syncSubject);
+        syncSubject();
       }
     });
   })();

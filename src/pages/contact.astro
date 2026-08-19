@@ -3,17 +3,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
-import Placeholder from "../components/Placeholder.astro";
 import FormSourceScript from "../components/FormSourceScript.astro";
 
 export const prerender = true;
 
-// Web3Forms — plain HTML POST, no dependency. The access key stays a visible
-// placeholder until the founder supplies it (see the changelog for the
-// activation steps).
-const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
-const WEB3FORMS_ACCESS_KEY = "[WEB3FORMS_ACCESS_KEY]";
-const THANK_YOU_REDIRECT = "https://tai42.ai/thank-you/?page=contact";
+// Formspree — a plain HTML POST, no dependency and nothing rendered as text.
+// PENDING_FOUNDER is a sentinel, not a value we invented: the founder creates
+// the form under contact@tai42.ai and swaps this one constant for its ID. The
+// delivery address is configured account-side, never in the markup.
+const FORMSPREE_CONTACT_ID = "PENDING_FOUNDER";
+const FORM_ENDPOINT = `https://formspree.io/f/${FORMSPREE_CONTACT_ID}`;
+const THANK_YOU_REDIRECT = "https://tai42.ai/thank-you/";
+// The company is appended live by FormSourceScript: "… — {company}".
+const SUBJECT = "[tai42] Readiness report request";
 
 const inputClass =
   "w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-charcoal placeholder:text-charcoal/30 focus:border-crimson focus:outline-none focus:ring-1 focus:ring-crimson transition-colors";
@@ -37,20 +39,18 @@ const labelClass = "block text-sm font-medium text-black mb-2";
 
         <Reveal delay={100}>
           <form
-            action={WEB3FORMS_ENDPOINT}
+            action={FORM_ENDPOINT}
             method="POST"
-            data-web3form
+            data-source-form
             class="space-y-6"
           >
-            <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
-            <input type="hidden" name="subject" value="tai42.ai — production audit request" />
-            <input type="hidden" name="from_name" value="tai42.ai contact form" />
-            <input type="hidden" name="redirect" value={THANK_YOU_REDIRECT} />
+            <input type="hidden" name="_subject" value={SUBJECT} />
+            <input type="hidden" name="_next" value={THANK_YOU_REDIRECT} />
             <input type="hidden" name="source" value="" />
-            <!-- Web3Forms honeypot -->
+            <!-- Formspree honeypot -->
             <input
-              type="checkbox"
-              name="botcheck"
+              type="text"
+              name="_gotcha"
               class="hidden"
               style="display:none"
               tabindex="-1"
@@ -115,10 +115,6 @@ const labelClass = "block text-sm font-medium text-black mb-2";
             >
               Get your readiness report
             </button>
-
-            <div>
-              <Placeholder label="WEB3FORMS_ACCESS_KEY" />
-            </div>
           </form>
         </Reveal>
       </div>

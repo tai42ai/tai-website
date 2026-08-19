@@ -603,3 +603,70 @@ and the name / company / email fields stay required.
 Submit button: "Book your production audit" → "Get your readiness report".
 
 `npx astro check`: 25 files, 0 errors / 0 warnings / 0 hints.
+
+## Wave B, step 20 (spec §2 / §1.4): both forms moved to Formspree
+
+FORM_BACKEND is Formspree, per the orchestrator's resolution: the site is on
+GitHub Pages, so no native host form handling exists, and there is no working
+Web3Forms key in the repo. Web3Forms is gone from `src/` entirely (0 hits).
+
+**The endpoint and the pending IDs.** Each form page carries one clearly-named
+frontmatter constant holding the sentinel string `PENDING_FOUNDER`:
+
+* `src/pages/contact.astro` — `FORMSPREE_CONTACT_ID`
+* `src/pages/builders.astro` — `FORMSPREE_BUILDERS_ID`
+
+The action is composed as `https://formspree.io/f/${…_ID}`, so **swap-in is one
+constant per file** when the IDs arrive. The sentinel carries no square brackets
+and is never rendered as visible text — it only ever appears inside the `action`
+URL. **PENDING founder values: the two Formspree form IDs.** Until they are
+filled, both forms post to `https://formspree.io/f/PENDING_FOUNDER`, which is
+not a live form — the forms are wired but not yet functional.
+
+**Removed:** the `[WEB3FORMS_ACCESS_KEY]` chip on both pages (and with it the
+last `Placeholder` usage outside the unrouted `_agents` page), the `access_key`
+hidden input, the Web3Forms `botcheck` honeypot, the `from_name` input, and the
+Web3Forms `subject`/`redirect` field names.
+
+**Added / renamed on both forms:**
+
+| Field | Contact | Builders |
+| --- | --- | --- |
+| `_subject` (hidden) | `[tai42] Readiness report request` | `[tai42] Founding builder` |
+| `_next` (hidden) | `https://tai42.ai/thank-you/` | `https://tai42.ai/thank-you-builders/` |
+| `source` (hidden) | kept — filled client-side | kept — filled client-side |
+| `_gotcha` (honeypot) | `type="text"`, `class="hidden"`, `display:none`, `tabindex="-1"`, `autocomplete="off"`, `aria-hidden="true"` | same |
+
+The form marker attribute is now `data-source-form` (was `data-web3form`).
+
+**`src/components/FormSourceScript.astro`** — the same shared inline script,
+extended rather than replaced. It still derives `source` from UTM parameters,
+then an off-site referrer (the same-origin guard is unchanged), then `"direct"`.
+It now writes the redirect into Formspree's `_next` instead of Web3Forms'
+`redirect`, appending `source` with the right separator (`?` when the stored
+`_next` has no query, `&` when it does) and `encodeURIComponent`. And it fills
+`_subject`: on load and on every keystroke in the company field it recomputes
+`_subject.defaultValue + " — " + company`, so the founder's inbox shows
+"[tai42] Readiness report request — Acme". Every write is derived from the
+input's `defaultValue`, so bfcache restores and repeated keystrokes recompute
+instead of appending twice.
+
+**`src/pages/privacy.astro`** — the sentence naming the form processor updated
+from Web3Forms to Formspree; nothing else on the page changed.
+
+**NOTE for the founder — verify when creating the forms:**
+
+1. **Formspree's custom `_next` redirect may require a paid plan.** On the free
+   tier a submission may land on Formspree's own branded success page instead of
+   our thank-you pages. Verify at form-creation time; if it is gated, the plan
+   has to be upgraded or the thank-you flow rethought — the analytics event and
+   the calendar hand-off both live on those pages.
+2. **Destinations are configured account-side, not in the markup**: `/contact`
+   → contact@tai42.ai, `/builders` → builders@tai42.ai. The account is the one
+   registered to contact@tai42.ai.
+3. Record the two form IDs in this changelog when they are created.
+
+Roadmap: replace the third-party form backend with an intake endpoint on the
+tai42 runtime — the first internal inbound flow.
+
+`npx astro check`: 25 files, 0 errors / 0 warnings / 0 hints.
