@@ -239,3 +239,15 @@ No new components, colors, or classes (the only class added anywhere is a
 - Note: the two `VERIFY: engineering` comments are HTML comments, so they do
   ship in `dist/security/index.html` page source (2 hits). That is the
   requested form — remove them once engineering signs the two sentences off.
+
+## Step 9 — /method sentence capitalization
+
+`src/pages/method.astro` — two paragraph openings capitalized, nothing else
+(diff is exactly two lines changed):
+
+- "your people at the decisions you name; ours on call…" → **"Your** people at…"
+- "you already have a demo. You've written down…" → **"You** already have a demo. …"
+
+This supersedes the earlier verbatim-lowercase ruling in the correction
+changelog — founder instruction. Other intentionally lowercase copy elsewhere
+on the site was left untouched.
