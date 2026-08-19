@@ -5,7 +5,12 @@
 //
 // Stop-points: `stopAfter` lists the 1-based step numbers a stop-point marker
 // follows, e.g. stopAfter={[2, 4]} puts a marker between steps 2→3 and 4→5.
-// The marker label defaults to "you can leave here".
+// The marker label defaults to "you can leave here". The markers are decorative
+// (`aria-hidden`): the steps stay the list's semantic items.
+//
+// `headingLevel` sets the tag of the step titles ("h3" by default) so each page
+// can keep its heading order unbroken — /method passes "h2" under its h1, the
+// homepage keeps h3 under its "How it works" h2.
 //
 // Nothing new in the design system: crimson/gray tokens, the existing
 // bg-white rounded-xl border border-gray-200 card, and the .reveal animation.
@@ -21,6 +26,8 @@ interface Props {
   steps: Step[];
   stopAfter?: number[];
   stopLabel?: string;
+  /** Tag for the step titles, so each page keeps an unbroken heading order. */
+  headingLevel?: "h2" | "h3" | "h4";
   class?: string;
 }
 
@@ -28,8 +35,11 @@ const {
   steps,
   stopAfter = [],
   stopLabel = "you can leave here",
+  headingLevel = "h3",
   class: className = "",
 } = Astro.props;
+
+const Heading = headingLevel;
 
 // Flatten steps and stop-points into one ordered list so the row lays out in
 // a single flex line on desktop and a single column on mobile.
@@ -50,7 +60,11 @@ steps.forEach((step, i) => {
 <ol class:list={["flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-0", className]}>
   {items.map((item, i) =>
     item.kind === "stop" ? (
-      <li class="reveal flex flex-col lg:shrink-0 lg:px-3" style={`transition-delay: ${i * 60}ms`}>
+      <li
+        class="reveal flex flex-col lg:shrink-0 lg:px-3"
+        style={`transition-delay: ${i * 60}ms`}
+        aria-hidden="true"
+      >
         <div class="flex h-9 items-center justify-center mb-4">
           <span class="whitespace-nowrap rounded-full border border-dashed border-crimson/40 bg-white px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-crimson">
             {stopLabel}
@@ -75,12 +89,12 @@ steps.forEach((step, i) => {
             href={item.step.link}
             class="card-hover flex-1 bg-white rounded-xl border border-gray-200 p-5 lg:p-6 block hover:border-crimson/30 transition-colors"
           >
-            <h3 class="text-base font-bold text-black mb-2">{item.step.title}</h3>
+            <Heading class="text-base font-bold text-black mb-2">{item.step.title}</Heading>
             <p class="text-sm text-charcoal/70 leading-relaxed">{item.step.body}</p>
           </a>
         ) : (
           <div class="flex-1 bg-white rounded-xl border border-gray-200 p-5 lg:p-6">
-            <h3 class="text-base font-bold text-black mb-2">{item.step.title}</h3>
+            <Heading class="text-base font-bold text-black mb-2">{item.step.title}</Heading>
             <p class="text-sm text-charcoal/70 leading-relaxed">{item.step.body}</p>
           </div>
         )}

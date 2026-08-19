@@ -13,7 +13,12 @@ export const prerender = true;
 // delivery address is configured account-side, never in the markup.
 const FORMSPREE_CONTACT_ID = "PENDING_FOUNDER";
 const FORM_ENDPOINT = `https://formspree.io/f/${FORMSPREE_CONTACT_ID}`;
-const THANK_YOU_REDIRECT = "https://tai42.ai/thank-you/";
+// Derived from the configured site origin, so a preview build redirects into
+// itself rather than into production.
+const THANK_YOU_REDIRECT = new URL(
+  "/thank-you/",
+  Astro.site?.href || "https://tai42.ai"
+).href;
 // The company is appended live by FormSourceScript: "… — {company}".
 const SUBJECT = "[tai42] Readiness report request";
 
@@ -58,10 +63,10 @@ const labelClass = "block text-sm font-medium text-black mb-2";
               aria-hidden="true"
             />
 
-            <!-- The demo question, given the weight it deserves: it is the one
-                 answer the readiness report is built from. Optional but
-                 encouraged — said in the label, not only in the helper text, so
-                 it reaches screen readers as well. -->
+            {/* The demo question, given the weight it deserves: it is the one
+                answer the readiness report is built from. Optional but
+                encouraged — said in the label, not only in the helper text, so
+                it reaches screen readers as well. */}
             <div class="rounded-xl border border-gray-200 bg-gray-50 p-5 lg:p-6">
               <label class="block text-base font-semibold text-black mb-1.5" for="demo">
                 Do you have a working demo today? (optional)

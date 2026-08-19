@@ -3,7 +3,10 @@
 Branch: `website-hotfix-1`, based on live `main` (e821a2a). Implements the
 post-launch hotfix: fill the values that resolved, hide (never delete) the
 sections that are still unconfirmed, and stop the known 404s. No new
-dependencies, colors, fonts, or components.
+dependencies, colors, or fonts. Three components were added along the way, all
+composed from the existing tokens and idioms: `StepLine.astro`,
+`ScreenshotSlot.astro`, and `FormSubmissionEvent.astro` (which renders no markup
+at all — an inline script only).
 
 Not deployed from here. Never pushed by the implementer.
 
@@ -16,14 +19,39 @@ Not deployed from here. Never pushed by the implementer.
 - GitHub org = `https://github.com/tai42ai`
 - GitHub Discussions = `https://github.com/orgs/tai42ai/discussions`
 
-## Parked — NOT touched by this hotfix (founder values still pending)
+## Pending — founder / engineering (the single open list, current as of the cold-review fix wave)
 
-1. **Web3Forms access key wiring** in `/contact` and `/builders`. Both pages
-   still carry `const WEB3FORMS_ACCESS_KEY = "[WEB3FORMS_ACCESS_KEY]"` and a
-   visible `<Placeholder label="WEB3FORMS_ACCESS_KEY" />` chip. Forms do not
-   submit successfully until the founder supplies the key.
-2. **`/platform` visual-builder mock replacement.** The mock stays exactly as
-   built until the founder supplies the real asset.
+This list supersedes every earlier "parked" note in this file.
+
+1. **The two Formspree form IDs.** `FORMSPREE_CONTACT_ID` (`src/pages/contact.astro`)
+   and `FORMSPREE_BUILDERS_ID` (`src/pages/builders.astro`) both hold the
+   sentinel `PENDING_FOUNDER`, so both forms post to
+   `https://formspree.io/f/PENDING_FOUNDER` — **the forms are wired but dead
+   until the IDs are swapped in.** One constant per file.
+2. **Verify Formspree's paid-plan requirement for the `_next` custom redirect.**
+   On the free tier a submission may land on Formspree's own branded success
+   page instead of our thank-you pages, which is where the analytics event and
+   the calendar hand-off live.
+3. **The three `/platform` screenshot files, plus their flag flips.** Drop
+   `example-flow.png`, `visual-builder.png`, and `audit-observability.png` into
+   `/public/images/platform/` and set `show` on that one `ScreenshotSlot`
+   instance. Nothing renders while a file is missing.
+4. **The open/commercial boundary table on `/open-source`** — founder confirms
+   the split, then `SHOW_BOUNDARY_TABLE = true`.
+5. **The agent-roster content on `/about`** — founder supplies the entries
+   (agent + owner role, never a person's name), then `SHOW_AGENT_ROSTER = true`.
+6. **`/security` — engineering sign-off on the two sentences** marked
+   `<!-- VERIFY: engineering -->` ("The open-source runtime you self-host makes
+   no outbound calls back to us and has no required cloud dependency." and
+   "Nothing about your workloads is reported to tai42."). Remove the two
+   comments once signed off.
+7. **`/platform` contract instance (7j)** — founder confirms whether Change
+   Order v1.5 §4.4 still requires the one-sentence contract in the `/platform`
+   body; today it reaches the page through the footer only. See step 14.
+8. **"Read the technical overview" returns to `/platform` card 1** once
+   engineering signs the overview off; 7j removed the link for now.
+9. **Live end-to-end form test** — blocked on item 1. The procedure will be in
+   `HOTFIX-REPORT.md`.
 
 ---
 
@@ -735,7 +763,7 @@ came out in step 20 its only remaining user is the unrouted `_agents.astro`.
 | Check | Result |
 | --- | --- |
 | "production audit" / "Book a production audit" / "Book your production audit" | **0** in `src/`, **0** in `dist/` |
-| Remaining "audit" hits (case-insensitive, `src/`) | 8, every one a product property: `builders.astro:59` "full audit" · `open-source.astro:22` hidden boundary-table cell "permissions, audit, delegated access" · `open-source.astro:79` "Permissions, audit, and delegated access …" · `about.astro:25` the same sentence in the runtime layer card · `platform.astro:150` card 5 title "Audit and observability, by construction." · `platform.astro:159,160` the hidden `audit-observability.png` slot and its alt · `security.astro:41,48` "Open and auditable" (comment + heading). No human-facing CTA use remains |
+| Remaining "audit" hits (case-insensitive, `src/`) | 9, every one a product property: `builders.astro:59` "full audit" · `open-source.astro:22` hidden boundary-table cell "permissions, audit, delegated access" · `open-source.astro:79` "Permissions, audit, and delegated access …" · `about.astro:25` the same sentence in the runtime layer card · `platform.astro:150` card 5 title "Audit and observability, by construction." · `platform.astro:159,160` the hidden `audit-observability.png` slot and its alt · `security.astro:41,48` "Open and auditable" (comment + heading). No human-facing CTA use remains |
 | Calendar URL in the build | exactly **one** file — `dist/thank-you/index.html`. `dist/thank-you-builders/index.html`: 0 hits |
 | "Get your readiness report" → `/contact/` | every occurrence: nav desktop + nav mobile (×2 on all 14 pages), home hero, home bottom CTA, `/method` bottom, `/about` bottom, `/platform` action. The one exception is `/contact`'s own submit button, which is the form's `<button type="submit">` and has no href. Home checked in `dist/index.html`: 4 anchors carrying the label, all `href="/contact/"` |
 | "travel-tech marketplace" / "Two further engagements" / "The problem" / "Why it holds" in `dist/` | **0 / 0 / 0 / 0** |
@@ -749,5 +777,141 @@ came out in step 20 its only remaining user is the unrouted `_agents.astro`.
 | `/contact` demo field | label carries "(optional)", `aria-describedby="demo-help"` present, and `required` now appears 5× on the page (the two other questions + name, company, email) — the demo textarea is not among them |
 | `public/llms.txt` | **UNCHANGED** — no diff against the wave A tip |
 | New design-system surface | none — no new colours, fonts, or dependencies. One new component, `FormSubmissionEvent.astro`, which renders no markup at all (an inline script only), plus the new page `/thank-you-builders/` built from the existing page frame |
+
+Nothing was pushed.
+
+---
+
+# Cold-review fix wave
+
+A verified cold review of the branch produced thirteen findings; all are fixed
+here. No new dependencies, colours, fonts, or components, and no spec copy was
+altered except at the two points the review explicitly authorised (the
+thank-you-builders sentence below, and the `/privacy` thank-you-page plural).
+
+## Forms — `src/components/FormSourceScript.astro`
+
+1. **`_subject` is now re-synced on submit.** The company was appended on load
+   and on every `input` event only, so an autofill or a session restore — neither
+   of which fires `input` — could repopulate the company field and send a
+   subject line without it. `form.addEventListener("submit", syncSubject)` now
+   runs the same handler as the form leaves. The computation is unchanged and
+   still derives from `subjectInput.defaultValue`, so the extra run is
+   idempotent.
+2. **The source tag stores the referrer HOST only.** It stored
+   `document.referrer` in full — path and query included — which is more than
+   `/privacy` promises. The already-computed `referrerHost` is now what gets
+   stored (`referrer = referrerHost;`), so the value that reaches the founder's
+   inbox and the Plausible event is exactly "the site that referred you".
+   `/privacy`'s referrer sentence ("a campaign link, the site that referred you,
+   or simply 'direct'") therefore now describes the code exactly and needed no
+   change. The one `/privacy` edit in this wave is the singular thank-you page:
+   the session-storage entry is written "by our thank-you pages … so that
+   reloading one does not count the same form confirmation twice" — there are
+   two thank-you pages since wave B step 21.
+3. **`_next` is derived from `Astro.site`, not hardcoded.** `/contact` and
+   `/builders` both held a literal `https://tai42.ai/thank-you…`, so a preview
+   build's form would have redirected into production. Both now compose
+   `new URL("/thank-you…/", Astro.site?.href || "https://tai42.ai").href`, the
+   same fallback idiom `BaseLayout` uses. The built values are unchanged
+   (`astro.config.mjs` sets `site: "https://tai42.ai"`).
+
+## Structure and accessibility
+
+4. **`StepLine` takes a `headingLevel` prop** (default `"h3"`), and `/method`
+   passes `headingLevel="h2"`. `/method` had an h1 → h3 skip: the five step
+   titles were h3 directly under the page h1. The homepage keeps the default h3,
+   because there the step line sits under the "How it works" h2. Verified in the
+   build: `dist/method/index.html` main is h1 then h2 only; `dist/index.html`
+   main is h1 · h2 · h3×5 · h2 · h2 · h3×3 — no skips on either page.
+   The stop-marker `<li>`s are now `aria-hidden="true"`: they are decorative
+   labels, and the five steps stay the list's semantic items.
+5. **`ScreenshotSlot`'s unused `class` prop removed** — no call site passed one;
+   the `<figure>` carries its classes directly.
+6. **Canonical and `og:url` are omitted on `noindex` pages.** `dist/404.html`
+   was emitting `canonical` and `og:url` of `https://tai42.ai/404/` — a URL that
+   does not exist, on a document GitHub Pages serves at *every* unknown path.
+   `BaseLayout` now gates both tags behind `!noindex`. **Applied uniformly, and
+   that is correct SEO**: a page we ask crawlers to skip has no canonical URL to
+   declare. Checked before applying — no other `noindex` page depends on its
+   canonical: the two thank-you pages and `/company/careers` are reachable only
+   by direct navigation and are linked from nowhere, and `_agents.astro` is
+   unrouted. Verified: 0 canonicals on `/404`, `/thank-you/`,
+   `/thank-you-builders/`, `/company/careers/`; every indexable page still has
+   exactly one. The rest of the OG card (title, description, image) is untouched.
+
+## Copy and content
+
+7. **The two thank-you pages no longer share a `<title>`.** Contact keeps
+   "Thank you — tai42"; builders becomes **"You're on the list — tai42"**,
+   derived from its own H1. The title also feeds `og:title` / `twitter:title`.
+8. **Removed from `/thank-you-builders`: "We'll be in touch when it opens for
+   yours."** — an unapproved commitment about when we make contact. The H1
+   ("Thanks — you're on the list.") and the restated honest line ("Founding
+   partners are invited in small batches as delivery capacity opens.") stay.
+   *Founder: a wording nod on the shortened paragraph would be welcome — it now
+   ends on the honest line and promises nothing further.*
+9. **`public/llms.txt` line 5: "- Method:" → "- How it works:"** — the label,
+   not the URL, which stays `https://tai42.ai/method`. **Ruling:** the 7h
+   rename-everywhere ("Method" is retired as a label sitewide) supersedes the
+   older verbatim-block treatment of `llms.txt`; the file was the last place the
+   old label survived.
+10. **`/terms` §8 now contacts `contact@tai42.ai`** instead of
+    `balin.miki@tai42.ai` — same `mailto:` link pattern and styling, label
+    updated to match. This removes the last person-named address from the site;
+    nothing else in §8 changed. `balin` now returns 0 hits in `dist/`.
+11. **Three author-rationale HTML comments became Astro template comments**
+    (`{/* … */}`), so they no longer ship in `dist/`: the demo-question note on
+    `/contact`, and the "hidden until the founder …" gate notes on `/about` and
+    `/open-source`. The two `<!-- VERIFY: engineering -->` comments on
+    `/security` are sanctioned and remain HTML comments (2 hits in the built
+    page, by design). Section-label comments elsewhere are the site idiom and
+    were left alone.
+
+## Band rhythm
+
+12. **Homepage.** "What we build" and "Why it works" were both `bg-white`, and
+    "Why it works" put three `bg-white` cards on a white band. One fill flip
+    could not fix it — inserting or flipping a single band shifts the parity of
+    everything after it — so the tail of the page was re-alternated: "Why it
+    works" → `bg-gray-50` (its white cards get their contrast back), "The other
+    doors" → `bg-white` with its card switched to the `bg-gray-50` card fill
+    already used on `/contact`, and the closing CTA → `bg-gray-50`, matching the
+    CTA band on `/method`, `/about`, and `/open-source`. The full sequence is now
+    hero white · How it works gray · What we build white · Why it works gray ·
+    doors white · CTA gray. No copy changed; the frontmatter const
+    `WHY_IT_HOLDS` was renamed to `WHY_IT_WORKS` to match the heading.
+13. **The two gated sections.** `/open-source`'s boundary table and `/about`'s
+    agent roster each rendered next to a section with the same fill, so the
+    promised one-flag flip would have broken the rhythm. A gated section is an
+    extra band, so the fills *after* it derive from the flag: `/about` gets
+    `BAND_CTA`, `/open-source` gets `BAND_PROMISE` / `BAND_HOW_WE_RUN` /
+    `BAND_ACTIONS`. Verified by building with each flag flipped both ways — both
+    pages alternate in both states, and the flags are back to `false`.
+
+## Gates and self-checks after the cold-review fix wave
+
+`npx astro check` — 27 files, **0 errors, 0 warnings, 0 hints**.
+`npm run build` (clean `dist/`) — **14 pages, complete, no warnings**.
+
+| Check | Result |
+| --- | --- |
+| "The demo question" / "hidden until the founder" in `dist/` | 0 / 0 |
+| "We'll be in touch when it opens" in `dist/` | 0 |
+| `dist/llms.txt` line 5 | `- How it works: https://tai42.ai/method` |
+| `rel="canonical"` in `dist/404.html` | 0 (was 1 × `https://tai42.ai/404/`); `og:url` 0 |
+| Canonicals on the other `noindex` pages | `/thank-you/` 0, `/thank-you-builders/` 0, `/company/careers/` 0 — all were 1; indexable pages unchanged at 1 each |
+| `balin` in `dist/` | 0 — `/terms` §8 is now `mailto:contact@tai42.ai` |
+| Referrer storage | host only — `referrer = referrerHost;` in the built inline script |
+| Submit-time `_subject` sync | present on both form pages in `dist/` |
+| `dist/method` heading order | h1 → h2 only in `<main>` (was h1 → h3); homepage h1 · h2 · h3×5 · h2 · h2 · h3×3 |
+| Stop markers | 2 on `/method`, both `aria-hidden="true"` |
+| Home band sequence | white · gray-50 · white · gray-50 · white · gray-50 |
+| Gate flips | `/open-source` and `/about` alternate with the flag `true` **and** `false` (built both ways; flags left `false`) |
+| Bracket regex `\[[A-Z_]+[^\]]*\]` in `dist/` | 0 |
+| Banned strings in `dist/` | Text-to-Flow 0 · Request access 0 · No credit card 0 · SOC 2 0 · certified 0 · autopilot 0 · disrupt 0 · € 0 · base_url 0 · Nexus 0 · Web3Forms 0 |
+| "Get your readiness report" anchors | 33 across `dist/`, every one `href="/contact/"` |
+| `VERIFY: engineering` comments | still 2, still HTML comments, in `src/pages/security.astro` and `dist/security/index.html` |
+| `_next` values in `dist/` | `https://tai42.ai/thank-you/` and `https://tai42.ai/thank-you-builders/` — unchanged, now derived from `Astro.site` |
 
 Nothing was pushed.

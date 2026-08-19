@@ -10,14 +10,13 @@ interface Props {
   alt: string;
   /** Flip to true once the file is in the repo. */
   show?: boolean;
-  class?: string;
 }
 
-const { src, alt, show = false, class: className = "" } = Astro.props;
+const { src, alt, show = false } = Astro.props;
 ---
 
 {show && (
-  <figure class:list={["mt-6 overflow-hidden rounded-xl border border-gray-200 bg-white", className]}>
+  <figure class="mt-6 overflow-hidden rounded-xl border border-gray-200 bg-white">
     <img src={src} alt={alt} class="block w-full h-auto" loading="lazy" decoding="async" />
   </figure>
 )}

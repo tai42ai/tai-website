@@ -11,6 +11,13 @@ export const prerender = true;
 // bring the whole section back — nothing else has to change.
 const SHOW_BOUNDARY_TABLE = false;
 
+// Band rhythm: the page alternates bg-white / bg-gray-50. The gated table is
+// one extra band, so the sections after it take their fill from the flag —
+// flipping it keeps the alternation instead of doubling a fill.
+const BAND_PROMISE = SHOW_BOUNDARY_TABLE ? "bg-white" : "bg-gray-50";
+const BAND_HOW_WE_RUN = SHOW_BOUNDARY_TABLE ? "bg-gray-50" : "bg-white";
+const BAND_ACTIONS = BAND_PROMISE;
+
 const DOCS_URL = "https://docs.tai42.ai";
 const GITHUB_ORG_URL = "https://github.com/tai42ai";
 const GITHUB_DISCUSSIONS_URL = "https://github.com/orgs/tai42ai/discussions";
@@ -98,7 +105,7 @@ const COMMERCIAL_ROWS = [
       </div>
     </section>
 
-    <!-- What's open, what's commercial — hidden until the founder confirms -->
+    {/* What's open, what's commercial — hidden until the founder confirms */}
     {SHOW_BOUNDARY_TABLE && (
       <section class="bg-gray-50 py-16 lg:py-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -140,7 +147,7 @@ const COMMERCIAL_ROWS = [
     )}
 
     <!-- What we promise about it -->
-    <section class="bg-gray-50 py-20 lg:py-24">
+    <section class={`${BAND_PROMISE} py-20 lg:py-24`}>
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
@@ -156,7 +163,7 @@ const COMMERCIAL_ROWS = [
     </section>
 
     <!-- How we run it -->
-    <section class="bg-white py-20 lg:py-24">
+    <section class={`${BAND_HOW_WE_RUN} py-20 lg:py-24`}>
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
@@ -176,7 +183,7 @@ const COMMERCIAL_ROWS = [
     </section>
 
     <!-- Actions -->
-    <section class="bg-gray-50 py-20 lg:py-24">
+    <section class={`${BAND_ACTIONS} py-20 lg:py-24`}>
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div class="flex flex-col sm:flex-row items-center justify-center gap-4">

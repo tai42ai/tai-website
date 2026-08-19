@@ -14,6 +14,11 @@ export const prerender = true;
 //   { agent: "Status & reporting agent", owner: "engineering" }
 const SHOW_AGENT_ROSTER = false;
 
+// Band rhythm: the page alternates bg-white / bg-gray-50. The gated roster is
+// one extra band (gray, under the white section above it), so the CTA below
+// takes its fill from the flag — flipping it keeps the alternation.
+const BAND_CTA = SHOW_AGENT_ROSTER ? "bg-white" : "bg-gray-50";
+
 const AGENT_ROSTER: { agent: string; owner: string }[] = [];
 
 const LAYERS = [
@@ -122,7 +127,7 @@ const LAYERS = [
       </div>
     </section>
 
-    <!-- The agent roster — hidden until the founder supplies it -->
+    {/* The agent roster — hidden until the founder supplies it */}
     {SHOW_AGENT_ROSTER && (
       <section class="bg-gray-50 py-20 lg:py-24">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -146,7 +151,7 @@ const LAYERS = [
     )}
 
     <!-- CTA -->
-    <section class="bg-gray-50 py-20 lg:py-24">
+    <section class={`${BAND_CTA} py-20 lg:py-24`}>
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Reveal>
           <a

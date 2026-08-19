@@ -12,7 +12,11 @@ export const prerender = true;
 // (builders@tai42.ai) is configured account-side, never in the markup.
 const FORMSPREE_BUILDERS_ID = "PENDING_FOUNDER";
 const FORM_ENDPOINT = `https://formspree.io/f/${FORMSPREE_BUILDERS_ID}`;
-const THANK_YOU_REDIRECT = "https://tai42.ai/thank-you-builders/";
+// Derived from the configured site origin — see /contact for the note.
+const THANK_YOU_REDIRECT = new URL(
+  "/thank-you-builders/",
+  Astro.site?.href || "https://tai42.ai"
+).href;
 // The company is appended live by FormSourceScript: "… — {company}".
 const SUBJECT = "[tai42] Founding builder";
 

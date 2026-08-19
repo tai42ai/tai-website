@@ -36,7 +36,7 @@ const STEPS: Step[] = [
   },
 ];
 
-const WHY_IT_HOLDS = [
+const WHY_IT_WORKS = [
   {
     title: "Gates, not promises.",
     body:
@@ -151,7 +151,7 @@ const WHY_IT_HOLDS = [
     </section>
 
     <!-- Why it works -->
-    <section class="bg-white py-20 lg:py-24">
+    <section class="bg-gray-50 py-20 lg:py-24">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <h2 class="text-3xl sm:text-4xl font-bold text-black text-center mb-14">
@@ -160,7 +160,7 @@ const WHY_IT_HOLDS = [
         </Reveal>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-          {WHY_IT_HOLDS.map((card, i) => (
+          {WHY_IT_WORKS.map((card, i) => (
             <Reveal delay={100 + i * 75}>
               <div class="card-hover bg-white rounded-xl border border-gray-200 p-8 h-full">
                 <h3 class="text-xl font-bold text-black mb-3">{card.title}</h3>
@@ -173,13 +173,13 @@ const WHY_IT_HOLDS = [
     </section>
 
     <!-- The other doors -->
-    <section class="bg-gray-50 py-16 lg:py-20">
+    <section class="bg-white py-16 lg:py-20">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <p class="text-lg text-charcoal/70 leading-relaxed mb-6">
             Two other doors.
           </p>
-          <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8">
+          <div class="bg-gray-50 rounded-xl border border-gray-200 p-6 lg:p-8">
             <p>
               <a
                 href="/builders/"
@@ -194,7 +194,7 @@ const WHY_IT_HOLDS = [
     </section>
 
     <!-- CTA -->
-    <section class="bg-white py-20 lg:py-24">
+    <section class="bg-gray-50 py-20 lg:py-24">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Reveal>
           <a
