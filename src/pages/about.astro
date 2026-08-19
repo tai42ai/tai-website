@@ -6,12 +6,14 @@ import Reveal from "../components/Reveal.astro";
 
 export const prerender = true;
 
-// The agent roster is written and kept, but not rendered: the founder supplies
-// the roster before it publishes. Flip this to true to bring the section back —
-// nothing else has to change.
-//
-// Entry format (agent + owner role, never a person's name), e.g.:
-//   { agent: "Status & reporting agent", owner: "engineering" }
+// The agent roster section is written and kept, but not rendered: the founder
+// supplies the roster content before it publishes. Two steps, in this order —
+// AGENT_ROSTER below is empty, so flipping this flag on its own publishes an
+// empty card:
+//   1. fill AGENT_ROSTER with entries (agent + owner role, never a person's
+//      name), e.g. { agent: "Status & reporting agent", owner: "engineering" }
+//   2. then flip SHOW_AGENT_ROSTER to true.
+// Nothing else has to change.
 const SHOW_AGENT_ROSTER = false;
 
 // Band rhythm: the page alternates bg-white / bg-gray-50. The gated roster is

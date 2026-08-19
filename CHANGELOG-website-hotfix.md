@@ -35,7 +35,11 @@ This list supersedes every earlier "parked" note in this file.
 3. **The three `/platform` screenshot files, plus their flag flips.** Drop
    `example-flow.png`, `visual-builder.png`, and `audit-observability.png` into
    `/public/images/platform/` and set `show` on that one `ScreenshotSlot`
-   instance. Nothing renders while a file is missing.
+   instance. Nothing renders until `show` is flipped — the slot emits no `<img>`
+   and no empty frame while the flag is false. Order matters: drop the file in
+   **before** flipping, or the flipped slot renders a broken image (the flag,
+   not the file's presence, is what gates the markup — see the comment at the
+   top of `src/components/ScreenshotSlot.astro`).
 4. **The open/commercial boundary table on `/open-source`** — founder confirms
    the split, then `SHOW_BOUNDARY_TABLE = true`.
 5. **The agent-roster content on `/about`** — founder supplies the entries
@@ -48,6 +52,16 @@ This list supersedes every earlier "parked" note in this file.
 7. **`/platform` contract instance (7j)** — founder confirms whether Change
    Order v1.5 §4.4 still requires the one-sentence contract in the `/platform`
    body; today it reaches the page through the footer only. See step 14.
+8. **Enable GitHub Discussions for the `tai42ai` org** (turn the feature on in
+   one repo, which GitHub designates as the org's Discussions source repo).
+   `/open-source` links `GITHUB_DISCUSSIONS_URL` =
+   `https://github.com/orgs/tai42ai/discussions` (`src/pages/open-source.astro:23`),
+   and that URL **returns 404 today** — verified against the GitHub API: no repo
+   under the org has discussions enabled, so the org-level Discussions page does
+   not exist yet. §8.2 (the community forum) is blocked on this. **The URL is
+   correct and stays as written** — it is the org's canonical Discussions path
+   and starts resolving the moment a source repo is designated; the fix is on
+   GitHub, not in this repo.
 8. **"Read the technical overview" returns to `/platform` card 1** once
    engineering signs the overview off; 7j removed the link for now.
 9. **Live end-to-end form test** — blocked on item 1. The procedure will be in
@@ -305,7 +319,7 @@ possessive wording is the post-submission variant the hotfix asks for.
 | `dist/llms.txt` Docs line | `- Docs: https://docs.tai42.ai` |
 | Docs in nav + footer | 3 × `Docs` on every page — desktop nav, mobile panel, footer — never in the active style |
 | `docs.tai42.ai` links in `dist/` | 41 `href` instances across 13 HTML files: 39 chrome (13 pages × 3) + 2 in the `/open-source` body and Links list |
-| Banned strings in `dist/` | `Text-to-Flow` 0, `Request access` 0, `No credit card` 0, `SOC 2` 0, `certified` 0, `autopilot` 0, `disrupt` 0, `€` 0, `base_url` 0. `Nexus` 1 — the pre-existing `/product/nexus/` legacy-URL redirect stub (noindex meta-refresh to `/platform/`, from `astro.config.mjs` on `main`, untouched by this hotfix) |
+| Banned strings in `dist/` | `Text-to-Flow` 0, `Request access` 0, `No credit card` 0, `SOC 2` 0, `certified` 0, `autopilot` 0, `disrupt` 0, `€` 0, `base_url` 0. `Nexus` 1 — **counted case-insensitively**, and the single hit is the lowercase URL path in the pre-existing `/product/nexus/` legacy-URL redirect stub (noindex meta-refresh to `/platform/`, from `astro.config.mjs` on `main`, untouched by this hotfix). The capitalized brand term `Nexus` is **0** everywhere in `dist/`, which is what the later gates tables report — so the 1 → 0 across this document is a counting-method difference, not a change to the output |
 | Open-source contract sentence | present in all 3 required places — the footer (so on all 13 pages), the `/open-source` body, the `/platform` body — verbatim, whitespace-normalized comparison |
 | `" - "` on `/security` | 0 in the source and 0 in the built page |
 | `VERIFY: engineering` comments | 2 in `src/pages/security.astro` (also emitted into `dist/security/index.html`) |
@@ -1000,3 +1014,46 @@ custom event, not visitor copy. It ships in every built page (14 hits for the
 singular form in `dist/`) and predates this wave.
 
 Nothing was pushed.
+
+## Cold-review fix wave 3 (documentation)
+
+Documentation only — no page copy, no markup, no logic. One Astro frontmatter
+comment and this changelog. `dist/` is byte-identical before and after
+(40 files, sha256 per file — no diff), so nothing shipped changed.
+
+1. **`src/pages/about.astro` — the roster gate comment was wrong about the
+   flip.** It said "Flip this to true to bring the section back — nothing else
+   has to change", but `AGENT_ROSTER` is `[]`, so a lone flip publishes an empty
+   card. The comment now spells out the order: **first** fill `AGENT_ROSTER`
+   with entries (agent + owner role, never a person's name), **then** flip
+   `SHOW_AGENT_ROSTER`. Pending-list item 5 already said the founder supplies
+   the entries; only the in-file comment was misleading.
+2. **Wave-A gates row `Nexus 1` clarified.** That row counted
+   case-insensitively, and its single hit is the lowercase URL path in the
+   `/product/nexus/` redirect stub. The capitalized brand term is 0 in `dist/`
+   (re-verified this wave: `grep -ro "Nexus" dist` → **0**,
+   `grep -ro "nexus" dist` → **1**), which is what the later gates tables
+   report. The 1 → 0 across this document is a counting-method difference, not
+   a change to the output.
+3. **Pending item 3 (the `/platform` screenshots) corrected.** "Nothing renders
+   while a file is missing" was loose — the missing file is not what gates the
+   markup. `ScreenshotSlot.astro` renders nothing while `show` is false, and
+   renders an `<img>` at `src` as soon as `show` is true, file or no file. The
+   item now states the order: drop the file in **before** flipping, or the slot
+   renders a broken image.
+4. **New pending item 8 — enable GitHub Discussions for the `tai42ai` org.**
+   Found while checking the outbound links: `/open-source` links
+   `https://github.com/orgs/tai42ai/discussions`, which **returns 404**. Checked
+   against the GitHub API — no repo under the org has discussions enabled, so
+   GitHub has no source repo to serve the org-level Discussions page from. §8.2
+   (the community forum) is blocked on it. The URL is the org's canonical
+   Discussions path and is **left exactly as written**; it starts resolving as
+   soon as a source repo is designated. This is a GitHub-side action for the
+   founder, not a code change.
+
+Gates after this wave: `npx astro check` — 27 files, **0 errors, 0 warnings,
+0 hints**. `npm run build` — **14 pages, complete, no warnings**. `dist/`
+unchanged (byte-identical, all 40 files). Files touched:
+`src/pages/about.astro`, `CHANGELOG-website-hotfix.md`.
+
+Nothing was committed or pushed.
