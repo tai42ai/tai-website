@@ -5,8 +5,10 @@
 //
 // Stop-points: `stopAfter` lists the 1-based step numbers a stop-point marker
 // follows, e.g. stopAfter={[2, 4]} puts a marker between steps 2→3 and 4→5.
-// The marker label defaults to "you can leave here". The markers are decorative
-// (`aria-hidden`): the steps stay the list's semantic items.
+// The marker label defaults to "you can leave here". A marker carries
+// `role="presentation"` so it drops out of the list's item count — the steps
+// stay the list's semantic items — while its label stays readable to assistive
+// technology (which `aria-hidden` would have hidden).
 //
 // `headingLevel` sets the tag of the step titles ("h3" by default) so each page
 // can keep its heading order unbroken — /method passes "h2" under its h1, the
@@ -28,7 +30,6 @@ interface Props {
   stopLabel?: string;
   /** Tag for the step titles, so each page keeps an unbroken heading order. */
   headingLevel?: "h2" | "h3" | "h4";
-  class?: string;
 }
 
 const {
@@ -36,7 +37,6 @@ const {
   stopAfter = [],
   stopLabel = "you can leave here",
   headingLevel = "h3",
-  class: className = "",
 } = Astro.props;
 
 const Heading = headingLevel;
@@ -57,13 +57,13 @@ steps.forEach((step, i) => {
 });
 ---
 
-<ol class:list={["flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-0", className]}>
+<ol class="flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-0">
   {items.map((item, i) =>
     item.kind === "stop" ? (
       <li
         class="reveal flex flex-col lg:shrink-0 lg:px-3"
         style={`transition-delay: ${i * 60}ms`}
-        aria-hidden="true"
+        role="presentation"
       >
         <div class="flex h-9 items-center justify-center mb-4">
           <span class="whitespace-nowrap rounded-full border border-dashed border-crimson/40 bg-white px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-crimson">

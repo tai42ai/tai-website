@@ -763,7 +763,7 @@ came out in step 20 its only remaining user is the unrouted `_agents.astro`.
 | Check | Result |
 | --- | --- |
 | "production audit" / "Book a production audit" / "Book your production audit" | **0** in `src/`, **0** in `dist/` |
-| Remaining "audit" hits (case-insensitive, `src/`) | 9, every one a product property: `builders.astro:59` "full audit" · `open-source.astro:22` hidden boundary-table cell "permissions, audit, delegated access" · `open-source.astro:79` "Permissions, audit, and delegated access …" · `about.astro:25` the same sentence in the runtime layer card · `platform.astro:150` card 5 title "Audit and observability, by construction." · `platform.astro:159,160` the hidden `audit-observability.png` slot and its alt · `security.astro:41,48` "Open and auditable" (comment + heading). No human-facing CTA use remains |
+| Remaining "audit" hits (case-insensitive, `src/`) | 9, every one a product property: `builders.astro:63` "full audit" · `open-source.astro:29` hidden boundary-table cell "permissions, audit, delegated access" · `open-source.astro:86` "Permissions, audit, and delegated access …" · `about.astro:30` the same sentence in the runtime layer card · `platform.astro:150` card 5 title "Audit and observability, by construction." · `platform.astro:159,160` the hidden `audit-observability.png` slot and its alt · `security.astro:41,48` "Open and auditable" (comment + heading). No human-facing CTA use remains |
 | Calendar URL in the build | exactly **one** file — `dist/thank-you/index.html`. `dist/thank-you-builders/index.html`: 0 hits |
 | "Get your readiness report" → `/contact/` | every occurrence: nav desktop + nav mobile (×2 on all 14 pages), home hero, home bottom CTA, `/method` bottom, `/about` bottom, `/platform` action. The one exception is `/contact`'s own submit button, which is the form's `<button type="submit">` and has no href. Home checked in `dist/index.html`: 4 anchors carrying the label, all `href="/contact/"` |
 | "travel-tech marketplace" / "Two further engagements" / "The problem" / "Why it holds" in `dist/` | **0 / 0 / 0 / 0** |
@@ -784,10 +784,21 @@ Nothing was pushed.
 
 # Cold-review fix wave
 
-A verified cold review of the branch produced thirteen findings; all are fixed
-here. No new dependencies, colours, fonts, or components, and no spec copy was
-altered except at the two points the review explicitly authorised (the
-thank-you-builders sentence below, and the `/privacy` thank-you-page plural).
+A verified cold review of the branch produced thirteen fixes consolidated from
+the review's findings; all are applied here. No new dependencies, colours,
+fonts, or components, and no spec copy was altered except at the four points
+the review explicitly authorised:
+
+- the `/thank-you-builders` sentence "We'll be in touch when it opens for
+  yours." removed (item 8);
+- the `/privacy` thank-you-page plural (recorded inside item 2);
+- the `public/llms.txt` label rename "- Method:" → "- How it works:" (item 9);
+- the `/terms` §8 contact swap `balin.miki@tai42.ai` → `contact@tai42.ai`
+  (item 10).
+
+Item 7 also changes page-frame text that is not spec copy: the
+`/thank-you-builders` `<title>` becomes "You're on the list — tai42" so the two
+thank-you pages no longer share one title.
 
 ## Forms — `src/components/FormSourceScript.astro`
 
@@ -913,5 +924,79 @@ thank-you-builders sentence below, and the `/privacy` thank-you-page plural).
 | "Get your readiness report" anchors | 33 across `dist/`, every one `href="/contact/"` |
 | `VERIFY: engineering` comments | still 2, still HTML comments, in `src/pages/security.astro` and `dist/security/index.html` |
 | `_next` values in `dist/` | `https://tai42.ai/thank-you/` and `https://tai42.ai/thank-you-builders/` — unchanged, now derived from `Astro.site` |
+
+Nothing was pushed.
+
+---
+
+# Cold-review fix wave 2
+
+Five small items from the final cold pass. No copy in the verbatim-locked spec
+blocks was touched, no new dependencies, colours, fonts, or components.
+
+1. **`/security` no longer skips a heading level.** The page outline was
+   h1 → h3 × 4 with no h2 anywhere on it. The four block titles ("Open and
+   auditable", "Your infrastructure, or your tenant", "Deterministic where it
+   matters", "No outbound calls from the self-hosted runtime") are now `h2`,
+   classes unchanged and the strings byte-identical. `<main>` outline in
+   `dist/security/index.html`: **1, 2, 2, 2, 2**.
+2. **`StepLine` — unused `class` prop removed** (`Props.class`, the
+   `class: className` destructure, and the `class:list` on the `<ol>`, which is
+   now a plain `class`). Neither caller passed it; the same cleanup was already
+   done on `ScreenshotSlot`.
+3. **`StepLine` stop markers: `aria-hidden="true"` → `role="presentation"`.**
+   `role="presentation"` takes the marker `<li>` out of the list's item count —
+   so assistive tech still reads five steps, not seven — while the spec-mandated
+   "you can leave here" label stays readable, which `aria-hidden` had suppressed.
+   `dist/method/index.html`: 2 × `role="presentation"`, 0 × `aria-hidden`, and
+   "you can leave here" still present twice.
+4. **`/privacy` — the last singular "our thank-you page" pluralised.** The
+   analytics-event sentence now reads "when a form submission lands on **one of
+   our thank-you pages** …", matching the pluralisation already applied to the
+   session-storage sentence in wave 1. There are two thank-you pages.
+5. **`/platform` band rhythm.** The page declared `bg-white` twice in a row —
+   the hero and the "What it runs" section, which has no top padding and is
+   painted as part of the hero's band. The redundant declaration is removed, so
+   the section inherits the `body`'s white and the page's painted bands read
+   **white · gray-50 · white · gray-50 · white**, like every other page. Nothing
+   moves on screen and no card fill changes: the cards still sit `bg-white` on
+   the one gray band. (A single fill *flip* cannot alternate this page: with six
+   sections, the only one-flip solution is a grey hero, which no other page has.)
+6. **Changelog corrections.** Four stale line refs in the wave-B audit
+   classification row are corrected against the current files —
+   `builders.astro:59 → 63`, `open-source.astro:22 → 29`,
+   `open-source.astro:79 → 86`, `about.astro:25 → 30`. The wave-1 opening
+   paragraph undercounted itself: it now reads "thirteen fixes consolidated from
+   the review's findings" and names all **four** authorised text changes
+   (`/thank-you-builders` sentence removal, `/privacy` plural, `llms.txt` label
+   rename, `/terms` §8 contact swap), plus the `/thank-you-builders` `<title>`
+   change from item 7.
+
+The wave-1 gates table row "Stop markers | 2 on `/method`, both
+`aria-hidden="true"`" is superseded by item 3 above.
+
+## Gates and self-checks after fix wave 2
+
+`npx astro check` — 27 files, **0 errors, 0 warnings, 0 hints**.
+`npm run build` (clean `dist/`) — **14 pages, complete, no warnings**.
+
+| Check | Result |
+| --- | --- |
+| `dist/security` `<main>` outline | **1, 2, 2, 2, 2** (was 1, 3, 3, 3, 3) |
+| `dist/security` block titles | all four byte-exact, `class` unchanged |
+| `VERIFY: engineering` comments | still **2** in `src/pages/security.astro` and **2** in `dist/security/index.html` |
+| `dist/method` stop markers | **2 × `role="presentation"`**, **0 × `aria-hidden`**; "you can leave here" × 2 |
+| `dist/method` `<main>` outline | h1 → h2 × 10 — unchanged |
+| `dist/index` `<main>` outline | h1 · h2 · h3 × 5 · h2 · h2 · h3 × 3 — unchanged; 0 stop markers (home passes no `stopAfter`) |
+| `/privacy` singular "thank-you page" in body copy | **0** (2 × "thank-you pages") |
+| `dist/platform` band sequence | `bg-white` · *(no fill — hero continuation)* · `bg-gray-50` · `bg-white` · `bg-gray-50` · `bg-white` → painted **white · gray · white · gray · white** |
+| Bracket regex `\[[A-Z_]+[^\]]*\]` in `dist/` | **0** |
+| Banned strings in `dist/` | Text-to-Flow 0 · Request access 0 · No credit card 0 · SOC 2 0 · certified 0 · autopilot 0 · disrupt 0 · € 0 · base_url 0 · Nexus 0 · Web3Forms 0 · "production audit" 0 |
+| Files touched | `src/pages/security.astro`, `src/components/StepLine.astro`, `src/pages/privacy.astro`, `src/pages/platform.astro`, `CHANGELOG-website-hotfix.md` |
+
+Known and left alone: `src/layouts/BaseLayout.astro:68` carries an HTML comment
+ending "… fired from the thank-you page." — a developer note about the Plausible
+custom event, not visitor copy. It ships in every built page (14 hits for the
+singular form in `dist/`) and predates this wave.
 
 Nothing was pushed.
