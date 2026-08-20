@@ -145,3 +145,43 @@ build" `:140`):
 The text is byte-identical — `Two other doors.` — and the heading order is
 unbroken (it is an `h2` under the page `h1`, like every other home band). Only
 the tag and the class list changed.
+
+## Step 3 — the StepLine stop-point marker reads as a connector on mobile
+
+`src/components/StepLine.astro`. The `<ol>` is `flex flex-col … gap-8` on mobile
+and `lg:flex-row lg:gap-0` on desktop. On mobile that gave the
+`role="presentation"` stop-point marker ("you can leave here") a **full slot in
+the vertical flow** — 32px of gap above it and 32px below, the same rhythm as a
+real step card, plus the 36px node-height spacer and its 16px margin that the
+marker only needs to line up with the numbered nodes in the desktop rail. It
+read as an extra step rather than as a label sitting *between* two cards.
+
+Two class changes, both scoped below `lg`:
+
+| | Before | After |
+| --- | --- | --- |
+| marker `<li>` | `reveal flex flex-col lg:shrink-0 lg:px-3` | `reveal flex flex-col -my-6 lg:my-0 lg:shrink-0 lg:px-3` |
+| its inner row | `flex h-9 items-center justify-center mb-4` | `flex items-center justify-center lg:h-9 lg:mb-4` |
+
+`-my-6` (−24px block margin) cancels most of the 32px flex gap on each side, so
+the mobile spacing around the marker is **8px above and 8px below** against
+**32px** between two step cards — 4× tighter, and visibly subordinate. Dropping
+`h-9`/`mb-4` below `lg` removes the 52px of rail-alignment box the stacked
+layout has no rail to align to.
+
+Unchanged: the desktop rendering (`lg:my-0 lg:h-9 lg:mb-4` restore the previous
+box model exactly — at `lg` the computed margins and heights are identical),
+`role="presentation"`, the dashed crimson pill styling, the label text, and the
+`stopAfter`/`stopLabel`/`headingLevel` API. The component doc comment gained one
+sentence explaining the mobile spacing.
+
+**Verified in the built markup** (`dist/method/index.html`, both markers):
+
+```
+<li class="reveal flex flex-col -my-6 lg:my-0 lg:shrink-0 lg:px-3" … role="presentation">
+  <div class="flex items-center justify-center lg:h-9 lg:mb-4">
+```
+
+and in the shipped stylesheet: `.-my-6{margin-block:calc(var(--spacing) * -6)}`,
+`.lg\:my-0`, `.lg\:h-9`, `.lg\:mb-4` all emitted. The homepage passes no
+`stopAfter`, so its four-step line is unaffected.
