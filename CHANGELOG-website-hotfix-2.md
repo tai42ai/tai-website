@@ -124,3 +124,24 @@ blocked** on those two IDs. Procedure: `CHANGELOG-website-hotfix.md`, step 20,
 and `HOTFIX-REPORT.md` check 4, steps 1–8.
 
 ---
+
+## Step 2 — the homepage "Two other doors." line becomes the section heading
+
+`src/pages/index.astro`, "The other doors" section. The line was marked up as
+body copy — `<p class="text-lg text-charcoal/70 leading-relaxed mb-6">` — while
+functioning as the heading of its own band, which left the section headless in
+the document outline and rendered its one sentence in muted grey at body size.
+
+It is now an `<h2>` in the site's section-heading style, copied character for
+character from the neighbouring home sections ("How it works" `:96`, "What we
+build" `:140`):
+
+```
+<h2 class="text-3xl sm:text-4xl font-bold text-black mb-6">
+  Two other doors.
+</h2>
+```
+
+The text is byte-identical — `Two other doors.` — and the heading order is
+unbroken (it is an `h2` under the page `h1`, like every other home band). Only
+the tag and the class list changed.
