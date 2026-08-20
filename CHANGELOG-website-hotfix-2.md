@@ -13,7 +13,7 @@ Not deployed from here. Never pushed by the implementer.
 
 ---
 
-## Cause analysis — "the live site is half old"
+## Step 1 — Cause analysis — "the live site is half old"
 
 **It is not.** The repo and the deployed artifact are both, entirely, the new
 generation. The observation matches the *pre-deploy* pages held in a browser or
@@ -44,7 +44,7 @@ so neither the browser nor the Pages CDN could answer from cache:
 | `https://tai42.ai/security/` | 200 | "Security by architecture" | 0 |
 
 Each of those H1s exists **only** in the new generation. The bracket-placeholder
-regex `\[[A-Z_]+[^\]]*\]` returns **zero** hits across all four live pages —
+regex `\[[A-Z_]+[^\]]*\]` returns **zero** hits across all four live pages and on the separately fetched live `/contact/` (200, zero brackets, action=formspree sentinel) —
 including the four `[WEB3FORMS_ACCESS_KEY]` chips that the previous generation
 rendered on `/contact` and `/builders`. (The only `placeholder` substring on the
 live `/builders` is the Tailwind `placeholder:text-charcoal/30` utility class on

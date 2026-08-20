@@ -76,7 +76,8 @@ The backend chain, re-checked this pass and unchanged:
 
 1. The site is hosted on **GitHub Pages** → **no host-native form handling** exists.
 2. There is **no working Web3Forms key** in the repo — Web3Forms is gone from `src/`
-   entirely (0 hits, § g).
+   entirely (0 hits — evidence in § a's live-page sweep; re-verified:
+   `grep -rio web3forms src/ public/ dist/` → 0).
 3. Therefore **FORM_BACKEND = Formspree**, and the Formspree account under
    **`contact@tai42.ai` must be created by the founder**.
 
@@ -112,7 +113,11 @@ declares them; the build emits a stub for each; the target of each is a real 200
 | `/product/babelfish/` | `…url=/platform/` + canonical `/platform/` | **200** | `/platform/` **200** |
 | `/how-it-works/` | `…url=/method/` + canonical `/method/` | **200** | `/method/` **200** |
 
-One hop each: every stub points straight at a final page, never at another stub.
+One hop each: every stub points straight at a final page, never at another stub. The
+config declares **eight** stubs in total; the other four — `/babelfish/`,
+`/babelfish/agentic-to-flow/` → `/platform/`, `/company/about/` → `/about/`,
+`/company/contact/` → `/contact/` — were verified the same way: one-hop stubs in the
+build, live **200**, targets live **200**.
 
 **Doc paths — client-side mechanism, and it is the only one available.** GitHub Pages has
 no redirect rule file and no wildcard support, so a path with no file *must* answer 404.
@@ -236,7 +241,10 @@ with no heading. Now `<h2 class="text-3xl sm:text-4xl font-bold text-black mb-6"
 classes copied from the neighbouring home sections. Verified in `dist/index.html`: four
 `h2`s now render — "How it works", "What we build", "Why it works", **"Two other doors."**
 — the last with `text-3xl sm:text-4xl font-bold text-black mb-6`. The sentence itself is
-byte-identical.
+byte-identical. Founder heads-up (carried forward from the hotfix review): the block still
+shows a single door — "For builders →" alone, no agents door while `/agents` is gated —
+and this change gives that lone door a full-scale section heading; if that reads too
+heavy before the agents door goes live, it is a one-line style call during the voice pass.
 
 **No copy changed anywhere in this branch.** The whole diff is: one tag + class list on
 `index.astro`, two class lists + one doc-comment sentence on `StepLine.astro`, and two new
@@ -261,6 +269,18 @@ markdown files.
    person's name), then `SHOW_AGENT_ROSTER = true`.
 6. **`/security` engineering sign-off** on the two sentences marked
    `<!-- VERIFY: engineering -->`; remove both comments once signed.
+7. **Formspree `_next` custom-redirect plan check** — when creating the account, verify
+   whether the custom redirect to the site's thank-you pages requires a paid plan; if
+   gated, submissions land on Formspree's branded page and both the calendar hand-off and
+   the analytics event are lost (see `CHANGELOG-website-hotfix.md`, Activation step 5).
+8. **`/platform` contract instance** — founder confirms whether Change Order v1.5 §4.4
+   still requires the one-sentence contract in the `/platform` body (the 7j rebuild
+   removed it; the footer instance still renders on the page).
+9. **"Read the technical overview"** — returns to `/platform` card 1 once engineering
+   signs off on the white paper (currently absent everywhere, as gated).
+
+This list mirrors `CHANGELOG-website-hotfix.md`'s canonical pending list in full (its
+former item 10, the live end-to-end test, is folded into item 1 above).
 
 Plus, from § a: **a hard refresh** is the whole remedy for the "half old" report, and **a
 true 301 for the doc paths needs a hosting move** — neither is a code change.
