@@ -103,7 +103,7 @@ silently.
 
 ## d. Redirects · PASS (doc paths client-side by necessity)
 
-**Four legacy stubs — one hop, verified in the build and live.** `astro.config.mjs:7–16`
+**Legacy stubs — one hop, verified in the build and live (four in the table; all eight covered below).** `astro.config.mjs:7–16`
 declares them; the build emits a stub for each; the target of each is a real 200 page.
 
 | Requested | Stub in `dist/` | Live (cache-busted) | Target live |
@@ -272,7 +272,7 @@ markdown files.
 7. **Formspree `_next` custom-redirect plan check** — when creating the account, verify
    whether the custom redirect to the site's thank-you pages requires a paid plan; if
    gated, submissions land on Formspree's branded page and both the calendar hand-off and
-   the analytics event are lost (see `CHANGELOG-website-hotfix.md`, Activation step 5).
+   the analytics event are lost (see `CHANGELOG-website-hotfix.md` step 20, "NOTE for the founder", item 1).
 8. **`/platform` contract instance** — founder confirms whether Change Order v1.5 §4.4
    still requires the one-sentence contract in the `/platform` body (the 7j rebuild
    removed it; the footer instance still renders on the page).
@@ -280,7 +280,7 @@ markdown files.
    signs off on the white paper (currently absent everywhere, as gated).
 
 This list mirrors `CHANGELOG-website-hotfix.md`'s canonical pending list in full (its
-former item 10, the live end-to-end test, is folded into item 1 above).
+item 10, the live end-to-end test, is folded into item 1 above).
 
 Plus, from § a: **a hard refresh** is the whole remedy for the "half old" report, and **a
 true 301 for the doc paths needs a hosting move** — neither is a code change.
