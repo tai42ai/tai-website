@@ -436,3 +436,155 @@ with the session-storage entry, the source tag and the thank-you pages it
 describes. `/privacy` is rewritten in wave C (spec 4f); it is left untouched
 here rather than half-edited. The build does not depend on it — the page has no
 imports from the removed files.
+
+---
+
+## Step 8 — `/method` becomes an overview strip, one gate line, five detail blocks
+
+Decision of 20 Aug (spec 4e, which supersedes 4a–4c for this page). The page no
+longer renders its five steps through `StepLine`; it renders them twice, in two
+registers, inside one section:
+
+1. **The overview strip** — one compact horizontal line of five nodes, number
+   badge + short title only, connected by a thin `w-6 h-px bg-gray-200` rule
+   (`aria-hidden`, it is decoration): `1 Readiness review · 2 Readiness gate ·
+   3 Build · 4 Acceptance · 5 Run`. Left-aligned, an `<ol>` so the order is
+   semantic. Below `sm` it is `w-max` inside an `overflow-x-auto` wrapper
+   bled to the band edges (`-mx-4 sm:mx-0`), so it scrolls sideways rather than
+   breaking a node in half; from `sm` up it is `flex-wrap` and wraps normally.
+2. **The gate line** — one plain sentence directly under the strip, verbatim:
+   "Every phase ends at a written gate. You can stop at any of them — which is
+   exactly why clients don't." Body copy, not a heading. This is the only place
+   the leave-idea appears on the page.
+3. **The detail blocks** — the same five steps stacked, left-aligned, in the
+   established card (`bg-white rounded-xl border border-gray-200` on the gray
+   band): number badge, full title, locked paragraph. One number per step — the
+   badge — and the titles carry no numbering of their own.
+
+The five step bodies are **byte-identical**; only the `STEPS` entries gained a
+`short` field for the strip. The `Step` type is now local to the page (it no
+longer imports `StepLine`).
+
+**Heading-outline call.** The step titles must not be `<h2>` (4e) and the outline
+must not skip a level, so the strip and the blocks now live in a section with
+its own heading — `<h2>The five steps</h2>`, in the site's standard section
+style — and the five titles are `<h3 class="text-base font-bold text-black">`,
+the same small title style they had as cards. Rendered outline of `/method`:
+
+```
+h1 How it works
+h2 The five steps
+   h3 The production readiness review (free, entry).
+   h3 Stage 0 — the readiness gate.
+   h3 The build.
+   h3 Acceptance (your verification).
+   h3 Run (the license).
+h2 What's in the production readiness report
+h2 Where humans stay
+h2 What we ask of you
+h2 What you keep
+h2 Who we work with
+```
+
+One `h1`, section `h2`s, step titles one level under their own section, no skip,
+and the titles are visibly subordinate (16px bold against a 30–36px section
+heading).
+
+### The StepLine API loses its stop-points
+
+`/method` was the only caller passing `stopAfter` — so with the stop-point idea
+gone from the page, the marker had no user left. `src/components/StepLine.astro`
+therefore drops:
+
+* the `stopAfter` and `stopLabel` props (and the `"you can leave here"` default),
+* the whole `Item` union and the flattening loop that interleaved markers with
+  steps — the component now maps `steps` directly,
+* the marker `<li>` (the `role="presentation"` dashed crimson pill), which is
+  what Step 3 above had been tuning. Step 3's mobile-spacing fix is superseded:
+  there is no marker to space.
+
+`headingLevel` stays (the homepage relies on its `h3` default, and it is the
+knob that keeps a caller's heading order unbroken), as do `Step`, the rail, the
+card, the link variant and the `.reveal` delays. **The homepage's four-step line
+renders byte-identically**: its `<ol>…</ol>` region in `dist/index.html` is
+character-for-character the same as in the pre-change build (2,893 bytes,
+diffed). Without the stop branch, the `i * 60ms` reveal delays are the same
+numbers they always were for a caller that passed no `stopAfter`.
+
+## Step 9 — internal working labels stop rendering
+
+Spec 4d: every heading has to pass "would a reader write this?".
+
+| Page | Before | After |
+| --- | --- | --- |
+| `/` | `<h2>Two other doors.</h2>` above the doors card | heading removed; the card with the builders link stands alone, left-aligned, in its own band |
+| `/method` | `<h2>Who we work with (the honest filter)</h2>` | `<h2>Who we work with</h2>` |
+| `/builders` | `<h2>The honest line</h2>` above its paragraph | heading removed; the paragraph stands alone |
+| `/platform` | `<h2>What you get</h2>` | unchanged — 4d allows it as a plain section heading, and it is one |
+| `/open-source` | contract label was never a heading | unchanged |
+
+This supersedes Step 2 of this changelog, which had promoted the homepage
+"Two other doors." line to a heading; 20 Aug removes the label outright.
+
+**Astro emits HTML comments into the build.** The section comments carrying the
+same working labels were therefore rendered text as far as the verification
+greps are concerned, and are renamed:
+
+* `src/pages/builders.astro` — `<!-- The honest line -->` → `<!-- How founding partners come in -->`
+* `src/pages/platform.astro` — `<!-- The honest line -->` → `<!-- Where else to start -->`
+* `src/pages/open-source.astro` — `<!-- The one-sentence contract -->` → `<!-- The contract, as one sentence -->`
+* `src/pages/method.astro` — the section comment lost "(the honest filter)" with the heading
+
+## Step 10 — `/about`: new h1, and the layers paragraph replaced
+
+Spec 7i.
+
+* **H1 and metadata.** `The self-driving company, the honest way` →
+  `The self-driving company, in production.`; the page `title` →
+  `The self-driving company, in production. — tai42`. `BaseLayout` derives
+  `og:title` and `twitter:title` from `title`, so all three change with the one
+  edit (verified in `dist/about/index.html`). "the honest way" now returns zero
+  hits sitewide.
+* **The "Why the layers are separate." paragraph.** The bold lead is **kept**:
+  it is descriptive, reader-facing copy — a reader would write "Why the layers
+  are separate." — so it passes the 4d test, and 7i's replacement text is the
+  paragraph body only. Everything after the `<strong>` is replaced with the
+  spec's text verbatim: "So each one can make you a promise the others don't
+  depend on. You can verify the engine without trusting us — the code is public.
+  You can run your operations without sharing them — your tenant is private. And
+  you can start without committing — engagements are short and end at gates you
+  verify. Three layers, three independent guarantees." The old
+  trust/keep/proof sentences are gone, so "earns its keep" returns zero hits.
+* The `description` meta, the three layer cards and the rest of the page are
+  untouched.
+
+## Steps 8–10 — verification (wave B gates)
+
+`npx astro check` — **22 files, 0 errors, 0 warnings, 0 hints.**
+`npm run build` — **12 pages built**, build clean.
+
+| Check | Result |
+| --- | --- |
+| `you can leave here` | 0 in `src/`, 0 in `dist/` |
+| `honest line` (case-insensitive) | 0 in `dist/` |
+| `honest filter` | 0 in `dist/` |
+| `Two other doors` | 0 in `dist/` |
+| `doors line` | 0 in `dist/` |
+| `proof strip` | 0 in `dist/` |
+| `the one-sentence contract` | 0 as a label; **1 remaining hit** — see below |
+| `the honest way` | 0 in `src/`, 0 in `dist/` |
+| `earns its keep` | 0 in `src/`, 0 in `dist/` |
+| `/method` renders strip → gate line → five blocks | yes (rendered text order verified in `dist/method/index.html`) |
+| one number per step on `/method` | yes — the badge; no numeral in any title |
+| five locked step paragraphs | byte-identical to the pre-change build (each of the five matched exactly against the old `dist`) |
+| homepage step line | `<ol>` region byte-identical to the pre-change `dist/index.html` |
+| homepage, only intended change | whole-page diff shows exactly one removal: the `Two other doors.` `<h2>` |
+
+**The one remaining hit, flagged not fixed:** `dist/about/index.html` still
+contains the words "The one-sentence contract:" — inside the locked body of the
+"The open-source runtime." layer card, as an in-sentence lead-in to the contract
+sentence, not as a heading or a standalone label. 4d's instruction ("Open
+Source: … never render it (already correct; keep)") is about the `/open-source`
+page, which is clean. Rewriting the `/about` card body is not in wave B's scope
+and that sentence is due to change anyway under 4b(2) (the contract sentence's
+casing sweep), so it is left for that wave to settle.
