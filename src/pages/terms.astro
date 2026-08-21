@@ -5,10 +5,18 @@ import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
 
 export const prerender = true;
+
+// Pre-incorporation (decision 20 Aug): the provider is the brand, not a
+// company that does not exist yet. The old incorporated-entity construct is
+// gone from every section, and there is no governing-law clause and
+// no registered address — the Provider section says plainly that a corporate
+// entity will be named when there is one. Sections 1–7 keep their numbers so
+// earlier references still resolve; Trademarks and Provider are appended as 8
+// and 9, and Contact moves from 8 to 10.
 ---
 
 <BaseLayout
-  title="Terms of Service — tai42"
+  title="Terms of service — tai42"
   description="The terms governing the tai42 open-source runtime, BabelFish, and associated APIs, documentation, and websites — acceptance, licensing, and data handling."
 >
   <NavBar />
@@ -19,7 +27,7 @@ export const prerender = true;
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mb-6">
-            Terms of Service.
+            Terms of service.
           </h1>
         </Reveal>
         <Reveal delay={100}>
@@ -34,22 +42,22 @@ export const prerender = true;
     <section class="bg-white pb-20 lg:pb-24">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="space-y-12">
-          <!-- 1. Acceptance of Terms -->
+          <!-- 1. Acceptance of terms -->
           <Reveal>
             <div>
-              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">1. Acceptance of Terms</h2>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">1. Acceptance of terms</h2>
               <p class="text-charcoal/70 leading-relaxed">
-                By accessing or using any services provided by TAI42, Inc. ("TAI42," "we," "us," or "our"), including the TAI42 open-source runtime, BabelFish, and any associated APIs, documentation, or websites (collectively, the "Services"), you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use the Services.
+                By accessing or using any services provided by tai42 ("tai42," "we," "us"), including the tai42 open-source runtime, BabelFish, and any associated APIs, documentation, or websites (collectively, the "Services"), you agree to be bound by these terms. If you do not agree to these terms, you may not use the Services.
               </p>
             </div>
           </Reveal>
 
-          <!-- 2. The Open-Source Runtime -->
+          <!-- 2. The open-source runtime -->
           <Reveal>
             <div>
-              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">2. The Open-Source Runtime</h2>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">2. The open-source runtime</h2>
               <p class="text-charcoal/70 leading-relaxed">
-                The TAI42 runtime - the framework, plugin ecosystem, Studio UI, and CLI - is open source and licensed under the Apache License, Version 2.0. Your use of those components is governed by that license, including its warranty disclaimers and limitation of liability. You may self-host, modify, and distribute them under its terms.
+                The tai42 runtime — the framework, plugin ecosystem, Studio UI, and CLI — is open source and licensed under the Apache License, Version 2.0. Your use of those components is governed by that license, including its warranty disclaimers and limitation of liability. You may self-host, modify, and distribute them under its terms.
               </p>
             </div>
           </Reveal>
@@ -59,57 +67,77 @@ export const prerender = true;
             <div>
               <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">3. BabelFish</h2>
               <p class="text-charcoal/70 leading-relaxed">
-                BabelFish is a proprietary product, licensed separately - not under the open-source license that covers the runtime. Access to it, and the terms of that access, are agreed with TAI42 directly. You may not copy, redistribute, or reverse-engineer it except as that separate license permits.
+                BabelFish is a proprietary product, licensed separately — not under the open-source license that covers the runtime. Access to it, and the terms of that access, are agreed with tai42 directly. You may not copy, redistribute, or reverse-engineer it except as that separate license permits.
               </p>
             </div>
           </Reveal>
 
-          <!-- 4. Intellectual Property -->
+          <!-- 4. Intellectual property -->
           <Reveal>
             <div>
-              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">4. Intellectual Property</h2>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">4. Intellectual property</h2>
               <p class="text-charcoal/70 leading-relaxed">
-                You retain all ownership rights to your code, data, agent configurations, and the flows you author. TAI42 retains all intellectual property rights in and to the runtime software, the BabelFish software, algorithms, documentation, and all other aspects of the Services, subject to the open-source license that governs the runtime. Nothing in these terms transfers ownership of either party's pre-existing intellectual property.
+                You retain all ownership rights to your code, data, agent configurations, and the flows you author. Tai42 retains all intellectual property rights in and to the runtime software, the BabelFish software, algorithms, documentation, and all other aspects of the Services, subject to the open-source license that governs the runtime. Nothing in these terms transfers ownership of either party's pre-existing intellectual property.
               </p>
             </div>
           </Reveal>
 
-          <!-- 5. Data Handling -->
+          <!-- 5. Data handling -->
           <Reveal>
             <div>
-              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">5. Data Handling</h2>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">5. Data handling</h2>
               <p class="text-charcoal/70 leading-relaxed">
-                This website's analytics are aggregate and set no cookies, and anything you send through its forms is used only to respond to you. The open-source runtime runs on your own infrastructure when you self-host it - your prompts, payloads, and data then never reach TAI42's servers. The hosted BabelFish platform runs in a private, dedicated, EU-hosted tenant your team operates, under the separate agreement covering that tenant. For details, see our <a href="/privacy/" class="font-medium text-crimson hover:text-burgundy transition-colors">Privacy Policy</a>.
+                This website's analytics are aggregate and set no cookies, and the site has no forms: what you write to <a href="mailto:contact@tai42.ai" class="font-medium text-crimson hover:text-burgundy transition-colors">contact@tai42.ai</a> or <a href="mailto:builders@tai42.ai" class="font-medium text-crimson hover:text-burgundy transition-colors">builders@tai42.ai</a> arrives in a group mailbox and is used only to reply to you and to schedule a conversation. The open-source runtime runs on your own infrastructure when you self-host it — your prompts, payloads, and data then never reach tai42's servers. The hosted BabelFish platform runs in a private, dedicated, EU-hosted tenant your team operates, under the separate agreement covering that tenant. For details, see our <a href="/privacy/" class="font-medium text-crimson hover:text-burgundy transition-colors">privacy policy</a>.
               </p>
             </div>
           </Reveal>
 
-          <!-- 6. Limitation of Liability -->
+          <!-- 6. Limitation of liability -->
           <Reveal>
             <div>
-              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">6. Limitation of Liability</h2>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">6. Limitation of liability</h2>
               <p class="text-charcoal/70 leading-relaxed">
-                To the maximum extent permitted by applicable law, TAI42 and its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses resulting from your use of or inability to use the Services. The Services are provided "as-is" and "as-available" without warranties of any kind, except as expressly stated in a separate written agreement.
+                To the maximum extent permitted by applicable law, tai42 and its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses resulting from your use of or inability to use the Services. The Services are provided "as-is" and "as-available" without warranties of any kind, except as expressly stated in a separate written agreement.
               </p>
             </div>
           </Reveal>
 
-          <!-- 7. Changes to Terms -->
+          <!-- 7. Changes to terms -->
           <Reveal>
             <div>
-              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">7. Changes to Terms</h2>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">7. Changes to terms</h2>
               <p class="text-charcoal/70 leading-relaxed">
-                TAI42 reserves the right to modify these Terms of Service at any time. We will notify you of material changes by posting the updated terms on our website and updating the effective date above. Your continued use of the Services after such changes constitutes your acceptance of the revised terms.
+                Tai42 reserves the right to modify these terms at any time. We will notify you of material changes by posting the updated terms on our website and updating the effective date above. Your continued use of the Services after such changes constitutes your acceptance of the revised terms.
               </p>
             </div>
           </Reveal>
 
-          <!-- 8. Contact -->
+          <!-- 8. Trademarks -->
           <Reveal>
             <div>
-              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">8. Contact</h2>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">8. Trademarks</h2>
               <p class="text-charcoal/70 leading-relaxed">
-                For questions about these Terms of Service, please contact us at
+                Tai42, the tai42 logo, and BabelFish are marks of tai42. The Apache-2.0 license covering the runtime grants no rights to these marks; you may not use them except to accurately describe the origin of the software.
+              </p>
+            </div>
+          </Reveal>
+
+          <!-- 9. Provider -->
+          <Reveal>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">9. Provider</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                Tai42 is currently operated by its founders. A corporate entity will be designated upon incorporation, and these terms will be updated to name it. Questions: <a href="mailto:contact@tai42.ai" class="font-medium text-crimson hover:text-burgundy transition-colors">contact@tai42.ai</a>.
+              </p>
+            </div>
+          </Reveal>
+
+          <!-- 10. Contact -->
+          <Reveal>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-black mb-4">10. Contact</h2>
+              <p class="text-charcoal/70 leading-relaxed">
+                For questions about these terms, please contact us at
                 <a href="mailto:contact@tai42.ai" class="font-medium text-crimson hover:text-burgundy transition-colors">contact@tai42.ai</a>.
               </p>
             </div>
