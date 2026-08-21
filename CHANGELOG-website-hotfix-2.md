@@ -239,3 +239,65 @@ are no forms, no form IDs, no `_next`, and no thank-you pages to redirect to;
 `PENDING_FOUNDER` returns zero hits in `src/`. Its history stands as written and
 is not rewritten — this paragraph is the pointer. A pointer line was added to
 that file at the head of its pending list.
+
+---
+
+## Step 5 — `/contact` becomes three questions and one mailto button
+
+`src/pages/contact.astro`. The H1 is untouched: *"Three questions. They save us
+both a meeting."* Everything below it — the `<form>`, its five fields, the two
+hidden Formspree inputs, the honeypot, and the `FormSourceScript` import — is
+gone.
+
+**Layout call.** The three questions render as a plain numbered list (`<ol>`,
+left-aligned, `text-lg`), each with a small crimson numeral in the marker column
+— the same crimson-dot marker idiom `/method` already uses for its report list,
+with a numeral instead of a dot, because the page's own H1 counts them. The
+demo helper — *"Paste a link, a video, or a sentence — anything that shows what
+you've built."* — sits as the first question's **sub-line**, verbatim, in the
+`text-sm text-charcoal/60` size the form's helper text used. It reads naturally
+there: it explains what an answer to question 1 looks like.
+
+**One deletion of copy, stated plainly:** the form label read "Do you have a
+working demo today? **(optional)**". "(optional)" was a form affordance — it
+told you that you could submit with the field empty. With no fields to leave
+empty it means nothing, so the question renders as "Do you have a working demo
+today?" The encouragement it carried survives in the sub-line and in the mailto
+body, where the prompt is spelled "Do you have a working demo today? (paste a
+link, a video, or a sentence)".
+
+**The button** uses the site's primary button classes, unchanged
+(`btn-hover inline-flex … bg-crimson text-white hover:bg-burgundy rounded-lg
+px-8 py-3.5 font-semibold transition-colors`), and reads **"Get your production
+readiness report"**. Its `href` is built in the frontmatter from a `PROMPTS`
+array, so the encoding is `encodeURIComponent`'s and not hand-written:
+
+```
+mailto:contact@tai42.ai?subject=Production%20readiness%20report&body=…
+```
+
+decoded body:
+
+```
+Do you have a working demo today? (paste a link, a video, or a sentence)
+
+What breaks — or what's stopping you from putting it in front of real users?
+
+How will you measure success in production?
+
+Name / Company:
+
+```
+
+Each prompt on its own line with a blank line after it — including the last, so
+there is room to type under "Name / Company:". Line breaks are `\r\n`, which
+encode to `%0D%0A`.
+
+Under the button, one plain line, verbatim: *"or write to contact@tai42.ai — we
+read everything and reply with a time to talk."* The address is a `mailto:` link
+in the site's standard inline-link classes (`font-medium text-crimson
+hover:text-burgundy transition-colors`, no underline — matching every other
+inline link on the site).
+
+**No calendar link anywhere on the page**, and no analytics event: the page now
+loads no page-specific script at all.

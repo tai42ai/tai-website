@@ -3,28 +3,28 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
-import FormSourceScript from "../components/FormSourceScript.astro";
 
 export const prerender = true;
 
-// Formspree — a plain HTML POST, no dependency and nothing rendered as text.
-// PENDING_FOUNDER is a sentinel, not a value we invented: the founder creates
-// the form under contact@tai42.ai and swaps this one constant for its ID. The
-// delivery address is configured account-side, never in the markup.
-const FORMSPREE_CONTACT_ID = "PENDING_FOUNDER";
-const FORM_ENDPOINT = `https://formspree.io/f/${FORMSPREE_CONTACT_ID}`;
-// Derived from the configured site origin, so a preview build redirects into
-// itself rather than into production.
-const THANK_YOU_REDIRECT = new URL(
-  "/thank-you/",
-  Astro.site?.href || "https://tai42.ai"
-).href;
-// The company is appended live by FormSourceScript: "… — {company}".
-const SUBJECT = "[tai42] Readiness report request";
-
-const inputClass =
-  "w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-charcoal placeholder:text-charcoal/30 focus:border-crimson focus:outline-none focus:ring-1 focus:ring-crimson transition-colors";
-const labelClass = "block text-sm font-medium text-black mb-2";
+// No form, no form backend, no thank-you page (decision 20 Aug). The three
+// questions are plain text and the primary button is a mailto: with the subject
+// and the questions pre-filled, so the answers arrive as an ordinary email in
+// the contact@ Group mailbox. contact@tai42.ai is deliberately public here.
+const MAIL_TO = "contact@tai42.ai";
+const SUBJECT = "Production readiness report";
+// One prompt per line, each followed by a blank line, so the sender types under
+// each. encodeURIComponent turns the \r\n pairs into %0D%0A, which is what mail
+// clients expect in a mailto body.
+const PROMPTS = [
+  "Do you have a working demo today? (paste a link, a video, or a sentence)",
+  "What breaks — or what's stopping you from putting it in front of real users?",
+  "How will you measure success in production?",
+  "Name / Company:",
+];
+const BODY = PROMPTS.map((prompt) => `${prompt}\r\n\r\n`).join("");
+const MAILTO_HREF = `mailto:${MAIL_TO}?subject=${encodeURIComponent(
+  SUBJECT
+)}&body=${encodeURIComponent(BODY)}`;
 ---
 
 <BaseLayout
@@ -43,89 +43,54 @@ const labelClass = "block text-sm font-medium text-black mb-2";
         </Reveal>
 
         <Reveal delay={100}>
-          <form
-            action={FORM_ENDPOINT}
-            method="POST"
-            data-source-form
-            class="space-y-6"
-          >
-            <input type="hidden" name="_subject" value={SUBJECT} />
-            <input type="hidden" name="_next" value={THANK_YOU_REDIRECT} />
-            <input type="hidden" name="source" value="" />
-            <!-- Formspree honeypot -->
-            <input
-              type="text"
-              name="_gotcha"
-              class="hidden"
-              style="display:none"
-              tabindex="-1"
-              autocomplete="off"
-              aria-hidden="true"
-            />
-
-            {/* The demo question, given the weight it deserves: it is the one
-                answer the readiness report is built from. Optional but
-                encouraged — said in the label, not only in the helper text, so
-                it reaches screen readers as well. */}
-            <div class="rounded-xl border border-gray-200 bg-gray-50 p-5 lg:p-6">
-              <label class="block text-base font-semibold text-black mb-1.5" for="demo">
-                Do you have a working demo today? (optional)
-              </label>
-              <p id="demo-help" class="text-sm text-charcoal/60 leading-relaxed mb-3">
-                Paste a link, a video, or a sentence — anything that shows what
-                you've built.
-              </p>
-              <textarea
-                id="demo"
-                name="Do you have a working demo today?"
-                rows="4"
-                aria-describedby="demo-help"
-                class={inputClass}></textarea>
-            </div>
-
-            <div>
-              <label class={labelClass} for="breaks">
+          <ol class="space-y-6">
+            <li class="flex gap-3">
+              <span class="shrink-0 w-5 text-base font-semibold text-crimson/70 leading-relaxed">1</span>
+              <div>
+                <p class="text-lg text-black leading-relaxed">
+                  Do you have a working demo today?
+                </p>
+                <p class="mt-1.5 text-sm text-charcoal/60 leading-relaxed">
+                  Paste a link, a video, or a sentence — anything that shows what
+                  you've built.
+                </p>
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <span class="shrink-0 w-5 text-base font-semibold text-crimson/70 leading-relaxed">2</span>
+              <p class="text-lg text-black leading-relaxed">
                 What breaks — or what's stopping you from putting it in front of
                 real users?
-              </label>
-              <textarea id="breaks" name="What breaks, or what's stopping you from putting it in front of real users?" rows="4" required class={inputClass}></textarea>
-            </div>
-
-            <div>
-              <label class={labelClass} for="success">
+              </p>
+            </li>
+            <li class="flex gap-3">
+              <span class="shrink-0 w-5 text-base font-semibold text-crimson/70 leading-relaxed">3</span>
+              <p class="text-lg text-black leading-relaxed">
                 How will you measure success in production?
-              </label>
-              <textarea id="success" name="How will you measure success in production?" rows="3" required class={inputClass}></textarea>
-            </div>
+              </p>
+            </li>
+          </ol>
+        </Reveal>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
-                <label class={labelClass} for="name">Name</label>
-                <input id="name" name="name" type="text" required autocomplete="name" class={inputClass} />
-              </div>
-              <div>
-                <label class={labelClass} for="company">Company</label>
-                <input id="company" name="company" type="text" required autocomplete="organization" class={inputClass} />
-              </div>
-            </div>
-
-            <div>
-              <label class={labelClass} for="email">Email</label>
-              <input id="email" name="email" type="email" required autocomplete="email" class={inputClass} />
-            </div>
-
-            <button
-              type="submit"
+        <Reveal delay={200}>
+          <div class="mt-10">
+            <a
+              href={MAILTO_HREF}
               class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
             >
-              Get your readiness report
-            </button>
-          </form>
+              Get your production readiness report
+            </a>
+            <p class="mt-4 text-sm text-charcoal/60 leading-relaxed">
+              or write to <a
+                href={`mailto:${MAIL_TO}`}
+                class="font-medium text-crimson hover:text-burgundy transition-colors"
+                >contact@tai42.ai</a
+              > — we read everything and reply with a time to talk.
+            </p>
+          </div>
         </Reveal>
       </div>
     </section>
-
-    <FormSourceScript />
   </main>
 
   <Footer />
