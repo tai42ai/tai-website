@@ -995,7 +995,7 @@ cover. Two further accuracy fixes went in with it:
   (above, under step 4) after the review found it had been lost when the old
   Formspree pending items were voided; `CHANGELOG-website-hotfix.md` item 10 is
   now explicitly void with a pointer here.
-- `/privacy` meta description trimmed 174 → 138 characters (step 14 had pushed
+- `/privacy` meta description trimmed 174 → 136 characters (step 14 had pushed
   it past the ~160 search-snippet window; same rule applied to `/security` in
   fix wave 1).
 - Gates re-run after these edits: `npx astro check` 0/0/0; `npm run build` 12
