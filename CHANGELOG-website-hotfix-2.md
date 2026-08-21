@@ -353,3 +353,57 @@ carries no sender. An email does: the reply address is the From header. Nothing
 else was dropped.
 
 **No calendar link on the page.**
+
+---
+
+## Step 7 — the primary CTA reads "Get your production readiness report"
+
+Decision 20 Aug. The button label gains one word, in all eight places it
+appears, and the `href` is unchanged everywhere (`/contact/` — the page, not the
+mailto):
+
+| File | Where |
+| --- | --- |
+| `src/components/NavBar.astro` | desktop CTA, mobile-menu CTA |
+| `src/pages/index.astro` | hero CTA, bottom CTA |
+| `src/pages/method.astro` | bottom CTA |
+| `src/pages/about.astro` | bottom CTA |
+| `src/pages/platform.astro` | actions row (the primary of the pair; the secondary "Talk to us about a tenant" is untouched) |
+| `src/pages/contact.astro` | the mailto button (Step 5) |
+
+"Get your readiness report" returns **zero hits** in `src/` and in `dist/`.
+
+### First-mention upgrades — every changed sentence
+
+The rule: the **first** time a page names the report it says *production
+readiness report*; "the report" is fine thereafter. Two sentences changed:
+
+1. `src/pages/platform.astro`, "Getting started":
+   "…talk to us. The **readiness report** is free: we assess your demo…" →
+   "…talk to us. The **production readiness report** is free: we assess your
+   demo…" (the sentence's own later "a written report" stays — that is the
+   thereafter case).
+2. `src/pages/method.astro`, section-2 heading:
+   "What's in the **readiness report**" → "What's in the **production readiness
+   report**". *Judgment call, stated:* the page's literally-first occurrence of
+   the two words is inside step 1's locked paragraph ("You leave with a written
+   readiness report and a proposal"), which spec 4e locks verbatim — and it sits
+   two sentences under the step title "The production readiness review (free,
+   entry).", so the qualifier is already carried by its own context. The heading
+   is the page's first *standalone* naming of the artefact, and a heading is
+   where the full name earns its place. So: heading upgraded, locked paragraph
+   untouched.
+
+**Deliberately not changed:**
+
+* `/method` step 1's title and the page intro say "production readiness
+  **review**" — the review, not the report. Left as written (spec is explicit).
+* `/about`'s "the readiness review" in the OG/summary sentence — the review
+  again.
+* `/index`'s "Production readiness review (free)." — the review.
+* `/method`'s locked step-1 paragraph, as argued above.
+* Later mentions of "the report" and "a written report" anywhere.
+
+One comment also updated for accuracy: `NavBar.astro`'s header comment described
+the CTA as "form first, calendar second" — there is no form and no calendar, so
+it now reads "→ /contact/ — the page, not its mailto button".
