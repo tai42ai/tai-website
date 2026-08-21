@@ -23,6 +23,15 @@ Not deployed from here. Never pushed by the implementer.
 
 This list supersedes every earlier "parked" note in this file.
 
+> **Superseded 2026-08-21 — items 1 and 2 below are void.** The site no longer
+> has forms: the 20-Aug decision replaced both with `mailto:` buttons, and the
+> Formspree endpoints, the `PENDING_FOUNDER` sentinels, the `_next` redirect and
+> both thank-you pages were removed on `website-hotfix-2`. There are no form IDs
+> to supply and no paid-plan question to answer. See
+> `CHANGELOG-website-hotfix-2.md`, Step 4. The rest of this list is untouched,
+> and nothing below or above this line has been rewritten — this is a pointer,
+> not a correction.
+
 1. **The two Formspree form IDs.** `FORMSPREE_CONTACT_ID` (`src/pages/contact.astro`)
    and `FORMSPREE_BUILDERS_ID` (`src/pages/builders.astro`) both hold the
    sentinel `PENDING_FOUNDER`, so both forms post to

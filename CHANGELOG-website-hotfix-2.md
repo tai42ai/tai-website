@@ -185,3 +185,57 @@ sentence explaining the mobile spacing.
 and in the shipped stylesheet: `.-my-6{margin-block:calc(var(--spacing) * -6)}`,
 `.lg\:my-0`, `.lg\:h-9`, `.lg\:mb-4` all emitted. The homepage passes no
 `stopAfter`, so its four-step line is unaffected.
+
+---
+
+## Step 4 — forms teardown: the site has no form backend any more
+
+Decision of 20 Aug (deploy-completion prompt v2, "Step 3 forms — SUPERSEDED …
+NO FORMS"): `/contact` and `/builders` stop POSTing anywhere. The two pages keep
+their copy and their questions, and their primary button becomes a `mailto:`
+with the subject and the questions pre-filled (steps 5 and 6 below). This step
+removes everything the form machinery needed.
+
+**Deleted (`git rm`):**
+
+| File | Why it existed | Why it goes |
+| --- | --- | --- |
+| `src/pages/thank-you.astro` | the contact form's `_next` landing page; the only page that rendered the calendar link | no form, no redirect target |
+| `src/pages/thank-you-builders.astro` | the waitlist form's `_next` landing page | same |
+| `src/components/FormSourceScript.astro` | stamped the referrer-derived `source` tag and the live company into the Formspree `_subject`/`_next` | no form fields left to stamp |
+| `src/components/FormSubmissionEvent.astro` | fired the one custom Plausible event, `qualified_form_submission` | the event ceases to exist |
+| `src/consts.ts` | held exactly one export, `CALENDAR_URL` | its only importer was `thank-you.astro`; the file is now empty of purpose, so it goes rather than lingering as an unused constant. Verified before deleting: `CALENDAR_URL` was imported in one place and `consts` in no other. |
+
+**Changed:** `src/layouts/BaseLayout.astro` — the Plausible **script stays**
+(page views are still collected). What goes is the inline `window.plausible`
+queue shim, whose only job was to buffer custom events fired before the script
+loaded, and the comment naming `qualified_form_submission`. The comment now
+reads "Page views only: the site has no forms and fires no custom events" — a
+description the build can be checked against.
+
+**No calendar URL anywhere on the site.** `calendar.google.com` returns zero
+hits in `src/` and in `dist/`. The booking link now travels in the human reply
+to an email, which is the point: *we'll read this before we meet.*
+
+**Repealed rule.** The earlier rule "never render an email address on the site"
+is repealed for exactly two lines: `contact@tai42.ai` on `/contact` and
+`builders@tai42.ai` on `/builders`. Both addresses are now **deliberately
+public** — they are the intake path, and Google Workspace group-level spam
+filtering is the spam layer that the honeypot used to be.
+
+**Removed routes.** `/thank-you/` and `/thank-you-builders/` no longer exist and
+will 404. Both were `noindex`ed and were reachable only as a form redirect
+target — nothing on the site, and nothing off it, ever linked to them.
+**Accepted**, deliberately, rather than adding redirects for URLs no one holds.
+
+**Roadmap note:** the future intake flow reads the contact@ / builders@ Group
+mailboxes — no public endpoint needed.
+
+**Supersession — `CHANGELOG-website-hotfix.md`.** That file's *Pending —
+founder / engineering* list opens with two Formspree items: (1) supply the two
+form IDs replacing the `PENDING_FOUNDER` sentinel, and (2) verify whether
+Formspree's `_next` custom redirect needs a paid plan. **Both are void.** There
+are no forms, no form IDs, no `_next`, and no thank-you pages to redirect to;
+`PENDING_FOUNDER` returns zero hits in `src/`. Its history stands as written and
+is not rewritten — this paragraph is the pointer. A pointer line was added to
+that file at the head of its pending list.
