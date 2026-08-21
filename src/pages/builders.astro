@@ -3,28 +3,26 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
-import FormSourceScript from "../components/FormSourceScript.astro";
 
 export const prerender = true;
 
-// Formspree — see /contact for the note. PENDING_FOUNDER is the sentinel the
-// founder swaps for the builders form's ID; the delivery address
-// (builders@tai42.ai) is configured account-side, never in the markup.
-const FORMSPREE_BUILDERS_ID = "PENDING_FOUNDER";
-const FORM_ENDPOINT = `https://formspree.io/f/${FORMSPREE_BUILDERS_ID}`;
-// Derived from the configured site origin — see /contact for the note.
-const THANK_YOU_REDIRECT = new URL(
-  "/thank-you-builders/",
-  Astro.site?.href || "https://tai42.ai"
-).href;
-// The company is appended live by FormSourceScript: "… — {company}".
-const SUBJECT = "[tai42] Founding builder";
-
-const inputClass =
-  "w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-charcoal placeholder:text-charcoal/30 focus:border-crimson focus:outline-none focus:ring-1 focus:ring-crimson transition-colors";
-const labelClass = "block text-sm font-medium text-black mb-2";
+// No form, no form backend, no thank-you page (decision 20 Aug) — see /contact
+// for the note. The waitlist's three prompts are plain text and the button is a
+// mailto: with them pre-filled, answered from the builders@ Group mailbox.
+// builders@tai42.ai is deliberately public here.
+const MAIL_TO = "builders@tai42.ai";
+const SUBJECT = "Founding builder";
 
 const DELIVERS = ["agency", "dev shop", "service firm", "operator"];
+const DELIVERS_LINE = `What you deliver today (${DELIVERS.join(" / ")})`;
+
+// One prompt per line, each followed by a blank line, so the sender types under
+// each; encodeURIComponent turns the \r\n pairs into %0D%0A.
+const PROMPTS = ["Company", DELIVERS_LINE, "Roughly how many clients"];
+const BODY = PROMPTS.map((prompt) => `${prompt}:\r\n\r\n`).join("");
+const MAILTO_HREF = `mailto:${MAIL_TO}?subject=${encodeURIComponent(
+  SUBJECT
+)}&body=${encodeURIComponent(BODY)}`;
 ---
 
 <BaseLayout
@@ -83,65 +81,39 @@ const DELIVERS = ["agency", "dev shop", "service firm", "operator"];
       </div>
     </section>
 
-    <!-- Waitlist form -->
+    <!-- Waitlist -->
     <section class="bg-gray-50 py-16 lg:py-24">
       <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <form
-            action={FORM_ENDPOINT}
-            method="POST"
-            data-source-form
-            class="space-y-6 rounded-xl border border-gray-200 bg-white p-6 lg:p-8"
-          >
-            <input type="hidden" name="_subject" value={SUBJECT} />
-            <input type="hidden" name="_next" value={THANK_YOU_REDIRECT} />
-            <input type="hidden" name="source" value="" />
-            <!-- Formspree honeypot -->
-            <input
-              type="text"
-              name="_gotcha"
-              class="hidden"
-              style="display:none"
-              tabindex="-1"
-              autocomplete="off"
-              aria-hidden="true"
-            />
+          <div class="rounded-xl border border-gray-200 bg-white p-6 lg:p-8">
+            <ul class="space-y-4">
+              {PROMPTS.map((prompt) => (
+                <li class="flex gap-3 text-lg text-black leading-relaxed">
+                  <span class="mt-3 shrink-0 w-1.5 h-1.5 rounded-full bg-crimson/60"></span>
+                  <span>{prompt}</span>
+                </li>
+              ))}
+            </ul>
 
-            <div>
-              <label class={labelClass} for="company">Company</label>
-              <input id="company" name="company" type="text" required autocomplete="organization" class={inputClass} />
+            <div class="mt-8">
+              <a
+                href={MAILTO_HREF}
+                class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
+              >
+                Join the founding waitlist
+              </a>
+              <p class="mt-4 text-sm text-charcoal/60 leading-relaxed">
+                or write to <a
+                  href={`mailto:${MAIL_TO}`}
+                  class="font-medium text-crimson hover:text-burgundy transition-colors"
+                  >builders@tai42.ai</a
+                >.
+              </p>
             </div>
-
-            <div>
-              <label class={labelClass} for="delivers">What you deliver today</label>
-              <select id="delivers" name="what you deliver today" required class={inputClass}>
-                <option value="" selected disabled>Select one</option>
-                {DELIVERS.map((option) => <option value={option}>{option}</option>)}
-              </select>
-            </div>
-
-            <div>
-              <label class={labelClass} for="clients">Roughly how many clients</label>
-              <input id="clients" name="roughly how many clients" type="text" required class={inputClass} />
-            </div>
-
-            <div>
-              <label class={labelClass} for="email">Email</label>
-              <input id="email" name="email" type="email" required autocomplete="email" class={inputClass} />
-            </div>
-
-            <button
-              type="submit"
-              class="btn-hover inline-flex items-center justify-center bg-crimson text-white hover:bg-burgundy rounded-lg px-8 py-3.5 font-semibold transition-colors"
-            >
-              Join the founding waitlist
-            </button>
-          </form>
+          </div>
         </Reveal>
       </div>
     </section>
-
-    <FormSourceScript />
   </main>
 
   <Footer />

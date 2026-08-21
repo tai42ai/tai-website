@@ -301,3 +301,55 @@ inline link on the site).
 
 **No calendar link anywhere on the page**, and no analytics event: the page now
 loads no page-specific script at all.
+
+---
+
+## Step 6 — `/builders` becomes three prompts and one mailto button
+
+`src/pages/builders.astro`. **Body copy is verbatim and untouched** — the hero,
+the founding-partner paragraph, and the honest-line paragraph are byte-identical.
+Only the waitlist form changes: the `<form>`, the four fields, the two hidden
+Formspree inputs, the honeypot, and the `FormSourceScript` import are gone.
+
+The three field prompts render as plain text lines inside the same card the form
+sat in (`rounded-xl border border-gray-200 bg-white p-6 lg:p-8` on the gray
+band — the established card style, unchanged), with the crimson-dot marker
+`/method` uses for its lists:
+
+* Company
+* What you deliver today (agency / dev shop / service firm / operator)
+* Roughly how many clients
+
+The four `<select>` options survive as that parenthesis. `DELIVERS` stays a
+frontmatter array and is joined into both the rendered line and the mailto body,
+so the two cannot drift apart.
+
+**The button**, in the site's primary button classes, still reads **"Join the
+founding waitlist"**, and is now:
+
+```
+mailto:builders@tai42.ai?subject=Founding%20builder&body=…
+```
+
+decoded body:
+
+```
+Company:
+
+What you deliver today (agency / dev shop / service firm / operator):
+
+Roughly how many clients:
+
+```
+
+Same layout as `/contact`: one prompt per line, blank line after each, `\r\n`
+encoded as `%0D%0A`.
+
+Under it, verbatim: *"or write to builders@tai42.ai."* — the address a `mailto:`
+link in the standard inline-link classes.
+
+**Dropped from both pages: the Email field.** It was there because a form POST
+carries no sender. An email does: the reply address is the From header. Nothing
+else was dropped.
+
+**No calendar link on the page.**
