@@ -407,3 +407,32 @@ readiness report*; "the report" is fine thereafter. Two sentences changed:
 One comment also updated for accuracy: `NavBar.astro`'s header comment described
 the CTA as "form first, calendar second" — there is no form and no calendar, so
 it now reads "→ /contact/ — the page, not its mailto button".
+
+---
+
+## Steps 4–7 — verification (wave A gates)
+
+`npx astro check` — **22 files, 0 errors, 0 warnings, 0 hints.**
+`npm run build` — **12 pages built** (was 14; the two thank-you pages are gone),
+plus the 8 redirect pages, for 20 HTML files in `dist/`.
+
+| Check | Result |
+| --- | --- |
+| `Get your readiness report` | 0 in `src/`, 0 in `dist/` |
+| `Get your production readiness report` | 30 rendered instances across `dist/` |
+| `calendar.google.com` | 0 in `src/`, 0 in `dist/` |
+| `PENDING_FOUNDER` | 0 in `src/`, 0 in `dist/` |
+| `qualified_form_submission` | 0 in `src/`, 0 in `dist/` |
+| `FormSourceScript` / `FormSubmissionEvent` / `CALENDAR_URL` / `../consts` | 0 references in `src/` |
+| `thank-you` in `dist/` | 0 files, 0 hits |
+| `<form>` / `formspree.io` endpoints in `dist/` | 0 |
+| Bracket-placeholder regex `\[[A-Z_]{3,}\]` in `dist/` | 0 |
+| Both mailto hrefs decoded from the built HTML | addresses, subjects and bodies exactly as specified (bodies printed above) |
+| Addresses rendered | `contact@tai42.ai` ×3 on `/contact` (button href, inline link href, visible text), `builders@tai42.ai` ×3 on `/builders` — deliberate |
+
+**One known remaining hit, deferred by design:** `Formspree` still appears once
+in `src/pages/privacy.astro` (and so once in `dist/privacy/index.html`), along
+with the session-storage entry, the source tag and the thank-you pages it
+describes. `/privacy` is rewritten in wave C (spec 4f); it is left untouched
+here rather than half-edited. The build does not depend on it — the page has no
+imports from the removed files.
