@@ -23,7 +23,7 @@ Not deployed from here. Never pushed by the implementer.
 
 This list supersedes every earlier "parked" note in this file.
 
-> **Superseded 2026-08-21 — items 1 and 2 below are void.** The site no longer
+> **Superseded 2026-08-21 — items 1, 2, and 10 below are void.** The site no longer
 > has forms: the 20-Aug decision replaced both with `mailto:` buttons, and the
 > Formspree endpoints, the `PENDING_FOUNDER` sentinels, the `_next` redirect and
 > both thank-you pages were removed on `website-hotfix-2`. There are no form IDs
@@ -73,8 +73,10 @@ This list supersedes every earlier "parked" note in this file.
    GitHub, not in this repo.
 9. **"Read the technical overview" returns to `/platform` card 1** once
    engineering signs the overview off; 7j removed the link for now.
-10. **Live end-to-end form test** — blocked on item 1. The procedure will be in
-   `HOTFIX-REPORT.md`.
+10. **Live end-to-end form test** — void with items 1 and 2 (no forms exist).
+   Its deliverability concern moved to the mailto flow: see the 2026-08-21
+   entry in `CHANGELOG-website-hotfix-2.md` — verify both Google Groups accept
+   external senders and test each mailto from an outside address.
 
 ---
 

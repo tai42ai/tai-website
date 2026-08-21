@@ -247,6 +247,13 @@ is repealed for exactly two lines: `contact@tai42.ai` on `/contact` and
 public** — they are the intake path, and Google Workspace group-level spam
 filtering is the spam layer that the honeypot used to be.
 
+**Founder action — deliverability (added by the cold review):** before publish,
+verify that both `contact@tai42.ai` and `builders@tai42.ai` Google Groups accept
+mail from **external** senders, and send one test email to each from an outside
+address. A members-only group drops outside mail silently, and with the forms
+gone there is no backend, bounce surface, or analytics event left to notice a
+lost message — the mailto buttons are the site's only intake path.
+
 **Removed routes.** `/thank-you/` and `/thank-you-builders/` no longer exist and
 will 404. Both were `noindex`ed and were reachable only as a form redirect
 target — nothing on the site, and nothing off it, ever linked to them.
@@ -980,3 +987,16 @@ cover. Two further accuracy fixes went in with it:
 | same regex over every `description` / `og:description` / `twitter:description` | **0** |
 | ` - ` in rendered text, all pages | **0** |
 | contract sentence "Tai42 builds…" | 3 instances intact — footer on all 12 built pages, `/open-source` blockquote, `/about` layer card |
+
+
+## Cold-review fix wave 2 (2026-08-21)
+
+- The Google-Groups external-sender check was carried forward into this file
+  (above, under step 4) after the review found it had been lost when the old
+  Formspree pending items were voided; `CHANGELOG-website-hotfix.md` item 10 is
+  now explicitly void with a pointer here.
+- `/privacy` meta description trimmed 174 → 138 characters (step 14 had pushed
+  it past the ~160 search-snippet window; same rule applied to `/security` in
+  fix wave 1).
+- Gates re-run after these edits: `npx astro check` 0/0/0; `npm run build` 12
+  pages, green.
