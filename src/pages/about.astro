@@ -27,9 +27,11 @@ const LAYERS = [
   {
     title: "The open-source runtime.",
     body:
-      // The closing sentence is the one-sentence contract, byte-identical to
-      // the footer's and to the /open-source blockquote.
-      "The engine underneath everything we do is public: read the code, run it on your own infrastructure, extend it. It exists so that a small company can be deep tech an enterprise can rely on — you don't have to take our word for what the engine does. Permissions, audit, and delegated access are part of the open core, because governance is the product, not the paywall. The one-sentence contract: tai42 builds and runs its business on this runtime; the code is open; the company sells the hosted platform and enterprise layer on top — never a different core.",
+      // The closing sentence is the open-source contract, byte-identical to
+      // the footer's and to the /open-source blockquote. It stands on its own:
+      // the "The one-sentence contract:" lead-in is a working label (4d), so it
+      // does not render.
+      "The engine underneath everything we do is public: read the code, run it on your own infrastructure, extend it. It exists so that a small company can be deep tech an enterprise can rely on — you don't have to take our word for what the engine does. Permissions, audit, and delegated access are part of the open core, because governance is the product, not the paywall. Tai42 builds and runs its business on this runtime; the code is open; the company sells the hosted platform and enterprise layer on top — never a different core.",
   },
   {
     title: "BabelFish, the platform.",
@@ -46,7 +48,7 @@ const LAYERS = [
 
 <BaseLayout
   title="The self-driving company, in production. — tai42"
-  description="tai42 introduces the self-driving company — business functions that run themselves as production applications, humans at the named decisions."
+  description="Tai42 introduces the self-driving company — business functions that run themselves as production applications, humans at the named decisions."
 >
   <NavBar />
 
@@ -62,7 +64,7 @@ const LAYERS = [
         <Reveal delay={100}>
           <p class="text-lg text-charcoal/70 leading-relaxed">
             Business automation used to mean quarters of consultants modeling
-            workflows. tai42 introduces the self-driving company — business
+            workflows. Tai42 introduces the self-driving company — business
             functions that run themselves as production applications, humans at
             the named decisions. The industry's own evidence says raw autonomy
             fails and structured autonomy works — in Carnegie Mellon's benchmark

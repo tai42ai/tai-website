@@ -1,5 +1,5 @@
-# tai42
-> tai42 takes AI from demo to production: business functions that run themselves as production applications, humans at the named decisions. Platform: BabelFish (deterministic flow engine, visual builder, governance, optimizer). Open-source runtime.
+# Tai42
+> Tai42 takes AI from demo to production: business functions that run themselves as production applications, humans at the named decisions. Platform: BabelFish (deterministic flow engine, visual builder, governance, optimizer). Open-source runtime.
 ## Pages
 - Home: https://tai42.ai/
 - How it works: https://tai42.ai/method
