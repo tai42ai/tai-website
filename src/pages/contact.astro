@@ -43,33 +43,35 @@ const MAILTO_HREF = `mailto:${MAIL_TO}?subject=${encodeURIComponent(
         </Reveal>
 
         <Reveal delay={100}>
-          <ol class="space-y-6">
-            <li class="flex gap-3">
-              <span class="shrink-0 w-5 text-base font-semibold text-crimson/70 leading-relaxed">1</span>
-              <div>
+          <div class="bg-gray-50 rounded-xl border border-gray-200 p-6 lg:p-8">
+            <ol class="space-y-6">
+              <li class="flex gap-3">
+                <span class="shrink-0 w-5 text-base font-semibold text-crimson/70 leading-relaxed">1</span>
+                <div>
+                  <p class="text-lg text-black leading-relaxed">
+                    Do you have a working demo today?
+                  </p>
+                  <p class="mt-1.5 text-sm text-charcoal/60 leading-relaxed">
+                    Paste a link, a video, or a sentence — anything that shows what
+                    you've built.
+                  </p>
+                </div>
+              </li>
+              <li class="flex gap-3">
+                <span class="shrink-0 w-5 text-base font-semibold text-crimson/70 leading-relaxed">2</span>
                 <p class="text-lg text-black leading-relaxed">
-                  Do you have a working demo today?
+                  What breaks — or what's stopping you from putting it in front of
+                  real users?
                 </p>
-                <p class="mt-1.5 text-sm text-charcoal/60 leading-relaxed">
-                  Paste a link, a video, or a sentence — anything that shows what
-                  you've built.
+              </li>
+              <li class="flex gap-3">
+                <span class="shrink-0 w-5 text-base font-semibold text-crimson/70 leading-relaxed">3</span>
+                <p class="text-lg text-black leading-relaxed">
+                  How will you measure success in production?
                 </p>
-              </div>
-            </li>
-            <li class="flex gap-3">
-              <span class="shrink-0 w-5 text-base font-semibold text-crimson/70 leading-relaxed">2</span>
-              <p class="text-lg text-black leading-relaxed">
-                What breaks — or what's stopping you from putting it in front of
-                real users?
-              </p>
-            </li>
-            <li class="flex gap-3">
-              <span class="shrink-0 w-5 text-base font-semibold text-crimson/70 leading-relaxed">3</span>
-              <p class="text-lg text-black leading-relaxed">
-                How will you measure success in production?
-              </p>
-            </li>
-          </ol>
+              </li>
+            </ol>
+          </div>
         </Reveal>
 
         <Reveal delay={200}>

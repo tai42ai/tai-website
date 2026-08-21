@@ -8,8 +8,8 @@ import type { Step } from "../components/StepLine.astro";
 
 export const prerender = true;
 
-// The compressed four-step form of the /method step line: same component, no
-// stop-point labels here, every step links through to the full five-step page.
+// The home page's compact four-step line, rendered by StepLine. Every step
+// links through to /method/, where the full five-step sequence lives.
 const STEPS: Step[] = [
   {
     title: "Production readiness review (free).",

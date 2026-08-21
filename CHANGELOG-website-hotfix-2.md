@@ -1,13 +1,37 @@
 # CHANGELOG — website hotfix 2
 
-Branch: `website-hotfix-2`, based on live `main` (`d266de4`). This is a
-completion pass, not a redeploy: the cause analysis below comes first, because
-most of what the deploy-completion prompt lists is **not a defect in the repo or
-in the deployed artifact**. Two items are real and are fixed here.
+Branch: `website-hotfix-2`, based on live `main` (`d266de4`). The file records
+two rounds of work, in the order they happened.
 
-No new dependencies, colors, fonts, or components. **No site copy was changed —
-not one sentence.** The diff is a tag/class change on one heading, a spacing
-change on one list item, and two new markdown files.
+**Steps 1–3 — the deploy-completion pass.** The cause analysis comes first,
+because most of what that prompt listed was **not a defect in the repo or in the
+deployed artifact**: the live site was already entirely the new generation, and
+the fix was a hard refresh, not a redeploy. Two items were real and were fixed —
+the homepage's "Two other doors." line became the section heading it reads as,
+and the StepLine stop-point marker stopped reading as a connector on mobile.
+
+**Steps 4–14 — the 20-Aug decision set.** A larger set of founder decisions that
+does change site copy, page by page: both forms torn out and replaced by
+`mailto:` (there is no form backend any more); `/contact` and `/builders`
+rebuilt around three questions and one button each; the primary CTA renamed to
+"Get your production readiness report"; `/method` redesigned into an overview
+strip, one gate line and five detail blocks; internal working labels stopped
+rendering; `/about` given a new h1 and a rewritten layers paragraph; sitewide
+sweeps for the Tai42/tai42 casing rule and for alignment, band rhythm and em
+dashes; and `/terms` and `/privacy` rewritten — the provider is the brand, and
+the policy describes a site that only has an inbox.
+
+No new dependencies, colors, fonts, or components, and no new pages; the two
+thank-you pages went out with the forms in step 4.
+
+**Gates.** `npx astro check` is clean and `npm run build` builds 12 pages
+(`_agents.astro` is unrouted), at each wave gate — steps 4–7, 8–10, 11–14 — and
+after the cold-review fix wave at the end of this file. Each gate's command
+output and its sitewide regex sweeps are the tables under those headings.
+`HOTFIX-2-REPORT.md` carries the verification evidence for the
+deploy-completion pass, steps 1–3: the cache-busted live checks, the
+diagnosis table row by row, and the zero-hit sweeps as of 2026-08-20. It was
+written before the 20-Aug decision set and describes the site as it was then.
 
 Not deployed from here. Never pushed by the implementer.
 
@@ -639,8 +663,8 @@ single source line so they stay that way:
   becomes "Tai42 takes AI from demo to production:" as the parent ruled. The
   contrary reading — that a bare H1 is a mark like the title suffix — is
   defensible; it was not taken.
-* **`BaseLayout`'s default `title`/`description`** are dead code today (all 13
-  pages pass both), but they were swept anyway so the fallback cannot
+* **`BaseLayout`'s default `title`/`description`** are dead code today (all 12
+  built pages pass both), but they were swept anyway so the fallback cannot
   reintroduce a violation.
 * **Page `<title>`s were not touched.** "— tai42" is a mark, not a sentence, per
   the spec. `/terms`' title changed in step 13, but for sentence case, not
@@ -726,6 +750,16 @@ variants on the legal pages are gone.
 `/terms` and `/privacy` also needed heading case, em dashes and card style; those
 landed with the rewrites in steps 13 and 14 rather than being done twice.
 
+**Two of those `/privacy` bands moved again in step 14**, so the row above is
+this step's end state, not the page's. "What this site collects" dropped its
+fill and its top padding — it is now `pb-20 lg:pb-24` with no `bg-` class at
+all, closing the white header band rather than starting a band of its own — and
+"The runtime you self-host, the platform we host" flipped `bg-white` →
+`bg-gray-50`, which keeps the white/grey alternation running to the foot of the
+page. The third of them, "When you contact us" — now "When you write to us" —
+kept `bg-gray-50 py-20 lg:py-24`, and step 14's new "Who is responsible & your
+rights" band took `bg-white py-20 lg:py-24` between them.
+
 **`text-center` is now zero** in `src/pages` and `src/components` — no sanctioned
 survivors. The remaining `justify-center` occurrences are all inside
 shrink-to-fit `inline-flex` buttons or fixed-size round number/icon badges,
@@ -738,7 +772,7 @@ all on the two legal pages (`/terms` §§2, 3, 5; `/privacy` in four places) and
 became em dashes with the rewrites below. ` - ` is now zero in rendered text
 sitewide.
 
-**Sentence-case headings.** Every rendered `<h1>`–`<h3>` on all 13 pages was
+**Sentence-case headings.** Every rendered `<h1>`–`<h3>` on all 12 built pages was
 listed and checked. Only careers' h1 (this step) and the `/terms` and
 `/privacy` headings (steps 13–14) were Title Case. The footer's `Site` /
 `Doors` / `Legal` column labels are single words already in sentence case (the
@@ -855,4 +889,94 @@ white (header + collects) → gray → white → gray, on the standard rhythm.
 | analytics claim vs. build | Plausible script present in every built page; the policy describes page views only |
 | `/terms` Trademarks + Provider sections | both render (§8, §9) |
 | governing law / Aviso Legal / address on legal pages | none |
-| rendered headings, all 13 pages | all sentence case |
+| rendered headings, all 12 built pages | all sentence case |
+
+## Cold-review fix wave — five findings, all verified before fixing
+
+A fresh-context review of the finished branch. Five findings, no copy changes
+beyond the two sentences named below.
+
+**1. `/privacy` under-disclosed its processors (`privacy.astro:129`).** The
+rights paragraph said "**Two** providers handle data on the way" and then named
+GitHub and Google — while the same page, two sections earlier, discloses that
+Plausible receives a request from every page view. Two counted, three do the
+work. The count word is dropped and the third processor is named, in the
+sentence's own dash-and-comma shape:
+
+> Providers that handle data on the way: GitHub hosts the site and receives
+> standard request data, Plausible receives the analytics request, and Google
+> carries our mail and our calendar — each processing it under its own terms.
+
+**2. The two question lists were presented differently.** `/contact` rendered
+its three questions as a bare `<ol>` with crimson numeral badges, straight on
+the band; `/builders` rendered its three prompts as a `<ul>` with crimson dots
+inside a card. Same job on two doors, two presentations. Both are now
+card-wrapped, each keeping its own list style — numerals stay numerals, dots
+stay dots, and **no text changed on either page**. The fill follows the band, as
+everywhere else on the site: `/builders`' card sits on a `bg-gray-50` band and
+stays `bg-white`; `/contact`'s single band is `bg-white`, so its card is
+`bg-gray-50 rounded-xl border border-gray-200 p-6 lg:p-8` — the same card, the
+inverted fill, exactly as `/`'s "For builders" card already does on its white
+band. A `bg-white` card on a `bg-white` band would have had only its border to
+show for itself, and the site has no such instance.
+
+**3. `index.astro`'s step-line comment described the old design.** It claimed
+the home line was `/method`'s "same component" with "no stop-point labels here"
+— but the redesign in step 8 rebuilt `/method` around an overview strip and five
+detail blocks, and step 9 removed stop-point labels from the site entirely, so
+both halves were false. The comment now says only what is true: the home page's
+compact four-step line, rendered by `StepLine`, every step linking to `/method/`
+where the full five-step sequence lives.
+
+**4. `/security`'s `description` was 207 characters** — pre-existing, and a
+regression: the 91903a8 fix wave trimmed this same meta once, and the step-12
+rewrite reintroduced the long form. Trimmed to **150**, keeping both halves of
+the claim and the page intro's own words: "Open source, deterministic, and yours
+to run — self-host the open-source runtime, or run the hosted BabelFish platform
+in a private, EU-hosted tenant." (The intro paragraph keeps the full sentence;
+only the meta is shortened.)
+
+**5. This file's own header block was false.** It still declared that **no site
+copy had been changed, not a single one**, and described the whole diff as a
+tag/class change on one heading, a spacing change on one list item and two new
+markdown files — accurate when steps 1–3 were the whole branch, flatly untrue
+after steps 4–14 rewrote both door pages, `/method`, `/terms` and `/privacy`
+(and deleted two pages outright). The header now summarises what
+the file actually contains: the steps 1–3 deploy-completion pass, the steps 4–14
+decision set, the gates state, and what `HOTFIX-2-REPORT.md` does and does not
+cover. Two further accuracy fixes went in with it:
+
+* **The page count, in step 11's judgment calls and in the wave-C gate table.**
+  Both said thirteen; both now say **all 12 built pages**. The build emits 12
+  pages; `src/pages/_agents.astro` is underscore-prefixed and therefore
+  unrouted, so it is not one of them. (The
+  gate row reading "all 20 built HTML files" is correct as written and was left
+  — `dist/` holds 20 HTML files, the 12 pages plus the legacy redirect stubs.)
+* **The `/privacy` band row in step 12's changed-elements table** said "three
+  content bands `py-16 sm:py-20` → `py-20 lg:py-24`", which was that step's end
+  state but has not been the page's since step 14. A note under the table now
+  states it precisely: "What this site collects" carries no `bg-` class at all
+  and is `pb-20 lg:pb-24`, closing the white header band; "The runtime you
+  self-host, the platform we host" flipped `bg-white` → `bg-gray-50`; the third
+  band kept its classes, and step 14's new "Who is responsible & your rights"
+  band took `bg-white py-20 lg:py-24`.
+
+### Verification (fix-wave gates)
+
+`npx astro check` — **22 files, 0 errors, 0 warnings, 0 hints.**
+`rm -rf dist && npm run build` — **12 pages built**, build clean.
+
+| Check | Result |
+| --- | --- |
+| `/privacy` processors sentence in `dist` | renders with GitHub, Plausible and Google, one sentence |
+| `/contact` question list wrapper in `dist` | `bg-gray-50 rounded-xl border border-gray-200 p-6 lg:p-8` around the `<ol>` |
+| `/builders` prompt list wrapper in `dist` | `bg-white rounded-xl border border-gray-200 p-6 lg:p-8` around the `<ul>` |
+| `/security` `description` length | **150** chars (was 207) |
+| the old header's no-copy-was-changed claim, verbatim, in this file | **0 hits** |
+| the thirteen-page count, verbatim, in this file | **0 hits** |
+| `Formspree` / `Web3Forms` / `TAI42` / `Inc.` | 0 in `src`, `public`, `dist` |
+| bracket regex `\[[A-Z_]+[^\]]*\]` | 0 in `src`, `public`, `dist` |
+| `(^\|[.!?]\s+)tai42\b` over rendered text, all 20 built HTML files | **0** |
+| same regex over every `description` / `og:description` / `twitter:description` | **0** |
+| ` - ` in rendered text, all pages | **0** |
+| contract sentence "Tai42 builds…" | 3 instances intact — footer on all 12 built pages, `/open-source` blockquote, `/about` layer card |
