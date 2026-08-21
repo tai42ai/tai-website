@@ -1,21 +1,14 @@
 ---
-// StepLine — the numbered step line used on /method (five steps) and, in the
-// compressed four-step form, on the homepage. Horizontal on desktop (a rail
-// with numbered nodes and one card per step), stacked on mobile.
-//
-// Stop-points: `stopAfter` lists the 1-based step numbers a stop-point marker
-// follows, e.g. stopAfter={[2, 4]} puts a marker between steps 2→3 and 4→5.
-// The marker label defaults to "you can leave here". A marker carries
-// `role="presentation"` so it drops out of the list's item count — the steps
-// stay the list's semantic items — while its label stays readable to assistive
-// technology (which `aria-hidden` would have hidden). On mobile the marker
-// pulls its own vertical space in (`-my-6`) and drops the node-height spacer it
-// only needs in the desktop rail, so it reads as a label *between* two cards
-// rather than occupying a full step slot in the stacked flow.
+// StepLine — the compressed numbered step line used on the homepage.
+// Horizontal on desktop (a rail with numbered nodes and one card per step),
+// stacked on mobile.
 //
 // `headingLevel` sets the tag of the step titles ("h3" by default) so each page
-// can keep its heading order unbroken — /method passes "h2" under its h1, the
-// homepage keeps h3 under its "How it works" h2.
+// can keep its heading order unbroken — the homepage keeps h3 under its
+// "How it works" h2.
+//
+// /method no longer renders through this component: it has its own two-part
+// pattern (overview strip + stacked detail blocks) written into the page.
 //
 // Nothing new in the design system: crimson/gray tokens, the existing
 // bg-white rounded-xl border border-gray-200 card, and the .reveal animation.
@@ -29,52 +22,20 @@ export interface Step {
 
 interface Props {
   steps: Step[];
-  stopAfter?: number[];
-  stopLabel?: string;
   /** Tag for the step titles, so each page keeps an unbroken heading order. */
   headingLevel?: "h2" | "h3" | "h4";
 }
 
-const {
-  steps,
-  stopAfter = [],
-  stopLabel = "you can leave here",
-  headingLevel = "h3",
-} = Astro.props;
+const { steps, headingLevel = "h3" } = Astro.props;
 
 const Heading = headingLevel;
-
-// Flatten steps and stop-points into one ordered list so the row lays out in
-// a single flex line on desktop and a single column on mobile.
-type Item =
-  | { kind: "step"; step: Step; number: number; last: boolean }
-  | { kind: "stop" };
-
-const items: Item[] = [];
-steps.forEach((step, i) => {
-  const number = i + 1;
-  items.push({ kind: "step", step, number, last: number === steps.length });
-  if (stopAfter.includes(number) && number !== steps.length) {
-    items.push({ kind: "stop" });
-  }
-});
 ---
 
 <ol class="flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-0">
-  {items.map((item, i) =>
-    item.kind === "stop" ? (
-      <li
-        class="reveal flex flex-col -my-6 lg:my-0 lg:shrink-0 lg:px-3"
-        style={`transition-delay: ${i * 60}ms`}
-        role="presentation"
-      >
-        <div class="flex items-center justify-center lg:h-9 lg:mb-4">
-          <span class="whitespace-nowrap rounded-full border border-dashed border-crimson/40 bg-white px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-crimson">
-            {stopLabel}
-          </span>
-        </div>
-      </li>
-    ) : (
+  {steps.map((step, i) => {
+    const number = i + 1;
+    const last = number === steps.length;
+    return (
       <li
         class="reveal flex flex-col flex-1 lg:basis-0 lg:px-3"
         style={`transition-delay: ${i * 60}ms`}
@@ -82,26 +43,26 @@ steps.forEach((step, i) => {
         {/* Rail: the numbered node, then the line running on to the next node. */}
         <div class="flex items-center mb-4">
           <span class="shrink-0 w-9 h-9 rounded-full bg-crimson/10 text-crimson font-mono font-semibold flex items-center justify-center">
-            {item.number}
+            {number}
           </span>
-          {!item.last && <span class="hidden lg:block ml-3 h-px flex-1 bg-gray-200"></span>}
+          {!last && <span class="hidden lg:block ml-3 h-px flex-1 bg-gray-200"></span>}
         </div>
 
-        {item.step.link ? (
+        {step.link ? (
           <a
-            href={item.step.link}
+            href={step.link}
             class="card-hover flex-1 bg-white rounded-xl border border-gray-200 p-5 lg:p-6 block hover:border-crimson/30 transition-colors"
           >
-            <Heading class="text-base font-bold text-black mb-2">{item.step.title}</Heading>
-            <p class="text-sm text-charcoal/70 leading-relaxed">{item.step.body}</p>
+            <Heading class="text-base font-bold text-black mb-2">{step.title}</Heading>
+            <p class="text-sm text-charcoal/70 leading-relaxed">{step.body}</p>
           </a>
         ) : (
           <div class="flex-1 bg-white rounded-xl border border-gray-200 p-5 lg:p-6">
-            <Heading class="text-base font-bold text-black mb-2">{item.step.title}</Heading>
-            <p class="text-sm text-charcoal/70 leading-relaxed">{item.step.body}</p>
+            <Heading class="text-base font-bold text-black mb-2">{step.title}</Heading>
+            <p class="text-sm text-charcoal/70 leading-relaxed">{step.body}</p>
           </div>
         )}
       </li>
-    )
-  )}
+    );
+  })}
 </ol>

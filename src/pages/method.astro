@@ -3,36 +3,48 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";
 import Reveal from "../components/Reveal.astro";
-import StepLine from "../components/StepLine.astro";
-import type { Step } from "../components/StepLine.astro";
 
 export const prerender = true;
 
 // The route stays /method — "How it works" is only the label. /how-it-works is
 // an existing legacy redirect into this page, not a second page.
 
+// The five steps render twice, in two registers: `short` in the overview strip
+// (number badge + short title, one line), `title`/`body` in the detail blocks
+// below it. The bodies are locked copy — verbatim, unchanged.
+interface Step {
+  short: string;
+  title: string;
+  body: string;
+}
+
 const STEPS: Step[] = [
   {
+    short: "Readiness review",
     title: "The production readiness review (free, entry).",
     body:
       "From what you show us — a walkthrough of your demo and, if you can share them, its structural traces: the call graph without the data — we assess your demo, your definitions, and your integration surface. No system access. You leave with a written readiness report and a proposal — whether or not you continue with us.",
   },
   {
+    short: "Readiness gate",
     title: "Stage 0 — the readiness gate.",
     body:
       "Scope, success metrics, and acceptance criteria agreed in writing. With access in place, we run your full traces through our platform and sharpen the flow map to what the system actually does. If your systems aren't ready, the clock pauses — your budget doesn't burn.",
   },
   {
+    short: "Build",
     title: "The build.",
     body:
       "Your system on our platform: deterministic where it must be, intelligent where it should be, instrumented everywhere — weeks, not quarters.",
   },
   {
+    short: "Acceptance",
     title: "Acceptance (your verification).",
     body:
       "Pass/fail criteria you test yourself — functional acceptance is never hostage to business luck, and business results are measured openly at the gate.",
   },
   {
+    short: "Run",
     title: "Run (the license).",
     body:
       "Your team operates it on a private tenant — monitor, correct, and extend your own flows. We stay for the hard parts.",
@@ -76,8 +88,57 @@ const REPORT_CONTENTS = [
 
     <!-- 1 — the five steps · 2 — what's in the production readiness report -->
     <section class="bg-gray-50 py-20 lg:py-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <StepLine steps={STEPS} stopAfter={[2, 4]} headingLevel="h2" />
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <h2 class="text-3xl sm:text-4xl font-bold text-black mb-8">
+            The five steps
+          </h2>
+        </Reveal>
+
+        {/* Overview strip: number badge + short title, one line, connected by
+            a thin rule. It scrolls sideways rather than wrapping mid-node on
+            narrow screens; the rules are decoration. */}
+        <Reveal delay={100} class="-mx-4 sm:mx-0 overflow-x-auto">
+          <ol class="flex items-center gap-3 px-4 sm:px-0 w-max sm:w-auto sm:flex-wrap sm:gap-y-4">
+            {STEPS.map((step, i) => (
+              <li class="flex items-center gap-3 shrink-0">
+                <span class="shrink-0 w-8 h-8 rounded-full bg-crimson/10 text-crimson font-mono text-sm font-semibold flex items-center justify-center">
+                  {i + 1}
+                </span>
+                <span class="text-sm font-semibold text-black whitespace-nowrap">
+                  {step.short}
+                </span>
+                {i < STEPS.length - 1 && (
+                  <span class="w-6 h-px bg-gray-200" aria-hidden="true"></span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </Reveal>
+
+        <Reveal delay={150}>
+          <p class="mt-6 text-charcoal/70 leading-relaxed">
+            Every phase ends at a written gate. You can stop at any of them —
+            which is exactly why clients don't.
+          </p>
+        </Reveal>
+
+        {/* Detail blocks: the same five steps, stacked, one number each. */}
+        <div class="mt-12 lg:mt-14 space-y-6">
+          {STEPS.map((step, i) => (
+            <Reveal delay={100 + i * 60}>
+              <div class="bg-white rounded-xl border border-gray-200 p-6 lg:p-8">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="shrink-0 w-9 h-9 rounded-full bg-crimson/10 text-crimson font-mono font-semibold flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                  <h3 class="text-base font-bold text-black">{step.title}</h3>
+                </div>
+                <p class="text-charcoal/70 leading-relaxed">{step.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
 
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 lg:mt-20">
