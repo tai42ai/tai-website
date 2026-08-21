@@ -588,3 +588,271 @@ Source: … never render it (already correct; keep)") is about the `/open-source
 page, which is clean. Rewriting the `/about` card body is not in wave B's scope
 and that sentence is due to change anyway under 4b(2) (the contract sentence's
 casing sweep), so it is left for that wave to settle.
+
+## Step 11 — the name-casing rule: Tai42 at a sentence start, tai42 everywhere else
+
+Spec 4b(2). (The wave-C prompt said "ends at Step 10"; wave B already ended
+there, so the instruction to continue the numbering wins and wave C runs 11–14.)
+
+**The rule.** The mark is lowercase `tai42` everywhere except at the start of a
+sentence or on a standalone heading line, where it is `Tai42`. Mid-sentence it
+stays lowercase ("…we run inside tai42 —", "…reported to tai42.", "the platform
+every tai42 application runs on"). The domain, the two email addresses, the
+logo `alt` text, the GitHub org path and the `— tai42` title suffix are
+untouched.
+
+**Every sentence swept:**
+
+| Where | Now reads |
+| --- | --- |
+| `/` hero sub + `description` | "Tai42 takes AI into production — …" |
+| `/about` opening paragraph + `description` | "…workflows. Tai42 introduces the self-driving company — …" |
+| `/builders` hero paragraph + `description` | "Tai42's platform will open to a small group of founding partners — …" |
+| Footer line | "Tai42 — we take AI from demo to production." |
+| Footer contract, `/open-source` blockquote, `/about` layer card | "Tai42 builds and runs its business on this runtime; …" |
+| `BaseLayout` default `title`/`description` | "Tai42 — we take AI from demo to production" / "Tai42 turns fragile AI demos…" |
+| `public/llms.txt` | `# Tai42` and "> Tai42 takes AI from demo to production: …" |
+
+**The `/about` lead-in, removed (ruled).** The layer card read "…not the
+paywall. The one-sentence contract: tai42 builds and runs its business…".
+"The one-sentence contract" is a working label, and 4d says a working label
+never renders — that beats the locked 7i card copy, which was written before
+4d existed. The lead-in is deleted; the contract sentence now stands alone at
+the end of the card, opening "Tai42 builds…" like the other two instances. This
+closes the one hit wave B flagged and left ("The one-sentence contract" is now
+zero in `dist`).
+
+**The three contract instances are byte-identical**, and each is still kept on a
+single source line so they stay that way:
+
+> Tai42 builds and runs its business on this runtime; the code is open; the company sells the hosted platform and enterprise layer on top — never a different core.
+
+**Judgment calls, stated:**
+
+* **`llms.txt` `# tai42` → `# Tai42`.** The file's copy was spec-verbatim, and
+  the parent asked for a ruling. The casing rule names "a standalone heading
+  line" as a `Tai42` case, and a heading that is only the mark is the *only*
+  thing that phrase can mean — a heading like "tai42 builds…" is already covered
+  by "start of a sentence". The exemption list is closed and specific (domain,
+  emails, package names, code identifiers, the `— tai42` title suffix); an H1 is
+  on none of it. So the H1 is capitalised, and the blockquote line under it
+  becomes "Tai42 takes AI from demo to production:" as the parent ruled. The
+  contrary reading — that a bare H1 is a mark like the title suffix — is
+  defensible; it was not taken.
+* **`BaseLayout`'s default `title`/`description`** are dead code today (all 13
+  pages pass both), but they were swept anyway so the fallback cannot
+  reintroduce a violation.
+* **Page `<title>`s were not touched.** "— tai42" is a mark, not a sentence, per
+  the spec. `/terms`' title changed in step 13, but for sentence case, not
+  casing of the mark.
+* **The footer's HTML comment** `<!-- The one-sentence open-source contract -->`
+  renders into `dist` (Astro keeps HTML comments). It is now
+  `<!-- The open-source contract, as one sentence -->`, the same treatment wave
+  B gave the `/open-source` comment.
+
+**Outside this repo — supersession note for `CHANGELOG-website-correction.md`.**
+That file's "Outside this repo" instructions (docs landing §3, GitHub org
+README §2) tell the founder to publish the contract sentence verbatim in its
+old casing. Those two instructions are superseded by 4b(2). The old file is not
+rewritten; the corrected instruction text is recorded here and is what should be
+published:
+
+> **Docs landing (was §3):** Add the one-sentence contract verbatim to the docs
+> landing page:
+> "Tai42 builds and runs its business on this runtime; the code is open; the
+> company sells the hosted platform and enterprise layer on top — never a
+> different core."
+
+> **GitHub org README (was §2):** Open the org README with the one-sentence
+> contract, verbatim, as the first line:
+> "Tai42 builds and runs its business on this runtime; the code is open; the
+> company sells the hosted platform and enterprise layer on top — never a
+> different core."
+
+Only the first word changes in each; the rest of both instructions stands. The
+docs landing line in §2 of that file ("the tai42 runtime — the open runtime
+behind the tai42 platform") is mid-line and stays lowercase.
+
+## Step 12 — alignment and styling sweep
+
+Spec 4c(2). Everything reads from the left; one card style, one button style,
+one link style, one section-spacing scale. Nothing new was invented — every
+straggler was pulled onto an idiom that already existed on the site.
+
+**The spacing scale, stated:** heroes are `py-20 lg:py-28`; every other band is
+`py-20 lg:py-24`; a section that closes the band above it carries only
+`pb-20 lg:pb-24` (the `/platform` "What it runs" pattern). The `sm:` breakpoint
+variants on the legal pages are gone.
+
+**Every element changed:**
+
+| Page | Element | Change |
+| --- | --- | --- |
+| `/` | hero container | `text-center` removed |
+| `/` | hero sub-paragraph | `mx-auto` removed (`max-w-2xl` kept) |
+| `/` | hero CTA row | `justify-center` removed |
+| `/` | "Why it works" `<h2>` | `text-center` removed |
+| `/` | doors band | `py-16 lg:py-20` → `py-20 lg:py-24` |
+| `/` | bottom CTA container | `text-center` removed |
+| `/about` | bottom CTA container | `text-center` removed |
+| `/method` | hero container | `text-center` removed |
+| `/method` | bottom CTA container | `text-center` removed |
+| `/platform` | hero container | `text-center` removed |
+| `/platform` | actions row | `items-center justify-center` → `items-start sm:items-center` |
+| `/open-source` | contract band | `py-16 lg:py-20` → `py-20 lg:py-24` |
+| `/open-source` | gated boundary-table band | `py-16 lg:py-24` → `py-20 lg:py-24` |
+| `/open-source` | actions row | `items-center justify-center` → `items-start sm:items-center` |
+| `/builders` | body band, partners band | `py-16 lg:py-20` → `py-20 lg:py-24` |
+| `/builders` | waitlist band | `py-16 lg:py-24` → `py-20 lg:py-24` |
+| `/builders` | waitlist card | class order normalised to the card idiom |
+| `/404` | content container | `text-center` removed |
+| NavBar | mobile CTA | `block w-full text-center` → `inline-flex items-center … btn-hover` — it joins the one button style instead of being a full-width centred block |
+| `/security` | hero container | `text-center` removed |
+| `/security` | `<h1>` | `tracking-tight` → `leading-[1.1]` (the sitewide h1 idiom) |
+| `/security` | hero sub | `text-xl text-charcoal/60 max-w-2xl mx-auto` → `text-lg text-charcoal/70 max-w-2xl leading-relaxed` |
+| `/security` | card band | `py-20 lg:py-28` → `py-20 lg:py-24` |
+| `/security` | 4 card headings | `text-lg` → `text-xl` (card-title idiom) |
+| `/security` | 5 card paragraphs | `text-charcoal/60 text-sm` → `text-charcoal/70` (card-body idiom) |
+| `/company/careers` | `<h1>` | "Build the Open Agent Runtime." → "Build the open agent runtime."; `tracking-tight mb-8` → `leading-[1.1] mb-6` |
+| `/company/careers` | open-roles band | `py-20 lg:py-28` → `py-20 lg:py-24` |
+| `/company/careers` | open-roles card | `text-center` removed; `p-8 lg:p-10` → `p-6 lg:p-8` |
+| `/company/careers` | card paragraph | `mx-auto` removed |
+| `/company/careers` | "Get in touch →" | `text-base font-semibold` → `font-medium` (the sitewide link idiom) |
+| `/terms` | header band | `py-20 sm:py-24` → `py-20 lg:py-28`; container `text-center` removed |
+| `/terms` | content band | `pb-20 sm:pb-28` → `pb-20 lg:pb-24` |
+| `/privacy` | header band | `py-20 sm:py-24` → `py-20 lg:py-28`; container `text-center` removed |
+| `/privacy` | three content bands | `py-16 sm:py-20` → `py-20 lg:py-24` |
+
+`/terms` and `/privacy` also needed heading case, em dashes and card style; those
+landed with the rewrites in steps 13 and 14 rather than being done twice.
+
+**`text-center` is now zero** in `src/pages` and `src/components` — no sanctioned
+survivors. The remaining `justify-center` occurrences are all inside
+shrink-to-fit `inline-flex` buttons or fixed-size round number/icon badges,
+where they centre a glyph inside its own box and have no effect on text
+alignment.
+
+**Em dashes.** The founder's "never ` - `" now supersedes the task-2
+page-internal ruling. The eight remaining hyphen dashes in rendered copy were
+all on the two legal pages (`/terms` §§2, 3, 5; `/privacy` in four places) and
+became em dashes with the rewrites below. ` - ` is now zero in rendered text
+sitewide.
+
+**Sentence-case headings.** Every rendered `<h1>`–`<h3>` on all 13 pages was
+listed and checked. Only careers' h1 (this step) and the `/terms` and
+`/privacy` headings (steps 13–14) were Title Case. The footer's `Site` /
+`Doors` / `Legal` column labels are single words already in sentence case (the
+all-caps look is `uppercase` in CSS, an existing idiom, not copy).
+
+## Step 13 — `/terms`: the provider is the brand, plus Trademarks and Provider
+
+Spec 4f.
+
+* **"TAI42, Inc." is gone from every section.** §1 now reads "…any services
+  provided by tai42 ("tai42," "we," "us"), including the tai42 open-source
+  runtime, BabelFish…". `TAI42` and `Inc.` both return zero in `src` and in
+  `dist`.
+* **§2–§4** are substantively unchanged: only `TAI42` → `tai42` (or `Tai42`
+  where the sentence opens on it, in §4 and §7) and the hyphen dashes → em
+  dashes.
+* **§5's forms sentence** is replaced with the email reality: "This website's
+  analytics are aggregate and set no cookies, and the site has no forms: what
+  you write to contact@tai42.ai or builders@tai42.ai arrives in a group mailbox
+  and is used only to reply to you and to schedule a conversation." The rest of
+  §5 (self-hosting, the tenant, the link to the privacy policy) is unchanged.
+* **Two sections added, and only two:**
+  * **8. Trademarks** — "Tai42, the tai42 logo, and BabelFish are marks of
+    tai42. The Apache-2.0 license covering the runtime grants no rights to these
+    marks; you may not use them except to accurately describe the origin of the
+    software."
+  * **9. Provider** — "Tai42 is currently operated by its founders. A corporate
+    entity will be designated upon incorporation, and these terms will be
+    updated to name it. Questions: contact@tai42.ai."
+* **No governing-law section, no Aviso Legal, no registered address, no
+  registry number.** The Contact section still points at contact@tai42.ai and is
+  otherwise unchanged.
+* **Numbering.** §§1–7 keep their numbers so the spec's own §-references still
+  resolve; the two new sections are appended as 8 and 9, and Contact moves from
+  8 to 10.
+* **Headings sentence-cased**, including the page `<title>` and `<h1>`
+  ("Terms of Service." → "Terms of service."), so the title matches the h1.
+
+**Judgment call — the verbatim copy vs. the casing rule.** Both spec sections
+open on the mark: "tai42, the tai42 logo, …" and "tai42 is currently operated
+by its founders." 4b(2) is the later decision, it sweeps *every page*, and its
+verification gate is a hard zero for sentence-initial lowercase `tai42` in
+rendered copy. The gate wins: both sentences open "Tai42". Nothing else in
+either sentence is altered — the mid-sentence marks ("the tai42 logo", "marks of
+tai42") stay lowercase, as the rule requires.
+
+## Step 14 — `/privacy`: rewritten for a site that only has an inbox
+
+Spec 4f.
+
+**Removed entirely** — because none of it exists any more after step 4's forms
+teardown: Formspree, the two contact forms, the thank-you pages, the source tag
+recording how a visitor arrived, the session-storage entry, and the Plausible
+form-submission event. `Formspree` returns zero in `src`, `public` and `dist`.
+
+**Analytics — kept, exactly as scoped, minus the form event.** Plausible *is*
+loaded: `BaseLayout.astro` renders
+`<script is:inline defer data-domain="tai42.ai" src="https://plausible.io/js/script.js">`
+on every page, and the built HTML carries it. The page therefore still says:
+
+> We use Plausible, which counts page views in aggregate — which pages are read,
+> how often, and other aggregate dimensions such as country and device type.
+> Like any web request, the analytics request carries standard technical data
+> (such as your IP address and browser type); Plausible sets no cookies, and
+> what reaches us are aggregate totals, not individual visitors. Page views are
+> the only measurement: the site fires no other events.
+
+The last sentence replaces the old "There is one event beyond page views…"
+passage. The claim now matches the build exactly.
+
+**Added — "When you write to us":** there is no form to fill in; writing to
+contact@tai42.ai or builders@tai42.ai sends an ordinary email, received in a
+Google Workspace group inbox; what you send is used only to reply and to
+schedule a conversation — no CRM, no automated sequence, nothing sold and
+nothing passed on; ask us to delete it and we delete it.
+
+**Added — "Who is responsible & your rights":** the site is operated by tai42,
+write to contact@tai42.ai; you can ask at any time what we hold about you and
+have it corrected or deleted; GitHub hosts the site and receives standard
+request data, and Google carries our mail and our calendar, each processing it
+under its own terms. **No entity, registry, or address is named.**
+
+**Kept:** no cookies, no accounts, the GitHub Pages hosting-logs paragraph, and
+the runtime/platform scoping section (this policy covers the website only;
+self-hosting phones home to nobody; the hosted tenant is governed by its own
+agreement) — all substantively as they were.
+
+**Styling, per step 12:** headings sentence-cased ("Your Data is Yours. Here Is
+Exactly What This Site Collects." → "Your data is yours. Here is exactly what
+this site collects.", "What This Site Collects" → "What this site collects", and
+so on); five hyphen dashes → em dashes; the `bg-crimson/5 border-crimson/20`
+callout and the three icon-decorated cards are replaced by the site's one card
+style (`bg-gray-50 rounded-xl border border-gray-200` on the white band); the
+red-X / green-check icon chrome is dropped as the only instance of that pattern
+on the site; the `description` meta no longer promises a form. The page now runs
+white (header + collects) → gray → white → gray, on the standard rhythm.
+
+## Steps 11–14 — verification (wave C gates)
+
+`npx astro check` — **22 files, 0 errors, 0 warnings, 0 hints.**
+`npm run build` — **12 pages built**, build clean.
+
+| Check | Result |
+| --- | --- |
+| `(^\|[.!?]\s+)tai42\b` over rendered text, all 20 built HTML files | **0** |
+| same regex over every `description` / `og:description` / `twitter:description` | **0** |
+| `TAI42` | 0 in `src`, 0 in `dist` |
+| `Inc.` | 0 in `src`, 0 in `dist` |
+| `Formspree` (case-insensitive) | 0 in `src`, 0 in `public`, 0 in `dist` |
+| `The one-sentence contract` | **0 in `dist`** (wave B's flagged hit is closed) |
+| contract sentence opening "Tai42 builds" | present in all three places, byte-identical (footer on every page, `/open-source` blockquote, `/about` layer card) |
+| `text-center` in `src/pages` + `src/components` | **0** — no sanctioned survivors |
+| ` - ` in rendered text, all pages | **0** |
+| analytics claim vs. build | Plausible script present in every built page; the policy describes page views only |
+| `/terms` Trademarks + Provider sections | both render (§8, §9) |
+| governing law / Aviso Legal / address on legal pages | none |
+| rendered headings, all 13 pages | all sentence case |
