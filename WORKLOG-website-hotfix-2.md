@@ -144,7 +144,7 @@ forms are **wired but dead** until the two IDs are swapped in.
 Consequence: the **end-to-end live test, including the Google Groups check**
 (both groups must accept *external* senders, because Formspree delivers from its
 own domain and a members-only group drops every submission silently), **stays
-blocked** on those two IDs. Procedure: `CHANGELOG-website-hotfix.md`, step 20,
+blocked** on those two IDs. Procedure: `WORKLOG-website-hotfix.md`, step 20,
 and `HOTFIX-REPORT.md` check 4, steps 1–8.
 
 ---
@@ -262,7 +262,7 @@ target — nothing on the site, and nothing off it, ever linked to them.
 **Roadmap note:** the future intake flow reads the contact@ / builders@ Group
 mailboxes — no public endpoint needed.
 
-**Supersession — `CHANGELOG-website-hotfix.md`.** That file's *Pending —
+**Supersession — `WORKLOG-website-hotfix.md`.** That file's *Pending —
 founder / engineering* list opens with two Formspree items: (1) supply the two
 form IDs replacing the `PENDING_FOUNDER` sentinel, and (2) verify whether
 Formspree's `_next` custom redirect needs a paid plan. **Both are void.** There
@@ -681,7 +681,7 @@ single source line so they stay that way:
   `<!-- The open-source contract, as one sentence -->`, the same treatment wave
   B gave the `/open-source` comment.
 
-**Outside this repo — supersession note for `CHANGELOG-website-correction.md`.**
+**Outside this repo — supersession note for `WORKLOG-website-correction.md`.**
 That file's "Outside this repo" instructions (docs landing §3, GitHub org
 README §2) tell the founder to publish the contract sentence verbatim in its
 old casing. Those two instructions are superseded by 4b(2). The old file is not
@@ -993,7 +993,7 @@ cover. Two further accuracy fixes went in with it:
 
 - The Google-Groups external-sender check was carried forward into this file
   (above, under step 4) after the review found it had been lost when the old
-  Formspree pending items were voided; `CHANGELOG-website-hotfix.md` item 10 is
+  Formspree pending items were voided; `WORKLOG-website-hotfix.md` item 10 is
   now explicitly void with a pointer here.
 - `/privacy` meta description trimmed 174 → 136 characters (step 14 had pushed
   it past the ~160 search-snippet window; same rule applied to `/security` in

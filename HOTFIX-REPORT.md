@@ -427,7 +427,7 @@ not a color; every color used is an existing token (`crimson`, `burgundy`, `char
 `src/components/StepLine.astro`, `src/components/ScreenshotSlot.astro`,
 `src/components/FormSubmissionEvent.astro` (renders no markup — inline script only).
 Other new files: `src/pages/404.astro`, `src/pages/thank-you-builders.astro`,
-`CHANGELOG-website-hotfix.md`; `src/pages/agents.astro` → `src/pages/_agents.astro` (rename,
+`WORKLOG-website-hotfix.md`; `src/pages/agents.astro` → `src/pages/_agents.astro` (rename,
 unroutes the page).
 
 ## 15. Homepage hero + head · PASS
@@ -540,7 +540,7 @@ Platform's and Open Source's:
 
 ## Still open
 
-Mirrors the consolidated pending list in `CHANGELOG-website-hotfix.md` — 10 items, all
+Mirrors the consolidated pending list in `WORKLOG-website-hotfix.md` — 10 items, all
 founder- or engineering-side.
 
 1. **The two Formspree form IDs.** `FORMSPREE_CONTACT_ID` (`src/pages/contact.astro`) and
@@ -570,7 +570,7 @@ founder- or engineering-side.
 ## Deliverables
 
 - Branch **`website-hotfix-1`** — 28 commits on base `e821a2a`, HEAD `f485690`.
-- **`CHANGELOG-website-hotfix.md`** — per-step record, resolved values, and the single
+- **`WORKLOG-website-hotfix.md`** — per-step record, resolved values, and the single
   consolidated pending list.
 - **`HOTFIX-REPORT.md`** — this report.
 - Cold review: **3 cycles, 4 fix waves, final pass clean.**

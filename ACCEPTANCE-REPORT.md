@@ -12,7 +12,7 @@ rm -rf dist && npm run build
 
 Search scope for all string tests: `src/`, `public/`, `astro.config.mjs`, and the
 rendered build output `dist/`. Excluded per spec §6: the change order itself,
-`CHANGELOG-website-correction.md`, and this report.
+`WORKLOG-website-correction.md`, and this report.
 
 Rendered text was extracted from `dist/**/*.html` with `<script>`, `<style>`,
 `<svg>` and `<head>` stripped and tags removed, into a page-tagged text index
@@ -587,7 +587,7 @@ invented value.
 - **Branch `website-correction-v1.5`** — 20 commits on base `fbb50ca`, HEAD
   `bf43e0c`. Steps 1-16 implement the correction; four further commits are
   cold-review fix waves.
-- **`CHANGELOG-website-correction.md`** — maintained per step, including the
+- **`WORKLOG-website-correction.md`** — maintained per step, including the
   placeholder list, the gate results, the activation instructions (Web3Forms key
   creation for `balin.miki@tai42.ai`, the Plausible site, the CTA switch from
   `CALENDAR_URL` to `/contact/`), and the two outside-repo work items: the docs
@@ -599,7 +599,7 @@ invented value.
   vocabulary unification and claim scoping; careers positioning, spacing, and
   changelog completeness). The final holistic pass came back clean.
 - **NOT deployed.** Publishing is blocked on three founder/counsel actions, per
-  the top block of `CHANGELOG-website-correction.md`:
+  the top block of `WORKLOG-website-correction.md`:
   1. the **founder voice pass** over the new copy;
   2. **filling the open placeholders** above — `WEB3FORMS_ACCESS_KEY` in
      particular, without which neither form delivers;

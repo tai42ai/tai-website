@@ -62,7 +62,7 @@ Verdicts: **PASS** · **PASS (with founder action)** · **NOT-A-DEFECT**.
 ## 1. The original diagnosis table · NOT-A-DEFECT (resolved in task 3)
 
 **Condensed.** The prompt's "the live site is half old, half new" table was disproved in
-task 3 and the finding stands. Full cause analysis: **`CHANGELOG-website-hotfix-2.md`,
+task 3 and the finding stands. Full cause analysis: **`WORKLOG-website-hotfix-2.md`,
 Step 1** — read it there, it is not repeated here. In one line: the repo and the deployed
 artifact were both, entirely, the new generation; GitHub Pages publishes **one atomic
 artifact** per run (`dist/` replaces the whole site, so "half deployed" is impossible by
@@ -165,7 +165,7 @@ Step 3 is the one that can silently fail: **both `contact@tai42.ai` and
 group drops outside mail with no bounce, and with the forms gone there is no backend, no
 bounce surface and no analytics event left to notice a lost message — these two buttons are
 the site's **only** intake path. This is the deliverability founder-action recorded in
-`CHANGELOG-website-hotfix-2.md`, Step 4.
+`WORKLOG-website-hotfix-2.md`, Step 4.
 
 ## 4. Redirects · PASS
 
@@ -365,7 +365,7 @@ Home's doors block renders with **no heading** — the rendered text runs straig
 | Sentence-case headings, every `h1`–`h3` on all 12 built pages | **all sentence case** |
 
 ‡ `dist/_astro/about.*.css` emits `.text-center{text-align:center}` because Tailwind v4 scans
-the repo's markdown too and `CHANGELOG-website-hotfix-2.md` mentions the class in its
+the repo's markdown too and `WORKLOG-website-hotfix-2.md` mentions the class in its
 changed-elements table. **No element in any built page uses it.** Dead CSS, not a live
 alignment.
 
@@ -380,7 +380,7 @@ is responsible & your rights" / "The runtime you self-host, the platform we host
 (The footer's `Site` / `Doors` / `Legal` column labels are single words; their all-caps look
 is a CSS `uppercase`, not copy.)
 
-**The changed-elements evidence lives in `CHANGELOG-website-hotfix-2.md`, Step 12** — the
+**The changed-elements evidence lives in `WORKLOG-website-hotfix-2.md`, Step 12** — the
 full table of every element whose alignment or style was touched, plus the stated spacing
 scale (`py-20 lg:py-28` heroes, `py-20 lg:py-24` every other band, `pb-20 lg:pb-24` for a
 closing section) and the `/privacy` band note under it. It is not duplicated here.
@@ -488,7 +488,7 @@ the founder can take.
    `builders@tai42.ai` Google Groups **accept external senders**, then send one test mail to
    each from an outside address and confirm arrival. See §3 for the 30-second procedure.
    These two mailtos are the site's only intake path and a members-only group drops outside
-   mail silently. (`CHANGELOG-website-hotfix-2.md`, Step 4.)
+   mail silently. (`WORKLOG-website-hotfix-2.md`, Step 4.)
 2. **Enable GitHub Discussions** on a `tai42ai` repo. `/open-source` links
    `https://github.com/orgs/tai42ai/discussions` (`open-source.astro:23`), which returns
    **404 today**. The URL is correct and needs no change — the feature needs enabling.
@@ -530,10 +530,10 @@ Also carried forward, neither a code change: **a hard refresh** is the whole rem
 
 * **Branch `website-hotfix-2`** — **23 commits** on base `d266de4` (HEAD `02e4e7c`): 6 from
   the task-3 deploy-completion pass, 17 from the task-4 20-Aug decision set.
-* **`CHANGELOG-website-hotfix-2.md`** — Step 1 the cause analysis, Steps 2–3 the two task-3
+* **`WORKLOG-website-hotfix-2.md`** — Step 1 the cause analysis, Steps 2–3 the two task-3
   fixes (both later superseded inside the branch), Steps 4–14 the decision set with a wave
   gate after each wave, then the cold-review fix waves.
-* **`CHANGELOG-website-correction.md`** — the earlier branch's record, carried unchanged;
+* **`WORKLOG-website-correction.md`** — the earlier branch's record, carried unchanged;
   its two "Outside this repo" contract-sentence instructions (docs landing, GitHub org
   README) are **superseded** by the casing rule, with the corrected text recorded in
   hotfix-2 Step 11 rather than history being rewritten.

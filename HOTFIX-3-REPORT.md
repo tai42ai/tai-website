@@ -64,5 +64,5 @@ The **trademark clause in `/terms` §8 now claims "BabelDag" as a mark** — if 
 reflects a real product renaming, no action; if BabelDag is provisional, remember the
 terms page asserts it publicly on deploy. GitHub-side surfaces (org README, docs) that
 mention BabelFish are outside this repo and need the same rename — the outside-repo
-instruction set in `CHANGELOG-website-correction.md` §§docs/README should be executed
+instruction set in `WORKLOG-website-correction.md` §§docs/README should be executed
 with "BabelDag" when you run it.

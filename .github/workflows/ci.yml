@@ -24,5 +24,34 @@ jobs:
         run: npm ci
       - name: Type-check (astro check)
         run: npx astro check
+      - name: Changelog stub guard
+        # Every tracked CHANGELOG.md must be byte-identical to the canonical stub.
+        run: |
+          set -euo pipefail
+          expected="$(mktemp)"
+          cat > "$expected" <<'STUB'
+          # Changelog
+
+          All notable changes to this project will be documented in this file.
+
+          The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+          and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+          ## [Unreleased]
+          STUB
+          found=0
+          status=0
+          while IFS= read -r -d '' f; do
+            found=1
+            if ! cmp -s "$f" "$expected"; then
+              echo "Not byte-identical to the canonical stub: $f" >&2
+              status=1
+            fi
+          done < <(git ls-files -z -- '**/CHANGELOG.md' 'CHANGELOG.md')
+          if [ "$found" -eq 0 ]; then
+            echo "No tracked CHANGELOG.md found" >&2
+            exit 1
+          fi
+          exit "$status"
       - name: Build
         run: npm run build

@@ -28,7 +28,7 @@ This list supersedes every earlier "parked" note in this file.
 > Formspree endpoints, the `PENDING_FOUNDER` sentinels, the `_next` redirect and
 > both thank-you pages were removed on `website-hotfix-2`. There are no form IDs
 > to supply and no paid-plan question to answer. See
-> `CHANGELOG-website-hotfix-2.md`, Step 4. The rest of this list is untouched,
+> `WORKLOG-website-hotfix-2.md`, Step 4. The rest of this list is untouched,
 > and nothing below or above this line has been rewritten — this is a pointer,
 > not a correction.
 
@@ -75,7 +75,7 @@ This list supersedes every earlier "parked" note in this file.
    engineering signs the overview off; 7j removed the link for now.
 10. **Live end-to-end form test** — void with items 1 and 2 (no forms exist).
    Its deliverability concern moved to the mailto flow: see the 2026-08-21
-   entry in `CHANGELOG-website-hotfix-2.md` — verify both Google Groups accept
+   entry in `WORKLOG-website-hotfix-2.md` — verify both Google Groups accept
    external senders and test each mailto from an outside address.
 
 ---
@@ -1017,7 +1017,7 @@ The wave-1 gates table row "Stop markers | 2 on `/method`, both
 | `dist/platform` band sequence | `bg-white` · *(no fill — hero continuation)* · `bg-gray-50` · `bg-white` · `bg-gray-50` · `bg-white` → painted **white · gray · white · gray · white** |
 | Bracket regex `\[[A-Z_]+[^\]]*\]` in `dist/` | **0** |
 | Banned strings in `dist/` | Text-to-Flow 0 · Request access 0 · No credit card 0 · SOC 2 0 · certified 0 · autopilot 0 · disrupt 0 · € 0 · base_url 0 · Nexus 0 · Web3Forms 0 · "production audit" 0 |
-| Files touched | `src/pages/security.astro`, `src/components/StepLine.astro`, `src/pages/privacy.astro`, `src/pages/platform.astro`, `CHANGELOG-website-hotfix.md` |
+| Files touched | `src/pages/security.astro`, `src/components/StepLine.astro`, `src/pages/privacy.astro`, `src/pages/platform.astro`, `WORKLOG-website-hotfix.md` |
 
 Known and left alone: `src/layouts/BaseLayout.astro:68` carries an HTML comment
 ending "… fired from the thank-you page." — a developer note about the Plausible
@@ -1065,6 +1065,6 @@ comment and this changelog. `dist/` is byte-identical before and after
 Gates after this wave: `npx astro check` — 27 files, **0 errors, 0 warnings,
 0 hints**. `npm run build` — **14 pages, complete, no warnings**. `dist/`
 unchanged (byte-identical, all 40 files). Files touched:
-`src/pages/about.astro`, `CHANGELOG-website-hotfix.md`.
+`src/pages/about.astro`, `WORKLOG-website-hotfix.md`.
 
 Nothing was pushed.
