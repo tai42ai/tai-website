@@ -1,10 +1,8 @@
 ---
 // UNROUTED PAGE — the underscore prefix keeps Astro from emitting a route for
-// this file, so https://tai42.ai/agents returns 404. It is also linked from
-// nowhere: no nav entry, no footer link, no Home doors-line entry, no Platform
-// honest-line link. The gate clears when every placeholder below is filled and
-// the MCP endpoint responds; re-publishing is then a rename back to
-// agents.astro, plus adding the links and removing the noindex.
+// this file, so /agents returns 404, and it is linked from nowhere. To
+// publish it: fill the placeholders below, rename the file to agents.astro,
+// add the nav and footer links, and remove the noindex.
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBar from "../components/NavBar.astro";
 import Footer from "../components/Footer.astro";

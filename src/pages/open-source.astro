@@ -6,9 +6,8 @@ import Reveal from "../components/Reveal.astro";
 
 export const prerender = true;
 
-// The open/commercial boundary table is written and kept, but not rendered:
-// the founder confirms the split before it publishes. Flip this to true to
-// bring the whole section back — nothing else has to change.
+// The open/commercial boundary table is built but not rendered. Set this to
+// true to bring the whole section back — nothing else has to change.
 const SHOW_BOUNDARY_TABLE = false;
 
 // Band rhythm: the page alternates bg-white / bg-gray-50. The gated table is
@@ -105,7 +104,7 @@ const COMMERCIAL_ROWS = [
       </div>
     </section>
 
-    {/* What's open, what's commercial — hidden until the founder confirms */}
+    {/* What's open, what's commercial — hidden while SHOW_BOUNDARY_TABLE is false */}
     {SHOW_BOUNDARY_TABLE && (
       <section class="bg-gray-50 py-20 lg:py-24">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

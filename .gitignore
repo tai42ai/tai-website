@@ -100,10 +100,6 @@ npm-debug.log*
 coverage/
 
 
-specs
-.claude
-.specify
-CLAUDE.md
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
